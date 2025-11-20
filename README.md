@@ -2,12 +2,14 @@
 
 Reproducible code and scripts for ARCADIA benchmarking, simulation, and paper figures.
 
+> **Note**: This repository is currently under active development. Some components may be incomplete or subject to change. We recommend checking back periodically for updates.
+
 ## Overview
 
 This repository contains reproducible code and scripts used in the ARCADIA paper. ARCADIA is a method for integrating single-cell RNA-seq and spatial proteomics data using archetype-based cross-modal alignment. This repository provides:
 
 - **Benchmarking**: Comparison of ARCADIA against state-of-the-art methods (scMODAL, MaxFuse)
-- **Simulation**: Synthetic dataset generation - CITE-seq dataset with paired protein markers, scRNA-seq data, and synthetic spatial locations for cells
+- **Simulation**: Synthetic dataset generation - CITE-seq dataset with paired protein markers, scRNA-seq data and synthetic spatial locations for cells
 - **Datasets**: Real dataset - Tonsil dataset with CODEX spatial proteomics and scRNA-seq data
 - **Analysis**: Notebooks for reproducing paper figures and robustness analyses
 
