@@ -37,12 +37,12 @@ Please check out our main [ARCADIA repository](https://github.com/azizilab/ARCAD
 │   │   └── metadata.json
 │   └── README.md
 │
-├── notebooks/              # Paper figures and analysis notebooks
-│   ├── arcadia_fig1_simulation.ipynb
-│   ├── arcadia_fig2_archetype_analysis.ipynb
-│   ├── arcadia_fig3_cross_modal_matching.ipynb
-│   ├── arcadia_fig4_benchmark_comparison.ipynb
-│   ├── arcadia_fig5_spatial_integration.ipynb
+├── notebooks/              #  analysis notebooks
+│   ├── arcadia_simulation.ipynb
+│   ├── arcadia_archetype_analysis.ipynb
+│   ├── arcadia_cross_modal_matching.ipynb
+│   ├── arcadia_benchmark_comparison.ipynb
+│   ├── arcadia_spatial_integration.ipynb
 │   ├── arcadia_archetype_validation.ipynb
 │   └── arcadia_robustness_analysis.ipynb
 │
