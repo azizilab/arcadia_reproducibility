@@ -195,11 +195,11 @@ Contains dataset metadata, preprocessing information, and download instructions.
 
 ### `notebooks/`
 Jupyter notebooks for reproducing paper figures and analyses:
-- **fig1**: Simulation results and synthetic data generation
-- **fig2**: Archetype analysis and visualization
-- **fig3**: Cross-modal matching results
-- **fig4**: Benchmark comparison across methods
-- **fig5**: Spatial integration analysis
+- Simulation results and synthetic data generation
+- Archetype analysis and visualization
+- Cross-modal matching results
+- Benchmark comparison across methods
+- Spatial integration analysis
 - **archetype_validation**: Validation of archetype generation
 - **robustness_analysis**: Robustness to hyperparameters and data variations
 
