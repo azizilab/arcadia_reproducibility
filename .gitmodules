@@ -1,0 +1,3 @@
+[submodule "ARCADIA"]
+	path = ARCADIA
+	url = https://github.com/azizilab/ARCADIA_public.git
