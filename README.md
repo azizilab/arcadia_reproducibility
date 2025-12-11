@@ -19,53 +19,51 @@ Please check out our main [ARCADIA repository](https://github.com/azizilab/ARCAD
 
 ```
 .
+├── README.md                    # This file - main reproducibility repository README
 ├── run_pipeline_direct.sh      # Script to run ARCADIA pipeline (direct Python execution, no plots)
 ├── run_pipeline_notebooks.sh   # Script to run ARCADIA pipeline (notebook-based execution, with plots)
-├── benchmark/              # Benchmarking scripts for comparison methods
-│   ├── test_scmodal_tonsil.py
-│   ├── test_scmodal_cite_seq.py
-│   ├── test_maxfuse_tonsil.py
-│   ├── test_maxfuse_cite_seq.py
-│   ├── test_arcadia_tonsil.py
-│   ├── test_arcadia_cite_seq.py
-│   └── README.md
+├── generate_publication_figures_github.ipynb  # Notebook for generating publication figures
 │
-├── data/                   # Dataset information and metadata
-│   ├── tonsil/
-│   │   ├── README.md
-│   │   └── metadata.json
-│   ├── cite_seq/
-│   │   ├── README.md
-│   │   └── metadata.json
-│   └── README.md
-│
-├── notebooks/              #  analysis notebooks
-│   ├── arcadia_simulation.ipynb
-│   ├── arcadia_archetype_analysis.ipynb
-│   ├── arcadia_cross_modal_matching.ipynb
-│   ├── arcadia_benchmark_comparison.ipynb
-│   ├── arcadia_spatial_integration.ipynb
-│   ├── arcadia_archetype_validation.ipynb
-│   └── arcadia_robustness_analysis.ipynb
-│
-├── simulation/             # Synthetic dataset generation
-│   ├── generate_synthetic_cite_seq.py
-│   ├── spatial_simulation.py
-│   ├── utils.py
-│   ├── run_simulation.sh
-│   └── README.md
-│
-├── environments/           # Conda environment files for benchmarking methods
-│   ├── environment_scmodal.yaml
-│   └── environment_maxfuse.yaml
-│
-├── ARCADIA/                # ARCADIA model implementation repository (cloned)
-│   ├── model_comparison/   # Model comparison scripts for scMODAL and MaxFuse
+├── ARCADIA/                     # ARCADIA model implementation repository (cloned)
+│   ├── scripts/                 # Pipeline execution scripts
+│   │   ├── _0_preprocess_cite_seq.py
+│   │   ├── _0_preprocess_tonsil.py
+│   │   ├── _1_align_datasets.py
+│   │   ├── _2_spatial_integrate.py
+│   │   ├── _3_generate_archetypes.py
+│   │   ├── _4_prepare_training.py
+│   │   ├── _5_train_vae.py
+│   │   └── hyperparameter_search.py
+│   │
+│   ├── src/arcadia/             # ARCADIA package source code
+│   │   ├── training/            # Training utilities and dual VAE training plan
+│   │   ├── archetypes/          # Archetype generation and matching
+│   │   ├── data_utils/          # Data loading and preprocessing
+│   │   ├── plotting/            # Visualization functions
+│   │   ├── spatial/             # Spatial analysis utilities
+│   │   └── utils/               # General utilities (including scVI patching)
+│   │
+│   ├── model_comparison/        # Model comparison scripts for scMODAL and MaxFuse
 │   │   ├── model_scmodal_dataset_cite_seq.py
 │   │   ├── model_scmodal_dataset_tonsil.py
 │   │   ├── model_maxfuse_dataset_cite_seq.py
 │   │   ├── model_maxfuse_dataset_tonsil.py
-│   │   └── scMODAL_main/   # scMODAL implementation included
+│   │   └── scMODAL_main/        # scMODAL implementation included
+│   │
+│   ├── environments/            # Conda environment files and Docker setup
+│   │   ├── environment_cpu.yaml
+│   │   ├── environment_gpu_cuda11.8.yaml
+│   │   ├── environment_gpu_cuda12.1.yaml
+│   │   ├── environment_scmodal.yaml
+│   │   ├── environment_maxfuse.yaml
+│   │   ├── requirements.txt
+│   │   └── docker/              # Docker setup for reproducible execution
+│   │
+│   ├── configs/                 # Configuration files
+│   │   └── config.json          # Main configuration file
+│   │
+│   ├── run_pipeline.sh          # ARCADIA pipeline script (used by run_pipeline_notebooks.sh)
+│   └── README.md                # ARCADIA repository README
 ```
 
 ## Datasets
@@ -396,18 +394,11 @@ Script that runs the complete ARCADIA pipeline end-to-end using notebook-based e
 
 ### `ARCADIA/`
 Complete ARCADIA implementation including:
-- Core archetype generation and matching algorithms
-- Dual VAE training plan
-- Data loading and preprocessing utilities
-- Visualization functions
-- Pipeline scripts for end-to-end execution
-- Model comparison scripts (`model_comparison/`) for running scMODAL and MaxFuse comparisons
-
-### `outputs/`
-Generated outputs organized by type:
-- `benchmark_results/`: CSV files and plots from benchmarking
-- `figures/`: Generated paper figures
-- `processed_data/`: Preprocessed datasets ready for analysis
+- **Pipeline scripts** (`scripts/`): Step-by-step execution scripts for preprocessing, alignment, spatial integration, archetype generation, and training
+- **Source code** (`src/arcadia/`): Core implementation including training plans, archetype algorithms, data utilities, and visualization functions
+- **Model comparison scripts** (`model_comparison/`): Scripts for running scMODAL and MaxFuse comparisons
+- **Environment files** (`environments/`): Conda environment YAML files and Docker setup for reproducible execution
+- **Configuration** (`configs/`): Configuration files for pipeline parameters
 
 ## Citation
 
