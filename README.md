@@ -24,6 +24,13 @@ Please check out our main [ARCADIA repository](https://github.com/azizilab/ARCAD
 ├── run_pipeline_notebooks.sh   # Script to run ARCADIA pipeline (notebook-based execution, with plots)
 ├── generate_publication_figures_github.ipynb  # Notebook for generating publication figures
 │
+├── model_comparison/            # Model comparison scripts for scMODAL and MaxFuse
+│   ├── model_scmodal_dataset_cite_seq.py
+│   ├── model_scmodal_dataset_tonsil.py
+│   ├── model_maxfuse_dataset_cite_seq.py
+│   ├── model_maxfuse_dataset_tonsil.py
+│   └── scMODAL_main/            # scMODAL implementation included
+│
 ├── ARCADIA/                     # ARCADIA model implementation repository (cloned)
 │   ├── scripts/                 # Pipeline execution scripts
 │   │   ├── _0_preprocess_cite_seq.py
@@ -42,13 +49,6 @@ Please check out our main [ARCADIA repository](https://github.com/azizilab/ARCAD
 │   │   ├── plotting/            # Visualization functions
 │   │   ├── spatial/             # Spatial analysis utilities
 │   │   └── utils/               # General utilities (including scVI patching)
-│   │
-│   ├── model_comparison/        # Model comparison scripts for scMODAL and MaxFuse
-│   │   ├── model_scmodal_dataset_cite_seq.py
-│   │   ├── model_scmodal_dataset_tonsil.py
-│   │   ├── model_maxfuse_dataset_cite_seq.py
-│   │   ├── model_maxfuse_dataset_tonsil.py
-│   │   └── scMODAL_main/        # scMODAL implementation included
 │   │
 │   ├── environments/            # Conda environment files and Docker setup
 │   │   ├── environment_cpu.yaml
@@ -101,7 +101,7 @@ scMODAL (Single-Cell Multi-Omics Data Alignment) is a baseline method for multi-
 
 **Repository**: [scMODAL](https://github.com/gefeiwang/scMODAL)
 
-**Comparison Scripts**: `ARCADIA/model_comparison/model_scmodal_dataset_*.py`
+**Comparison Scripts**: `model_comparison/model_scmodal_dataset_*.py`
 
 ### MaxFuse
 MaxFuse is a method for integrating single-cell multi-omics data using maximum mean discrepancy.
@@ -110,7 +110,7 @@ MaxFuse is a method for integrating single-cell multi-omics data using maximum m
 
 **Repository**: [MaxFuse](https://github.com/shuxiaoc/maxfuse)
 
-**Comparison Scripts**: `ARCADIA/model_comparison/model_maxfuse_dataset_*.py`
+**Comparison Scripts**: `model_comparison/model_maxfuse_dataset_*.py`
 
 ## Getting Started
 
@@ -283,7 +283,7 @@ To run the benchmarking comparisons, you'll need to install scMODAL and MaxFuse 
 **scMODAL:**
 - Repository: [scMODAL](https://github.com/gefeiwang/scMODAL)
 - Follow the installation instructions in the scMODAL repository
-- The scMODAL implementation is also included in `ARCADIA/model_comparison/scMODAL_main/` for convenience
+- The scMODAL implementation is also included in `model_comparison/scMODAL_main/` for convenience
 
 **MaxFuse:**
 - Repository: [MaxFuse](https://github.com/shuxiaoc/maxfuse)
@@ -302,7 +302,7 @@ This will generate synthetic spatial datasets for both tonsil and cite_seq.
 
 ### Running Model Comparisons
 
-Compare ARCADIA against baseline methods (scMODAL and MaxFuse) on the same datasets. The comparison scripts are located in `ARCADIA/model_comparison/` and run the external models using the same preprocessed data as ARCADIA.
+Compare ARCADIA against baseline methods (scMODAL and MaxFuse) on the same datasets. The comparison scripts are located in `model_comparison/` and run the external models using the same preprocessed data as ARCADIA.
 
 #### Prerequisites
 
@@ -312,14 +312,14 @@ Before running comparisons, ensure you have:
 2. **Installed comparison methods** following their official installation instructions:
    - **scMODAL**: Follow installation instructions at [scMODAL repository](https://github.com/gefeiwang/scMODAL)
    - **MaxFuse**: Follow installation instructions at [MaxFuse repository](https://github.com/shuxiaoc/maxfuse)
-   - The scMODAL implementation is included in `ARCADIA/model_comparison/scMODAL_main/` for convenience
+   - The scMODAL implementation is included in `model_comparison/scMODAL_main/` for convenience
 
 #### Running scMODAL Comparisons
 
-scMODAL comparisons use the included implementation in `ARCADIA/model_comparison/scMODAL_main/`:
+scMODAL comparisons use the included implementation in `model_comparison/scMODAL_main/`:
 
 ```bash
-cd ARCADIA/model_comparison
+cd model_comparison
 
 # Activate your scMODAL conda environment (set up following scMODAL installation instructions)
 conda activate scmodal  # or your scMODAL environment name
@@ -342,7 +342,7 @@ python model_scmodal_dataset_tonsil.py
 MaxFuse comparisons use the official MaxFuse package:
 
 ```bash
-cd ARCADIA/model_comparison
+cd model_comparison
 
 # Activate your MaxFuse conda environment (set up following MaxFuse installation instructions)
 conda activate maxfuse  # or your MaxFuse environment name
@@ -361,7 +361,7 @@ python model_maxfuse_dataset_tonsil.py
 
 #### Comparison Results
 
-Results from model comparisons are saved in `ARCADIA/model_comparison/` with dataset-specific outputs. You can compare:
+Results from model comparisons are saved in `model_comparison/` with dataset-specific outputs. You can compare:
 
 - **Integration Quality**: iLISI scores, kBET rejection rates
 - **Matching Accuracy**: Cross-modal cell matching performance
@@ -392,7 +392,6 @@ Script that runs the complete ARCADIA pipeline end-to-end using notebook-based e
 Complete ARCADIA implementation including:
 - **Pipeline scripts** (`scripts/`): Step-by-step execution scripts for preprocessing, alignment, spatial integration, archetype generation, and training
 - **Source code** (`src/arcadia/`): Core implementation including training plans, archetype algorithms, data utilities, and visualization functions
-- **Model comparison scripts** (`model_comparison/`): Scripts for running scMODAL and MaxFuse comparisons
 - **Environment files** (`environments/`): Conda environment YAML files and Docker setup for reproducible execution
 - **Configuration** (`configs/`): Configuration files for pipeline parameters
 
