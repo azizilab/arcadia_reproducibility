@@ -101,9 +101,7 @@ scMODAL (Single-Cell Multi-Omics Data Alignment) is a baseline method for multi-
 
 **Repository**: [scMODAL](https://github.com/gefeiwang/scMODAL)
 
-**Environment**: `environments/environment_scmodal.yaml`
-
-**Benchmark Scripts**: `benchmark/test_scmodal_*.py`
+**Comparison Scripts**: `ARCADIA/model_comparison/model_scmodal_dataset_*.py`
 
 ### MaxFuse
 MaxFuse is a method for integrating single-cell multi-omics data using maximum mean discrepancy.
@@ -112,9 +110,7 @@ MaxFuse is a method for integrating single-cell multi-omics data using maximum m
 
 **Repository**: [MaxFuse](https://github.com/shuxiaoc/maxfuse)
 
-**Environment**: `environments/environment_maxfuse.yaml`
-
-**Benchmark Scripts**: `benchmark/test_maxfuse_*.py`
+**Comparison Scripts**: `ARCADIA/model_comparison/model_maxfuse_dataset_*.py`
 
 ## Getting Started
 
