@@ -60,6 +60,12 @@ Please check out our main [ARCADIA repository](https://github.com/azizilab/ARCAD
 │   └── environment_maxfuse.yaml
 │
 ├── ARCADIA/                # ARCADIA model implementation repository (cloned)
+│   ├── model_comparison/   # Model comparison scripts for scMODAL and MaxFuse
+│   │   ├── model_scmodal_dataset_cite_seq.py
+│   │   ├── model_scmodal_dataset_tonsil.py
+│   │   ├── model_maxfuse_dataset_cite_seq.py
+│   │   ├── model_maxfuse_dataset_tonsil.py
+│   │   └── scMODAL_main/   # scMODAL implementation included
 ```
 
 ## Datasets
@@ -278,20 +284,16 @@ After changing `requirements.txt` or other dependencies, rebuild the Docker imag
 
 ### Environment Setup for Benchmarking Methods
 
-To run the benchmarking comparisons, you'll need separate conda environments for scMODAL and MaxFuse. Run these commands from the root of the reproducibility repository:
+To run the benchmarking comparisons, you'll need to install scMODAL and MaxFuse following their official installation instructions:
 
-**scMODAL Environment:**
-```bash
-conda env create -f ARCADIA/environments/environment_scmodal.yaml
-conda activate scmodal
-# Install scMODAL from source (clone from https://github.com/gefeiwang/scMODAL)
-```
+**scMODAL:**
+- Repository: [scMODAL](https://github.com/gefeiwang/scMODAL)
+- Follow the installation instructions in the scMODAL repository
+- The scMODAL implementation is also included in `ARCADIA/model_comparison/scMODAL_main/` for convenience
 
-**MaxFuse Environment:**
-```bash
-conda env create -f ARCADIA/environments/environment_maxfuse.yaml
-conda activate maxfuse
-```
+**MaxFuse:**
+- Repository: [MaxFuse](https://github.com/shuxiaoc/maxfuse)
+- Follow the installation instructions in the MaxFuse repository
 
 ### Running Simulations
 
@@ -304,42 +306,78 @@ bash run_simulation.sh
 
 This will generate synthetic spatial datasets for both tonsil and cite_seq.
 
-### Running Benchmarks
+### Running Model Comparisons
 
-Compare ARCADIA against baseline methods:
+Compare ARCADIA against baseline methods (scMODAL and MaxFuse) on the same datasets. The comparison scripts are located in `ARCADIA/model_comparison/` and run the external models using the same preprocessed data as ARCADIA.
 
-```bash
-cd benchmark
+#### Prerequisites
 
-# Run ARCADIA
-python test_arcadia_tonsil.py
-python test_arcadia_cite_seq.py
+Before running comparisons, ensure you have:
 
-# Run scMODAL
-python test_scmodal_tonsil.py
-python test_scmodal_cite_seq.py
+1. **Completed ARCADIA pipeline** for your dataset (preprocessing through training)
+2. **Installed comparison methods** following their official installation instructions:
+   - **scMODAL**: Follow installation instructions at [scMODAL repository](https://github.com/gefeiwang/scMODAL)
+   - **MaxFuse**: Follow installation instructions at [MaxFuse repository](https://github.com/shuxiaoc/maxfuse)
+   - The scMODAL implementation is included in `ARCADIA/model_comparison/scMODAL_main/` for convenience
 
-# Run MaxFuse
-python test_maxfuse_tonsil.py
-python test_maxfuse_cite_seq.py
-```
+#### Running scMODAL Comparisons
 
-### Reproducing Paper Figures
-
-All figure notebooks are in the `notebooks/` directory:
+scMODAL comparisons use the included implementation in `ARCADIA/model_comparison/scMODAL_main/`:
 
 ```bash
-cd notebooks
+cd ARCADIA/model_comparison
 
-# Run individual figure notebooks
-jupyter nbconvert --execute arcadia_simulation.ipynb
-jupyter nbconvert --execute arcadia_archetype_analysis.ipynb
-jupyter nbconvert --execute arcadia_cross_modal_matching.ipynb
-jupyter nbconvert --execute arcadia_benchmark_comparison.ipynb
-jupyter nbconvert --execute arcadia_spatial_integration.ipynb
-jupyter nbconvert --execute arcadia_archetype_validation.ipynb
-jupyter nbconvert --execute arcadia_robustness_analysis.ipynb
+# Activate your scMODAL conda environment (set up following scMODAL installation instructions)
+conda activate scmodal  # or your scMODAL environment name
+
+# Run scMODAL on cite_seq dataset
+python model_scmodal_dataset_cite_seq.py
+
+# Run scMODAL on tonsil dataset
+python model_scmodal_dataset_tonsil.py
 ```
+
+**What it does:**
+- Loads preprocessed data from ARCADIA pipeline (same data used for ARCADIA training)
+- Runs scMODAL integration on RNA and protein modalities
+- Computes evaluation metrics (matching accuracy, integration quality, etc.)
+- Saves results and visualizations for comparison with ARCADIA
+
+#### Running MaxFuse Comparisons
+
+MaxFuse comparisons use the official MaxFuse package:
+
+```bash
+cd ARCADIA/model_comparison
+
+# Activate your MaxFuse conda environment (set up following MaxFuse installation instructions)
+conda activate maxfuse  # or your MaxFuse environment name
+
+# Run MaxFuse on cite_seq dataset
+python model_maxfuse_dataset_cite_seq.py
+
+# Run MaxFuse on tonsil dataset
+python model_maxfuse_dataset_tonsil.py
+```
+
+**What it does:**
+- Runs MaxFuse integration on RNA and protein modalities
+- Computes evaluation metrics (matching accuracy, integration quality, etc.)
+- Saves results and visualizations for comparison with ARCADIA
+
+#### Comparison Results
+
+Results from model comparisons are saved in `ARCADIA/model_comparison/` with dataset-specific outputs. You can compare:
+
+- **Integration Quality**: iLISI scores, kBET rejection rates
+- **Matching Accuracy**: Cross-modal cell matching performance
+- **Latent Space Quality**: UMAP/PCA visualizations
+- **Cell Type Preservation**: Cell type clustering metrics
+
+**Note:** These comparison scripts use the same preprocessed data as ARCADIA to ensure fair comparison. Make sure you've run the ARCADIA pipeline first to generate the required preprocessed data files.
+
+
+
 
 
 ## Benchmarking Metrics
@@ -354,34 +392,7 @@ Script that runs the complete ARCADIA pipeline end-to-end using direct Python ex
 ### `run_pipeline_notebooks.sh`
 Script that runs the complete ARCADIA pipeline end-to-end using notebook-based execution. Converts Python scripts to Jupyter notebooks and executes them with papermill. **All intermediate plots and visualizations are generated and saved in the notebooks**, which are saved with timestamps in `ARCADIA/notebooks/${dataset_name}/` for review and inspection. Useful for development, analysis, and when you need to examine intermediate results.
 
-### `benchmark/`
-Contains scripts for running comparative benchmarks between ARCADIA, scMODAL, and MaxFuse on tonsil and cite_seq datasets. Each script:
-- Loads preprocessed data
-- Runs the respective method
-- Computes evaluation metrics
-- Saves results and visualizations
 
-### `data/`
-Contains dataset metadata, preprocessing information, and download instructions. Each dataset subdirectory includes:
-- `README.md`: Dataset description and preprocessing steps
-- `metadata.json`: Dataset metadata (cell types, modalities, spatial info)
-
-### `notebooks/`
-Jupyter notebooks for reproducing paper figures and analyses:
-- Simulation results and synthetic data generation
-- Archetype analysis and visualization
-- Cross-modal matching results
-- Benchmark comparison across methods
-- Spatial integration analysis
-- **archetype_validation**: Validation of archetype generation
-- **robustness_analysis**: Robustness to hyperparameters and data variations
-
-### `simulation/`
-Scripts for generating synthetic spatial datasets:
-- `generate_synthetic_*.py`: Dataset-specific generation scripts
-- `spatial_simulation.py`: Core spatial simulation functions
-- `utils.py`: Utility functions for simulation
-- `run_simulation.sh`: Batch script to run all simulations
 
 ### `ARCADIA/`
 Complete ARCADIA implementation including:
@@ -390,6 +401,7 @@ Complete ARCADIA implementation including:
 - Data loading and preprocessing utilities
 - Visualization functions
 - Pipeline scripts for end-to-end execution
+- Model comparison scripts (`model_comparison/`) for running scMODAL and MaxFuse comparisons
 
 ### `outputs/`
 Generated outputs organized by type:
@@ -397,18 +409,32 @@ Generated outputs organized by type:
 - `figures/`: Generated paper figures
 - `processed_data/`: Preprocessed datasets ready for analysis
 
-<!-- ## Citation
+## Citation
 
 If you use ARCADIA or this reproducibility repository, please cite:
 
+**Plain text citation:**
+```
+Rozenman, B., Hoffer-Hawlik, K., Djedjos, N., Azizi, E.
+ARCADIA reveals spatially dependent transcriptional programs through integration of scRNA-seq and spatial proteomics.
+bioRxiv (2025).
+https://doi.org/10.1101/2025.11.20.689521
+```
+
+**BibTeX:**
 ```bibtex
-@article{arcadia2024,
-  title={ARCADIA: Archetype-based Cross-modal Data Integration and Alignment},
-  author={Your Name and Collaborators},
-  journal={Journal Name},
-  year={2024}
+@article {Rozenman2025.11.20.689521,
+	author = {Rozenman, Bar and Hoffer-Hawlik, Kevin and Djedjos, Nicholas and Azizi, Elham},
+	title = {ARCADIA Reveals Spatially Dependent Transcriptional Programs through Integration of scRNA-seq and Spatial Proteomics},
+	elocation-id = {2025.11.20.689521},
+	year = {2025},
+	doi = {10.1101/2025.11.20.689521},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2025/11/21/2025.11.20.689521},
+	eprint = {https://www.biorxiv.org/content/early/2025/11/21/2025.11.20.689521.full.pdf},
+	journal = {bioRxiv}
 }
-``` -->
+```
 
 ## License
 
