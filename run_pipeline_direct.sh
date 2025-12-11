@@ -60,7 +60,7 @@ echo "Pipeline completed successfully!"
 echo "=========================================="
 
 # Restore original plot_flag
-python -c "import json; f=open('${CONFIG_FILE}'); d=json.load(f); f.close(); d['plot_flag']=${ORIGINAL_PLOT_FLAG} == 'true'; f=open('${CONFIG_FILE}','w'); json.dump(d, f, indent=2); f.close()"
+python -c "import json; f=open('${CONFIG_FILE}'); d=json.load(f); f.close(); d['plot_flag']='${ORIGINAL_PLOT_FLAG}' == 'true'; f=open('${CONFIG_FILE}','w'); json.dump(d, f, indent=2); f.close()"
 
 exit 0
 
