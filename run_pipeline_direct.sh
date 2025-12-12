@@ -9,7 +9,7 @@ cd "$(dirname "$0")/ARCADIA"
 
 # Save original plot_flag and set to false
 CONFIG_FILE="configs/config.json"
-ORIGINAL_PLOT_FLAG=$(python -c "import json; f=open('${CONFIG_FILE}'); d=json.load(f); f.close(); print(str(d.get('plot_flag', True)).lower())")
+ORIGINAL_PLOT_FLAG=$(python -c "import json; f=open('${CONFIG_FILE}'); d=json.load(f); f.close(); print('true' if d.get('plot_flag', True) else 'false')")
 python -c "import json; f=open('${CONFIG_FILE}'); d=json.load(f); f.close(); d['plot_flag']=False; f=open('${CONFIG_FILE}','w'); json.dump(d, f, indent=2); f.close()"
 
 # Activate conda environment
@@ -47,12 +47,12 @@ echo "=== Step 4: Preparing Training Data ==="
 python scripts/_4_prepare_training.py --dataset_name "${DATASET_NAME}"
 
 # Clean up scales cache if it exists
-[ -f scales_cache.json ] && rm scales_cache.json
+[ -f scales_cache.json ] && rm -f scales_cache.json
 
 # Step 5: Train VAE (using hyperparameter search)
 echo ""
 echo "=== Step 5: Training VAE (Hyperparameter Search) ==="
-python scripts/_5_train_vae.py
+python scripts/_5_train_vae.py --dataset_name "${DATASET_NAME}"
 
 echo ""
 echo "=========================================="
@@ -60,7 +60,7 @@ echo "Pipeline completed successfully!"
 echo "=========================================="
 
 # Restore original plot_flag
-python -c "import json; f=open('${CONFIG_FILE}'); d=json.load(f); f.close(); d['plot_flag']='${ORIGINAL_PLOT_FLAG}' == 'true'; f=open('${CONFIG_FILE}','w'); json.dump(d, f, indent=2); f.close()"
+python -c "import json; f=open('${CONFIG_FILE}'); d=json.load(f); f.close(); d['plot_flag']=True if '${ORIGINAL_PLOT_FLAG}' == 'true' else False; f=open('${CONFIG_FILE}','w'); json.dump(d, f, indent=2); f.close()"
 
 exit 0
 

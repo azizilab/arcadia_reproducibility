@@ -2,127 +2,82 @@
 # scMODAL application to tonsil CODEX + RNA-seq data
 # Based on model_maxfuse_dataset_tonsil.py but using scMODAL instead of MaxFuse
 
-import sys
-
-sys.path.append("/workspace/model_comparison/scMODAL_main")
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import scmodal
-
-scmodal.model.Model
-from scipy.io import mmread
-
-plt.rcParams["figure.figsize"] = (6, 4)
-
 import os
+import sys
 import warnings
 from datetime import datetime
 
 import anndata as ad
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import scanpy as sc
+import scmodal
 import seaborn as sns
+from scipy.io import mmread
 from scipy.sparse import issparse
+from scipy.spatial.distance import cdist
 
+from comparison_utils import get_latest_file, here
+
+plt.rcParams["figure.figsize"] = (6, 4)
 warnings.filterwarnings("ignore")
 
-# %%
-scmodal
+if here().parent.name == "notebooks":
+    os.chdir("../../")
+
+ROOT = here().parent
+THIS_DIR = here()
+print(f"ROOT: {ROOT}")
+print(f"THIS_DIR: {THIS_DIR}")
+# Update sys.path and cwd
+sys.path.append(str(ROOT))
+sys.path.append(str(THIS_DIR))
+sys.path.append(str(THIS_DIR / "scMODAL_main"))
+os.chdir(str(ROOT))
+print(f"Working directory: {os.getcwd()}")
 
 # %%
-# Load protein (CODEX) data
-root_dir = "/workspace"
-protein = pd.read_csv(
-    f"{root_dir}/CODEX_RNA_seq/data/raw_data/tonsil/tonsil_codex.csv"
-)  # ~178,000 codex cells
+# Load data using the same approach as MaxFuse - from ARCADIA processed_data
+dataset_name = "tonsil"
+print("Loading tonsil CODEX + RNA-seq data from h5ad files...")
 
-# %%
-# Visualize spatial distribution (optional)
-sns.scatterplot(
-    data=protein.sample(frac=0.1), x="centroid_x", y="centroid_y", hue="cluster.term", s=1
+rna_file = get_latest_file(
+    "ARCADIA/processed_data", "rna", exact_step=1, dataset_name=dataset_name
 )
-
-# %%
-# Extract protein features
-protein_features = [
-    "CD38",
-    "CD19",
-    "CD31",
-    "Vimentin",
-    "CD22",
-    "Ki67",
-    "CD8",
-    "CD90",
-    "CD123",
-    "CD15",
-    "CD3",
-    "CD152",
-    "CD21",
-    "cytokeratin",
-    "CD2",
-    "CD66",
-    "collagen IV",
-    "CD81",
-    "HLA-DR",
-    "CD57",
-    "CD4",
-    "CD7",
-    "CD278",
-    "podoplanin",
-    "CD45RA",
-    "CD34",
-    "CD54",
-    "CD9",
-    "IGM",
-    "CD117",
-    "CD56",
-    "CD279",
-    "CD45",
-    "CD49f",
-    "CD5",
-    "CD16",
-    "CD63",
-    "CD11b",
-    "CD1c",
-    "CD40",
-    "CD274",
-    "CD27",
-    "CD104",
-    "CD273",
-    "FAPalpha",
-    "Ecadherin",
-]
-
-# Convert to AnnData
-adata_ADT = ad.AnnData(
-    protein[protein_features].to_numpy(),
-    dtype=np.float32,
-    obsm={"spatial": protein[["centroid_x", "centroid_y"]].to_numpy()},
+print(f"RNA file: {str(rna_file)}")
+protein_file = get_latest_file(
+    "ARCADIA/processed_data",
+    "protein",
+    exact_step=1,
+    dataset_name=dataset_name,
 )
-adata_ADT.var_names = protein[protein_features].columns
+print(f"Protein file: {str(protein_file)}")
+
+adata_RNA = sc.read(str(rna_file))
+adata_ADT = sc.read(str(protein_file))
+
+# Use raw counts from layers
+if "counts" in adata_RNA.layers:
+    adata_RNA.X = adata_RNA.layers["counts"].copy()
+    print("Using raw counts from adata_RNA.layers['counts']")
+if "counts" in adata_ADT.layers:
+    adata_ADT.X = adata_ADT.layers["counts"].copy()
+    print("Using raw counts from adata_ADT.layers['counts']")
 
 # %%
-# Load RNA data
-base_folder = f"{root_dir}/CODEX_RNA_seq/data/raw_data/tonsil"
-rna = mmread(f"{base_folder}/tonsil_rna_counts.txt")  # ~10k cells
-rna_names = pd.read_csv(f"{base_folder}/tonsil_rna_names.csv")["names"].to_numpy()
+# Cell type labels - already in obs from preprocessing
+# cell_types is guaranteed to exist from ARCADIA preprocessing
+adata_RNA.obs["celltype.l1"] = adata_RNA.obs["cell_types"]
+adata_RNA.obs["celltype"] = adata_RNA.obs["cell_types"]
+adata_RNA.obs["celltype.l2"] = adata_RNA.obs.get("minor_cell_types", adata_RNA.obs["cell_types"])
 
-# Convert to AnnData
-adata_RNA = ad.AnnData(rna.tocsr(), dtype=np.float32)
-adata_RNA.var_names = rna_names
+adata_ADT.obs["celltype.l1"] = adata_ADT.obs["cell_types"]
+adata_ADT.obs["celltype"] = adata_ADT.obs["cell_types"]
+adata_ADT.obs["celltype.l2"] = adata_ADT.obs.get("minor_cell_types", adata_ADT.obs["cell_types"])
 
-# %%
-print(f"RNA dataset: {adata_RNA.shape}")
-print(f"Protein dataset: {adata_ADT.shape}")
-
-# %%
-# Read in cell type labels
-df_rna_metadata = pd.read_csv(f"{base_folder}/tonsil_rna_meta.csv", index_col=0)
-labels_rna = df_rna_metadata["cluster.info"].to_numpy()
-labels_codex = protein["cluster.term"].to_numpy()
-adata_ADT.obs["celltype"] = labels_codex
-adata_RNA.obs["celltype"] = labels_rna
-adata_RNA.obs.index = df_rna_metadata.index.to_numpy()
+print(f"RNA dataset: {adata_RNA.shape[0]} cells")
+print(f"Protein dataset: {adata_ADT.shape[0]} cells")
 
 # Add celltype.l1 and celltype.l2 for consistency
 adata_RNA.obs["celltype.l1"] = adata_RNA.obs["celltype"]
@@ -131,38 +86,51 @@ adata_ADT.obs["celltype.l1"] = adata_ADT.obs["celltype"]
 adata_ADT.obs["celltype.l2"] = adata_ADT.obs["celltype"]
 
 # %%
-# Optional subsampling for faster processing
-num_cells = 500000000
-sc.pp.subsample(adata_RNA, n_obs=min(num_cells, adata_RNA.shape[0]))
-sc.pp.subsample(adata_ADT, n_obs=min(num_cells, adata_ADT.shape[0]))
-adata_RNA = adata_RNA.copy()
-adata_ADT = adata_ADT.copy()
+# Note: For tonsil dataset, RNA and protein cells are from different samples
+# (not matched by barcode like cite_seq), so we work with all cells from both datasets
+print(f"RNA dataset: {adata_RNA.shape[0]} cells")
+print(f"Protein dataset: {adata_ADT.shape[0]} cells")
 
 # %%
-# Load correspondence file
-correspondence = pd.read_csv(f"{base_folder}/protein_gene_conversion.csv")
-correspondence["Protein name"] = correspondence["Protein name"].replace(
-    to_replace={"CD11a-CD18": "CD11a/CD18", "CD66a-c-e": "CD66a/c/e"}
-)
-print(correspondence.head())
+# Build RNA-protein correspondence (similar to MaxFuse script)
+# Create mapping dictionaries for case-insensitive matching
+rna_gene_mapping = {gene.upper(): gene for gene in adata_RNA.var_names}
+protein_name_mapping = {prot.upper(): prot for prot in adata_ADT.var_names}
 
-# %%
-
-
-# %%
-# Build RNA-protein correspondence
+# Load correspondence file if it exists, otherwise use direct matching
+correspondence_file = "ARCADIA/raw_datasets/tonsil/protein_gene_conversion.csv"
 rna_protein_correspondence = []
 
-for i in range(correspondence.shape[0]):
-    curr_protein_name, curr_rna_names = correspondence.iloc[i]
-    if curr_protein_name not in adata_ADT.var_names:
-        continue
-    if curr_rna_names.find("Ignore") != -1:
-        continue
-    curr_rna_names = curr_rna_names.split("/")
-    for r in curr_rna_names:
-        if r in adata_RNA.var_names:
-            rna_protein_correspondence.append([r, curr_protein_name])
+if os.path.exists(correspondence_file):
+    correspondence = pd.read_csv(correspondence_file)
+    correspondence["Protein name"] = correspondence["Protein name"].replace(
+        to_replace={"CD11a-CD18": "CD11a/CD18", "CD66a-c-e": "CD66a/c/e"}
+    )
+    print(f"Loaded correspondence file: {correspondence_file}")
+    print(correspondence.head())
+    
+    for i in range(correspondence.shape[0]):
+        curr_protein_name, curr_rna_names = correspondence.iloc[i]
+        # Try to find protein (case-insensitive)
+        actual_protein_name = protein_name_mapping.get(curr_protein_name.upper())
+        if actual_protein_name is None:
+            continue
+        if curr_rna_names.find("Ignore") != -1:
+            continue
+        curr_rna_names = curr_rna_names.split("/")
+        for r in curr_rna_names:
+            # Try to find RNA gene (case-insensitive)
+            actual_rna_name = rna_gene_mapping.get(r.upper())
+            if actual_rna_name is not None:
+                rna_protein_correspondence.append([actual_rna_name, actual_protein_name])
+else:
+    # Fallback: direct matching by name (case-insensitive)
+    print(f"Correspondence file not found at {correspondence_file}, using direct matching")
+    common_names = set(g.upper() for g in adata_RNA.var_names) & set(p.upper() for p in adata_ADT.var_names)
+    for name_upper in common_names:
+        rna_name = rna_gene_mapping[name_upper]
+        prot_name = protein_name_mapping[name_upper]
+        rna_protein_correspondence.append([rna_name, prot_name])
 
 rna_protein_correspondence = np.array(rna_protein_correspondence)
 print(f"Found {len(rna_protein_correspondence)} RNA-protein correspondences")
@@ -189,11 +157,26 @@ RNA_unshared = adata_RNA[:, sorted(rna_unshared_genes)].copy()
 if issparse(RNA_unshared.X):
     RNA_unshared.X = RNA_unshared.X.toarray()
 
-sc.pp.highly_variable_genes(RNA_unshared, flavor="seurat_v3", n_top_genes=1000)
+# Use raw counts for HVG selection (seurat_v3 requires counts)
+if "counts" in RNA_unshared.layers:
+    RNA_unshared.X = RNA_unshared.layers["counts"].copy()
+    print("Using raw counts from layers['counts'] for HVG selection")
+
+# Use seurat_v3 if enough cells, otherwise fall back to seurat flavor
+# seurat_v3 can fail with small sample sizes due to numerical issues
+n_top_genes = min(1000, RNA_unshared.n_vars)
+if RNA_unshared.n_obs >= 500:
+    try:
+        sc.pp.highly_variable_genes(RNA_unshared, flavor="seurat_v3", n_top_genes=n_top_genes)
+    except (ValueError, RuntimeError) as e:
+        print(f"Warning: seurat_v3 failed ({e}), falling back to seurat flavor")
+        sc.pp.highly_variable_genes(RNA_unshared, flavor="seurat", n_top_genes=n_top_genes)
+else:
+    print(f"Warning: Only {RNA_unshared.n_obs} cells, using seurat flavor instead of seurat_v3")
+    sc.pp.highly_variable_genes(RNA_unshared, flavor="seurat", n_top_genes=n_top_genes)
 RNA_unshared = RNA_unshared[:, RNA_unshared.var.highly_variable].copy()
 
 RNA_unshared.var["feature_name"] = RNA_unshared.var.index.values
-# ADT_unshared.var["feature_name"] = ADT_unshared.var.index.values
 
 # %%
 # Convert sparse matrices to dense for scMODAL
@@ -203,13 +186,10 @@ if issparse(ADT_shared.X):
     ADT_shared.X = ADT_shared.X.toarray()
 if issparse(RNA_unshared.X):
     RNA_unshared.X = RNA_unshared.X.toarray()
-# if issparse(ADT_unshared.X):
-#     ADT_unshared.X = ADT_unshared.X.toarray()
 
 print(f"RNA_shared shape: {RNA_shared.shape}")
 print(f"ADT_shared shape: {ADT_shared.shape}")
 print(f"RNA_unshared shape: {RNA_unshared.shape}")
-# print(f"ADT_unshared shape: {ADT_unshared.shape}")
 
 # %% [markdown]
 # ## Normalization
@@ -249,14 +229,8 @@ sc.pp.scale(adata2, max_value=10)
 print(f"adata1 (RNA) shape: {adata1.shape}")
 print(f"adata2 (ADT) shape: {adata2.shape}")
 
-# %%
-ADT_shared
-
 # %% [markdown]
 # ## Running scMODAL
-# import torch
-#
-# print("cuda available: ", torch.cuda.is_available())
 
 # %%
 # Train model following original tutorial approach with explicit hyperparameters
@@ -294,8 +268,6 @@ print(adata_integrated)
 
 # %%
 # Label transfer from RNA to CODEX (matching original tutorial)
-from scipy.spatial.distance import cdist
-
 dist_mtx = cdist(
     model.latent[: adata2.shape[0], :],  # CODEX
     model.latent[adata2.shape[0] : (adata1.shape[0] + adata2.shape[0]), :],  # RNA
@@ -454,7 +426,7 @@ print(f"protein_adata_output.obs columns: {list(protein_adata_output.obs.columns
 sc.pl.embedding(protein_adata_output, "spatial", color="cell_types")
 
 # Save the formatted AnnData objects
-output_dir = f"{root_dir}/model_comparison/outputs"
+output_dir = "model_comparison/outputs"
 os.makedirs(output_dir, exist_ok=True)
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -506,6 +478,11 @@ print(f"\nlayers ({len(protein_adata_output.layers.keys())}):")
 print(list(protein_adata_output.layers.keys()))
 print(
     f"\nobsp fields ({len(protein_adata_output.obsp.keys()) if protein_adata_output.obsp else 0}):"
+)
+print(list(protein_adata_output.obsp.keys()) if protein_adata_output.obsp else [])
+
+# %%
+bsp fields ({len(protein_adata_output.obsp.keys()) if protein_adata_output.obsp else 0}):"
 )
 print(list(protein_adata_output.obsp.keys()) if protein_adata_output.obsp else [])
 

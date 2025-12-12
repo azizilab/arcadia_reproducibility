@@ -130,7 +130,7 @@ Runs Python scripts directly without notebook conversion. Faster execution, suit
 
 **Usage:**
 ```bash
-./run_pipeline_direct.sh [dataset_name]
+bash run_pipeline_direct.sh [dataset_name]
 ```
 
 **Supported datasets:**
@@ -140,10 +140,10 @@ Runs Python scripts directly without notebook conversion. Faster execution, suit
 **Examples:**
 ```bash
 # Run with cite_seq dataset (default)
-./run_pipeline_direct.sh cite_seq
+bash run_pipeline_direct.sh cite_seq
 
 # Run with tonsil dataset
-./run_pipeline_direct.sh tonsil
+bash run_pipeline_direct.sh tonsil
 ```
 
 **What it does:**
@@ -157,7 +157,7 @@ Converts Python scripts to Jupyter notebooks and executes them with papermill. *
 
 **Usage:**
 ```bash
-./run_pipeline_notebooks.sh [dataset_name]
+bash run_pipeline_notebooks.sh [dataset_name]
 ```
 
 **Supported datasets:** Same as `run_pipeline_direct.sh` (cite_seq, tonsil)
@@ -165,10 +165,10 @@ Converts Python scripts to Jupyter notebooks and executes them with papermill. *
 **Examples:**
 ```bash
 # Run with cite_seq dataset (default)
-./run_pipeline_notebooks.sh cite_seq
+bash run_pipeline_notebooks.sh cite_seq
 
 # Run with tonsil dataset
-./run_pipeline_notebooks.sh tonsil
+bash run_pipeline_notebooks.sh tonsil
 ```
 
 **What it does:**
@@ -218,7 +218,7 @@ Once MLflow UI is running, open your web browser and navigate to:
 - **Artifacts:** Saved model checkpoints, logs, and visualization PDFs
 - **Experiment Comparison:** Compare multiple training runs side-by-side
 
-**Note:** Training plots are only generated when `plot_x_times > 0` in your training configuration. Set `plot_x_times: 0` in the training parameters (see `ARCADIA/scripts/_5_train_vae.py`) to disable **all** plotting during training (including first batch plots, latent space visualizations, counterfactual plots, etc.) for faster execution. When `plot_x_times=0`, no plots will be generated regardless of the `plot_first_step` setting.
+**Note:** MLflow experiments are organized by dataset name (e.g., `cite_seq`, `tonsil`, or `default` if no dataset name is specified). Navigate to the experiment matching your dataset to view the training results. Training plots are only generated when `plot_x_times > 0` in your training configuration. Set `plot_x_times: 0` in the training parameters (see `ARCADIA/scripts/_5_train_vae.py`) to disable **all** plotting during training (including first batch plots, latent space visualizations, counterfactual plots, etc.) for faster execution. When `plot_x_times=0`, no plots will be generated regardless of the `plot_first_step` setting.
 
 **💡 Tip: Fast Debugging Runs**
 
@@ -251,9 +251,9 @@ Docker provides a containerized environment for reproducible execution. Recommen
 ```bash
 # From the ARCADIA root directory
 cd ARCADIA
-./environments/docker/run_docker.sh test              # Build and test
-DATASET_NAME=cite_seq ./environments/docker/run_docker.sh pipeline  # Run pipeline
-./environments/docker/run_docker.sh bash               # Interactive session
+bash environments/docker/run_docker.sh test              # Build and test
+bash environments/docker/run_docker.sh pipeline cite_seq  # Run pipeline
+bash environments/docker/run_docker.sh bash               # Interactive session
 ```
 
 **Rebuilding Docker Image:**
@@ -262,10 +262,10 @@ After changing `requirements.txt` or other dependencies, rebuild the Docker imag
 
 ```bash
 # Force rebuild without cache (ensures all dependencies are updated)
-./environments/docker/run_docker.sh --no-cache pipeline
+bash environments/docker/run_docker.sh --no-cache pipeline
 
 # Or use --rebuild (same as --no-cache)
-./environments/docker/run_docker.sh --rebuild bash
+bash environments/docker/run_docker.sh --rebuild bash
 ```
 
 **Note:** The script should be run from the `ARCADIA` root directory. It will automatically mount the parent repository root so that `run_pipeline_direct.sh` is accessible.
@@ -308,7 +308,18 @@ Compare ARCADIA against baseline methods (scMODAL and MaxFuse) on the same datas
 
 Before running comparisons, ensure you have:
 
-1. **Completed ARCADIA pipeline** for your dataset (preprocessing through training)
+1. **Run ARCADIA preprocessing scripts first** to generate the filtered datasets:
+   ```bash
+   # For CITE-seq dataset
+   cd ARCADIA
+   conda activate scvi  # or your ARCADIA environment name
+   python scripts/_0_preprocess_cite_seq.py
+   
+   # For Tonsil dataset
+   python scripts/_0_preprocess_tonsil.py
+   ```
+   This ensures that all comparison methods use the same filtered dataset as ARCADIA for fair comparison.
+
 2. **Installed comparison methods** following their official installation instructions:
    - **scMODAL**: Follow installation instructions at [scMODAL repository](https://github.com/gefeiwang/scMODAL)
    - **MaxFuse**: Follow installation instructions at [MaxFuse repository](https://github.com/shuxiaoc/maxfuse)
@@ -317,6 +328,26 @@ Before running comparisons, ensure you have:
 #### Running scMODAL Comparisons
 
 scMODAL comparisons use the included implementation in `model_comparison/scMODAL_main/`:
+
+**Option 1: Using Docker (Recommended for scMODAL)**
+
+A Dockerfile is provided for scMODAL at `model_comparison/Dockerfile.scmodal`:
+
+```bash
+cd model_comparison
+
+# Build the Docker image
+docker build -f Dockerfile.scmodal -t scmodal:latest .
+
+# Run the container (mount your workspace)
+docker run -it --gpus all -v /path/to/arcadia_reproducibility:/workspace scmodal:latest
+
+# Inside the container, run scMODAL
+python model_scmodal_dataset_cite_seq.py
+python model_scmodal_dataset_tonsil.py
+```
+
+**Option 2: Using Conda Environment**
 
 ```bash
 cd model_comparison
@@ -332,7 +363,7 @@ python model_scmodal_dataset_tonsil.py
 ```
 
 **What it does:**
-- Loads preprocessed data from ARCADIA pipeline (same data used for ARCADIA training)
+- Loads preprocessed data from ARCADIA pipeline (same filtered data used for ARCADIA training)
 - Runs scMODAL integration on RNA and protein modalities
 - Computes evaluation metrics (matching accuracy, integration quality, etc.)
 - Saves results and visualizations for comparison with ARCADIA
@@ -355,9 +386,79 @@ python model_maxfuse_dataset_tonsil.py
 ```
 
 **What it does:**
+- Loads preprocessed data from ARCADIA pipeline (same filtered data used for ARCADIA training)
 - Runs MaxFuse integration on RNA and protein modalities
 - Computes evaluation metrics (matching accuracy, integration quality, etc.)
 - Saves results and visualizations for comparison with ARCADIA
+
+#### Comparing ARCADIA Against Baseline Models
+
+After running both ARCADIA and baseline models (scMODAL or MaxFuse), use `compare_results.py` to compute and compare performance metrics between ARCADIA and the baseline model.
+
+**Prerequisites:**
+
+1. **Completed ARCADIA training** - You need a trained ARCADIA checkpoint (saved in MLflow)
+2. **Completed baseline model run** - The baseline model outputs should exist in `model_comparison/outputs/{model_name}_{dataset_name}/`
+
+**Usage:**
+
+The script can be run in two ways:
+
+**Option 1: Using MLflow experiment name (Recommended)**
+
+```bash
+cd model_comparison
+
+# Activate your ARCADIA conda environment
+conda activate scvi  # or your ARCADIA environment name
+
+# Compare ARCADIA against scMODAL on cite_seq dataset
+python compare_results.py --experiment_name "cite_seq" --other_model_name "scmodal"
+
+# Compare ARCADIA against MaxFuse on tonsil dataset
+python compare_results.py --experiment_name "tonsil" --other_model_name "maxfuse"
+```
+
+**Option 2: Using checkpoint path directly**
+
+```bash
+cd model_comparison
+conda activate scvi
+
+# Specify the checkpoint path explicitly
+python compare_results.py --checkpoint_path "/path/to/mlruns/.../epoch_0499" --other_model_name "scmodal"
+```
+
+**Arguments:**
+
+- `--experiment_name`: MLflow experiment name (e.g., "cite_seq", "tonsil") - automatically finds the latest checkpoint
+- `--checkpoint_path`: Direct path to ARCADIA checkpoint folder (alternative to experiment_name)
+- `--other_model_name`: Baseline model name to compare against (default: "maxfuse", options: "scmodal", "maxfuse")
+- `--experiment_id`: MLflow experiment ID (auto-inferred if using experiment_name)
+- `--run_id`: MLflow run ID (auto-inferred if using experiment_name)
+
+**What it does:**
+
+- Loads ARCADIA checkpoint data from MLflow (automatically finds checkpoint if using experiment_name)
+- Loads baseline model outputs from `model_comparison/outputs/{model_name}_{dataset_name}/`
+- Computes comprehensive evaluation metrics for both models:
+  - **Integration Quality**: iLISI, kBET, silhouette scores
+  - **Matching Accuracy**: Cross-modal cell type and CN matching
+  - **Spatial Metrics**: Moran's I, pair distance, FOSCTTM, FOSKNN
+  - **Cell Type Preservation**: ARI, F1 scores, cell type silhouette
+- Generates comparison visualizations (if `plot_flag=True` in config):
+  - Combined UMAP plots for both models
+  - Per-cell-type UMAPs
+  - Moran's I spatial autocorrelation plots
+- Saves results to CSV files:
+  - Individual model results: `metrics/results_comparison_{model}_{dataset}_{timestamp}.csv`
+  - Comparison results: `metrics/results_comparison_{dataset}_{model}.csv` (appended with each run)
+
+**Output:**
+
+The script prints a comparison table to the console showing all metrics side-by-side for ARCADIA vs. the baseline model. Results are also saved to CSV files in the `metrics/` directory, making it easy to track performance across multiple experiments and runs.
+
+**Note:** The dataset name is automatically inferred from the ARCADIA checkpoint metadata, so you don't need to specify it manually.
 
 #### Comparison Results
 
@@ -368,11 +469,29 @@ Results from model comparisons are saved in `model_comparison/` with dataset-spe
 - **Latent Space Quality**: UMAP/PCA visualizations
 - **Cell Type Preservation**: Cell type clustering metrics
 
-**Note:** These comparison scripts use the same preprocessed data as ARCADIA to ensure fair comparison. Make sure you've run the ARCADIA pipeline first to generate the required preprocessed data files.
+**Important:** These comparison scripts use the same filtered dataset as ARCADIA to ensure fair comparison. **You must run the ARCADIA preprocessing scripts first** (`_0_preprocess_cite_seq.py` for CITE-seq or `_0_preprocess_tonsil.py` for Tonsil) before running any comparison scripts to generate the required preprocessed data files.
 
+### Generating Publication Figures
 
+The `generate_publication_figures_github.ipynb` notebook contains code to reproduce all publication figures from the ARCADIA paper. This includes:
 
+- **Spatial visualizations**: Spatial embeddings colored by cell types, CN assignments, and spatial grid indices
+- **Integration quality plots**: UMAP visualizations of integrated RNA and protein modalities
+- **Confusion matrices**: Cell type matching accuracy for ARCADIA, scMODAL, and MaxFuse
+- **Differential expression analysis**: Counterfactual spatial neighborhood DEG analysis for tonsil dataset
+- **Dot plots**: Gene expression patterns across CNs and cell types
 
+```
+
+**Prerequisites:**
+
+Before running the notebook, ensure you have:
+1. Completed the ARCADIA pipeline for both `cite_seq` and `tonsil` datasets
+2. Required data files in the `data/` directory (see notebook for specific file requirements)
+
+**Note:** The notebook loads pre-generated comparison data files (confusion matrices, UMAP embeddings) for scMODAL and MaxFuse. If these files don't exist and you want to generate comparison figures, you'll need to run the model comparison scripts first (see [Running Model Comparisons](#running-model-comparisons) section).
+
+The notebook saves all generated figures to the `fig_khh/` directory.
 
 ## Benchmarking Metrics
 
@@ -386,7 +505,22 @@ Script that runs the complete ARCADIA pipeline end-to-end using direct Python ex
 ### `run_pipeline_notebooks.sh`
 Script that runs the complete ARCADIA pipeline end-to-end using notebook-based execution. Converts Python scripts to Jupyter notebooks and executes them with papermill. **All intermediate plots and visualizations are generated and saved in the notebooks**, which are saved with timestamps in `ARCADIA/notebooks/${dataset_name}/` for review and inspection. Useful for development, analysis, and when you need to examine intermediate results.
 
+### `model_comparison/`
+Contains scripts for running comparative benchmarks between ARCADIA, scMODAL, and MaxFuse on tonsil and cite_seq datasets. Each script:
+- Loads preprocessed data from ARCADIA pipeline (same filtered data used for ARCADIA training)
+- Runs the respective method
+- Computes evaluation metrics
+- Saves results and visualizations
 
+To use the scMODAL implementation, clone it into the [model_comparison](model_comparison) directory:
+
+```bash
+cd model_comparison
+git clone https://github.com/gefeiwang/scMODAL.git scMODAL_main
+```
+
+### `generate_publication_figures_github.ipynb`
+Jupyter notebook for generating all publication figures from the ARCADIA paper. Includes spatial visualizations, integration quality plots, confusion matrices, differential expression analysis, and dot plots. See the [Generating Publication Figures](#generating-publication-figures) section for usage instructions.
 
 ### `ARCADIA/`
 Complete ARCADIA implementation including:
@@ -428,4 +562,8 @@ BSD 3-Clause License
 
 ## Contact
 
-For questions or issues, please open an issue on GitHub or contact elham@azizilab.com.
+For questions or issues, please open an issue on GitHub or contact the authors.
+
+- Bar Rozenman - br2783@columbia.edu
+- Kevin Hoffer-Hawlik - kh3205@columbia.edu
+- Elham Azizi - elham@azizilab.com

@@ -1,42 +1,33 @@
 # %%
-# add /home/barroz/projects/ARCADIA/model_comparison/scMODAL_main tot he PYTHONPATH
-import sys
-
-sys.path.append("/workspace/model_comparison/scMODAL_main")
 import os
 import sys
 import warnings
 from datetime import datetime
-from pathlib import Path
-from typing import Optional
 
 import anndata as ad
-
-# print all modules in scmodal
 import numpy as np
 import pandas as pd
 import scanpy as sc
 import scmodal
+from scipy.sparse import issparse
+from scipy.spatial.distance import cdist
+
+from comparison_utils import get_latest_file, here
+import sys
 
 warnings.filterwarnings("ignore")
 
+if here().parent.name == "notebooks":
+    os.chdir("../../")
 
-# %%
-def here():
-    try:
-        return Path(__file__).resolve().parent
-    except NameError:
-        return Path.cwd()
-
-
-ROOT = here().parent.parent
+ROOT = here().parent
 THIS_DIR = here()
 print(f"ROOT: {ROOT}")
 print(f"THIS_DIR: {THIS_DIR}")
-
 # Update sys.path and cwd
 sys.path.append(str(ROOT))
 sys.path.append(str(THIS_DIR))
+sys.path.append(str(THIS_DIR / "scMODAL_main"))
 os.chdir(str(ROOT))
 print(f"Working directory: {os.getcwd()}")
 
@@ -45,154 +36,18 @@ print(f"Working directory: {os.getcwd()}")
 dataset_name = "cite_seq"
 print("Loading CITE-seq spleen lymph node data from h5ad files...")
 
-
-def _get_latest_from_numbered_files(folder, files, index_from_end=0, exact_step=None):
-    """Helper function to get latest file from numbered files."""
-
-    def get_step_number(filename):
-        step_part = filename.split("_")[0]
-        try:
-            return int(step_part)
-        except ValueError:
-            mtime = os.path.getmtime(os.path.join(folder, filename))
-            return int(mtime)
-
-    if exact_step is not None:
-        filtered_files = []
-        for f in files:
-            step_num = get_step_number(f)
-            if isinstance(step_num, int) and step_num == exact_step:
-                filtered_files.append(f)
-        files = filtered_files
-
-    if not files:
-        return None
-
-    def get_timestamp_from_filename_helper(filename):
-        parts = filename.split("_")
-        if len(parts) >= 3:
-            timestamp_str = "_".join(parts[2:]).replace(".h5ad", "")
-            return timestamp_str
-        else:
-            mtime = os.path.getmtime(os.path.join(folder, filename))
-            return str(int(mtime))
-
-    files.sort(key=get_timestamp_from_filename_helper, reverse=True)
-    latest_file = files[index_from_end]
-    return os.path.join(folder, latest_file)
-
-
-def get_latest_file(
-    folder, prefix, index_from_end=0, dataset_name=None, exact_step=None
-) -> Optional[str]:
-    """Get the latest file with given prefix from folder."""
-    base_folder = Path(folder)
-
-    if dataset_name:
-        dataset_folder = base_folder / dataset_name
-        if dataset_folder.exists():
-            files = [f for f in os.listdir(dataset_folder) if f.endswith(".h5ad")]
-            pattern_files = []
-            for f in files:
-                if f[0].isdigit() and "_" in f:
-                    parts = f.split("_")
-                    if len(parts) >= 2:
-                        step_part = parts[0]
-                        prefix_part = parts[1]
-                        if step_part.isdigit() and prefix_part == prefix:
-                            pattern_files.append(f)
-            if pattern_files:
-                return _get_latest_from_numbered_files(
-                    dataset_folder, pattern_files, index_from_end, exact_step
-                )
-
-    all_files = []
-
-    if base_folder.exists():
-        main_files = [f for f in os.listdir(base_folder) if f.endswith(".h5ad")]
-        for f in main_files:
-            if f[0].isdigit() and "_" in f:
-                parts = f.split("_")
-                if len(parts) >= 2:
-                    step_part = parts[0]
-                    prefix_part = parts[1]
-                    if step_part.isdigit() and prefix_part == prefix:
-                        all_files.append((base_folder, f))
-
-    if base_folder.exists():
-        for subdir in base_folder.iterdir():
-            if subdir.is_dir():
-                sub_files = [f for f in os.listdir(subdir) if f.endswith(".h5ad")]
-                for f in sub_files:
-                    if f[0].isdigit() and "_" in f:
-                        parts = f.split("_")
-                        if len(parts) >= 2:
-                            step_part = parts[0]
-                            prefix_part = parts[1]
-                            if step_part.isdigit() and prefix_part == prefix:
-                                all_files.append((subdir, f))
-
-    if not all_files:
-        return None
-
-    if exact_step is not None:
-        filtered_files = []
-        for folder_path, filename in all_files:
-            step_part = filename.split("_")[0]
-            try:
-                step_num = int(step_part)
-                if step_num == exact_step:
-                    filtered_files.append((folder_path, filename))
-            except ValueError:
-                pass
-        all_files = filtered_files
-
-    if not all_files:
-        return None
-
-    def get_timestamp_from_filename(folder_file_tuple):
-        folder_path, filename = folder_file_tuple
-        parts = filename.split("_")
-        if len(parts) >= 3:
-            timestamp_str = "_".join(parts[2:]).replace(".h5ad", "")
-            return timestamp_str
-        else:
-            mtime = os.path.getmtime(folder_path / filename)
-            return str(int(mtime))
-
-    all_files.sort(key=get_timestamp_from_filename, reverse=True)
-
-    folder_path, latest_file = all_files[index_from_end]
-    full_path = folder_path / latest_file
-
-    file_time = datetime.fromtimestamp(os.path.getmtime(full_path))
-    time_diff = datetime.now() - file_time
-
-    if time_diff.days > 0:
-        print(
-            f"{full_path} was created {time_diff.days} days, {time_diff.seconds//3600} hours, {(time_diff.seconds%3600)//60} minutes ago"
-        )
-    elif time_diff.seconds > 3600:
-        print(
-            f"{full_path} was created {time_diff.seconds//3600} hours, {(time_diff.seconds%3600)//60} minutes ago"
-        )
-    else:
-        print(f"{full_path} was created {time_diff.seconds} seconds ago")
-
-    return str(full_path)
-
-
 rna_file = get_latest_file(
-    "CODEX_RNA_seq/data/processed_data", "rna", exact_step=1, dataset_name=dataset_name
+    "ARCADIA/processed_data", "rna", exact_step=1, dataset_name=dataset_name
 )
+print(f"RNA file: {str(rna_file)}")
 protein_file = get_latest_file(
-    "CODEX_RNA_seq/data/processed_data",
+    "ARCADIA/processed_data",
     "protein",
     exact_step=1,
     dataset_name=dataset_name,
 )
-adata_RNA = sc.read(rna_file)
-adata_ADT = sc.read(protein_file)
+adata_RNA = sc.read(str(rna_file))
+adata_ADT = sc.read(str(protein_file))
 adata_RNA.X = adata_RNA.layers["counts"].copy()
 adata_ADT.X = adata_ADT.layers["counts"].copy()
 # %%
@@ -239,8 +94,6 @@ print(f"Indices match: {all(adata_RNA.obs.index == adata_ADT.obs.index)}")
 
 # %%
 # Use raw counts from layers for scMODAL processing
-from scipy.sparse import issparse
-
 if "counts" in adata_RNA.layers:
     adata_RNA.X = adata_RNA.layers["counts"].copy()
     if issparse(adata_RNA.X):
@@ -255,7 +108,7 @@ if "counts" in adata_ADT.layers:
 
 # %%
 # Load correspondence file
-data_dir = "/workspace/CODEX_RNA_seq/data/raw_data"
+data_dir = "/workspace/ARCADIA/raw_datasets"
 correspondence = pd.read_csv(f"{data_dir}/tonsil/protein_gene_conversion.csv")
 correspondence["Protein name"] = correspondence["Protein name"].replace(
     to_replace={"CD11a-CD18": "CD11a/CD18", "CD66a-c-e": "CD66a/c/e"}
@@ -312,9 +165,27 @@ RNA_unshared = adata_RNA[
 ADT_unshared = adata_ADT[
     :, sorted(set(adata_ADT.var.index) - set(rna_protein_correspondence[:, 1]))
 ].copy()
+print(f"RNA_unshared shape: {RNA_unshared.shape}")
+print(f"RNA_unshared: {RNA_unshared}")
 
-sc.pp.highly_variable_genes(RNA_unshared, flavor="seurat_v3", n_top_genes=3000)
-RNA_unshared = RNA_unshared[:, RNA_unshared.var.highly_variable].copy()
+# Use raw counts for HVG selection (seurat_v3 requires counts)
+if "counts" in RNA_unshared.layers:
+    RNA_unshared.X = RNA_unshared.layers["counts"].copy()
+    print("Using raw counts from layers['counts'] for HVG selection")
+
+# Skip HVG selection if less than 4000 cells
+if RNA_unshared.n_obs < 4000:
+    print(f"Skipping HVG selection: only {RNA_unshared.n_obs} cells (< 4000), using all genes")
+    RNA_unshared.var["highly_variable"] = True
+else:
+    # Use seurat_v3 if enough cells, otherwise fall back to seurat flavor
+    n_top_genes = min(3000, RNA_unshared.n_vars)
+    if RNA_unshared.n_obs >= 500:
+        sc.pp.highly_variable_genes(RNA_unshared, flavor="seurat_v3", n_top_genes=n_top_genes)
+    else:
+        print(f"Warning: Only {RNA_unshared.n_obs} cells, using seurat flavor instead of seurat_v3")
+        sc.pp.highly_variable_genes(RNA_unshared, flavor="seurat", n_top_genes=n_top_genes)
+    RNA_unshared = RNA_unshared[:, RNA_unshared.var.highly_variable].copy()
 
 RNA_unshared.var["feature_name"] = RNA_unshared.var.index.values
 ADT_unshared.var["feature_name"] = ADT_unshared.var.index.values
@@ -380,8 +251,6 @@ adata_integrated
 # ## benchmarking
 
 # %%
-from scipy.spatial.distance import cdist
-
 dist_mtx = cdist(
     model.latent[adata1.shape[0] :, :],
     model.latent[: adata1.shape[0], :],
@@ -537,7 +406,7 @@ print(f"protein_adata_output.obs columns: {list(protein_adata_output.obs.columns
 
 # %%
 # Save the formatted AnnData objects
-output_dir = "/workspace/model_comparison/outputs"
+output_dir = "model_comparison/outputs"
 os.makedirs(output_dir, exist_ok=True)
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -583,6 +452,11 @@ print(f"\nuns fields ({len(protein_adata_output.uns.keys())}):")
 print(list(protein_adata_output.uns.keys()))
 print(f"\nobsm fields ({len(protein_adata_output.obsm.keys())}):")
 print(list(protein_adata_output.obsm.keys()))
+print(f"\nlayers ({len(protein_adata_output.layers.keys())}):")
+print(list(protein_adata_output.layers.keys()))
+
+# %%
+
 print(f"\nlayers ({len(protein_adata_output.layers.keys())}):")
 print(list(protein_adata_output.layers.keys()))
 

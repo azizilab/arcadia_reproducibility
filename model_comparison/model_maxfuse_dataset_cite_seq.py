@@ -4,41 +4,36 @@
 # %% [markdown]
 # In this tutorial, we demonstrate the application of MaxFuse integration and matching across weak-linked modalities. Here we showcase an example between RNA and Protein modality. For testing reason, we uses a CITE-seq pbmc data with 228 antibodies from Hao et al. (2021), and we use the Protein and RNA information but __disregard the fact they are multiome data__.
 
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-
-plt.rcParams["figure.figsize"] = (6, 4)
-
 import os
+import sys
+from datetime import datetime
 
 import anndata as ad
+import matplotlib.pyplot as plt
 import maxfuse as mf
-
-
-def here():
-    try:
-        return Path(__file__).resolve().parent
-    except NameError:
-        return Path.cwd()
-
-
-import sys
-from pathlib import Path
-
+import numpy as np
+import pandas as pd
 import scanpy as sc
+from scipy.sparse import issparse
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+
+from comparison_utils import get_latest_file, here
+import sys
+
+plt.rcParams["figure.figsize"] = (6, 4)
 
 if here().parent.name == "notebooks":
     os.chdir("../../")
 
 ROOT = here().parent
 THIS_DIR = here()
-print(ROOT)
+print(f"ROOT: {ROOT}")
+print(f"THIS_DIR: {THIS_DIR}")
 # Update sys.path and cwd
 sys.path.append(str(ROOT))
 sys.path.append(str(THIS_DIR))
 os.chdir(str(ROOT))
+print(f"Working directory: {os.getcwd()}")
 
 
 # %% [markdown]
@@ -68,193 +63,15 @@ os.chdir(str(ROOT))
 # Load the CITE-seq spleen lymph node data directly from h5ad files (matching preprocessing pipeline)
 dataset_name = "cite_seq"
 print("Loading CITE-seq spleen lymph node data from h5ad files...")
-from datetime import datetime
-from pathlib import Path
-from typing import Optional
-
-
-def _get_latest_from_numbered_files(folder, files, index_from_end=0, exact_step=None):
-    """Helper function to get latest file from numbered files (e.g., 0_rna_2025-01-01-12-00-00.h5ad, 1_rna.h5ad)."""
-
-    def get_step_number(filename):
-        # Extract step number from filename like "3_rna_2025-01-01-12-00-00.h5ad" or "3_rna.h5ad"
-        step_part = filename.split("_")[0]
-        try:
-            return int(step_part)
-        except ValueError:
-            # Fallback to modification time for files that don't follow the pattern
-            mtime = os.path.getmtime(os.path.join(folder, filename))
-            return int(mtime)
-
-    # Filter by exact step if specified
-    if exact_step is not None:
-        filtered_files = []
-        for f in files:
-            step_num = get_step_number(f)
-            if isinstance(step_num, int) and step_num == exact_step:
-                filtered_files.append(f)
-        files = filtered_files
-
-    if not files:
-        return None
-
-    # Sort by timestamp within the same step (latest first)
-    def get_timestamp_from_filename_helper(filename):
-        parts = filename.split("_")
-        if len(parts) >= 3:
-            # Join timestamp parts: "2025-01-01-12-00-00"
-            timestamp_str = "_".join(parts[2:]).replace(".h5ad", "")
-            return timestamp_str
-        else:
-            # Fallback to modification time
-            mtime = os.path.getmtime(os.path.join(folder, filename))
-            return str(int(mtime))
-
-    files.sort(key=get_timestamp_from_filename_helper, reverse=True)
-    latest_file = files[index_from_end]
-    return os.path.join(folder, latest_file)
-
-
-def get_latest_file(
-    folder, prefix, index_from_end=0, dataset_name=None, exact_step=None
-) -> Optional[str]:
-    """
-    Get the latest file with given prefix from folder.
-    With new naming convention (e.g., 0_rna_2025-01-01-12-00-00.h5ad), finds files from exact step.
-
-    Args:
-        folder: Base folder to search in
-        prefix: File prefix to match (e.g., "rna", "protein")
-        index_from_end: Index from end of sorted files (0 = latest/highest number)
-        dataset_name: Optional dataset name to search in specific subdirectory
-        exact_step: Exact step number to load (e.g., if exact_step=2, will ONLY load step 2 files)
-
-    Returns:
-        Path to the latest matching file, or None if not found
-    """
-    base_folder = Path(folder)
-
-    # If dataset_name is provided, search in dataset-specific subdirectory first
-    if dataset_name:
-        dataset_folder = base_folder / dataset_name
-        if dataset_folder.exists():
-            files = [f for f in os.listdir(dataset_folder) if f.endswith(".h5ad")]
-            # Filter files that match the pattern: step_prefix_timestamp.h5ad or step_prefix.h5ad
-            pattern_files = []
-            for f in files:
-                # Check if file matches NEW pattern: number_prefix_timestamp.h5ad or number_prefix.h5ad
-                # Must start with a digit followed by underscore
-                if f[0].isdigit() and "_" in f:
-                    parts = f.split("_")
-                    if len(parts) >= 2:  # At least step_prefix
-                        step_part = parts[0]
-                        prefix_part = parts[1]
-                        if step_part.isdigit() and prefix_part == prefix:
-                            pattern_files.append(f)
-            if pattern_files:
-                return _get_latest_from_numbered_files(
-                    dataset_folder, pattern_files, index_from_end, exact_step
-                )
-
-    # Search in all subdirectories and main folder
-    all_files = []
-
-    # Check main folder
-    if base_folder.exists():
-        main_files = [f for f in os.listdir(base_folder) if f.endswith(".h5ad")]
-        for f in main_files:
-            # Check if file matches NEW pattern: number_prefix_timestamp.h5ad or number_prefix.h5ad
-            # Must start with a digit followed by underscore
-            if f[0].isdigit() and "_" in f:
-                parts = f.split("_")
-                if len(parts) >= 2:
-                    step_part = parts[0]
-                    prefix_part = parts[1]
-                    if step_part.isdigit() and prefix_part == prefix:
-                        all_files.append((base_folder, f))
-
-    # Check subdirectories (dataset-specific folders)
-    if base_folder.exists():
-        for subdir in base_folder.iterdir():
-            if subdir.is_dir():
-                sub_files = [f for f in os.listdir(subdir) if f.endswith(".h5ad")]
-                for f in sub_files:
-                    # Check if file matches NEW pattern: number_prefix_timestamp.h5ad or number_prefix.h5ad
-                    # Must start with a digit followed by underscore
-                    if f[0].isdigit() and "_" in f:
-                        parts = f.split("_")
-                        if len(parts) >= 2:
-                            step_part = parts[0]
-                            prefix_part = parts[1]
-                            if step_part.isdigit() and prefix_part == prefix:
-                                all_files.append((subdir, f))
-
-    if not all_files:
-        return None
-
-    # Filter by exact step if specified
-    if exact_step is not None:
-        filtered_files = []
-        for folder_path, filename in all_files:
-            step_part = filename.split("_")[0]
-            try:
-                step_num = int(step_part)
-                if step_num == exact_step:
-                    filtered_files.append((folder_path, filename))
-            except ValueError:
-                # Skip files that don't follow the pattern when exact_step is specified
-                pass
-        all_files = filtered_files
-
-    if not all_files:
-        return None
-
-    # Sort all files by timestamp within the same step (latest first)
-    def get_timestamp_from_filename(folder_file_tuple):
-        folder_path, filename = folder_file_tuple
-        # Extract timestamp from filename like "3_rna_2025-01-01-12-00-00.h5ad"
-        parts = filename.split("_")
-        if len(parts) >= 3:
-            # Join timestamp parts: "2025-01-01-12-00-00"
-            timestamp_str = "_".join(parts[2:]).replace(".h5ad", "")
-            return timestamp_str
-        else:
-            # Fallback to modification time
-            mtime = os.path.getmtime(folder_path / filename)
-            return str(int(mtime))
-
-    all_files.sort(key=get_timestamp_from_filename, reverse=True)
-
-    # Get the requested file
-    folder_path, latest_file = all_files[index_from_end]
-    full_path = folder_path / latest_file
-
-    # Print file information
-    file_time = datetime.fromtimestamp(os.path.getmtime(full_path))
-    time_diff = datetime.now() - file_time
-
-    if time_diff.days > 0:
-        print(
-            f"{full_path} was created {time_diff.days} days, {time_diff.seconds//3600} hours, {(time_diff.seconds%3600)//60} minutes ago"
-        )
-    elif time_diff.seconds > 3600:
-        print(
-            f"{full_path} was created {time_diff.seconds//3600} hours, {(time_diff.seconds%3600)//60} minutes ago"
-        )
-    else:
-        print(f"{full_path} was created {time_diff.seconds} seconds ago")
-
-    return str(full_path)
-
 
 rna_file = get_latest_file(
-    "CODEX_RNA_seq/data/processed_data", "rna", exact_step=1, dataset_name=dataset_name
+    "ARCADIA/processed_data", "rna", exact_step=1, dataset_name=dataset_name
 )
 protein_file = get_latest_file(
-    "CODEX_RNA_seq/data/processed_data", "protein", exact_step=1, dataset_name=dataset_name
+    "ARCADIA/processed_data", "protein", exact_step=1, dataset_name=dataset_name
 )
-rna_adata = sc.read(rna_file)
-protein_adata = sc.read(protein_file)
+rna_adata = sc.read(str(rna_file))
+protein_adata = sc.read(str(protein_file))
 
 # %% [markdown]
 # **Optional**: meta data for the cells. In this case we are using them to **evaluate the integration results**, but for actual running, MaxFuse does not require you have this information.
@@ -292,7 +109,7 @@ print(f"Protein cell types: {sorted(set(labels_l1_prot))}")
 
 # %%
 # Use the protein_gene_conversion from the tonsil dataset (it's a general mapping file)
-data_dir = "/home/barroz/projects/ARCADIA/CODEX_RNA_seq/data/raw_data"
+data_dir = "ARCADIA/raw_datasets"
 correspondence = pd.read_csv(f"{data_dir}/tonsil/protein_gene_conversion.csv")
 correspondence.head()
 
@@ -405,8 +222,6 @@ if "counts" in protein_shared.layers:
 # %%
 # Make sure no column is static
 # Handle both sparse and dense matrices
-from scipy.sparse import issparse
-
 rna_X = rna_shared.X.toarray() if issparse(rna_shared.X) else rna_shared.X
 protein_X = protein_shared.X.toarray() if issparse(protein_shared.X) else protein_shared.X
 mask = (rna_X.std(axis=0) > 1e-5) & (protein_X.std(axis=0) > 1e-5)
@@ -819,18 +634,6 @@ ConfusionMatrixDisplay(
 cca_adata.X
 
 # %%
-# !pip install scib
-
-# %%
-import os
-
-# Move one directory back
-os.chdir("..")
-
-# Check current working directory
-print(os.getcwd())
-
-# %%
 
 
 # %%
@@ -972,10 +775,7 @@ print(f"protein_adata.obs columns: {list(protein_adata.obs.columns)}")
 
 # %%
 # Save the formatted AnnData objects
-
-from datetime import datetime
-
-output_dir = "/home/barroz/projects/ARCADIA/model_comparison/outputs"
+output_dir = "model_comparison/outputs"
 os.makedirs(output_dir, exist_ok=True)
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
