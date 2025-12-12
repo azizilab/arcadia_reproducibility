@@ -31,7 +31,7 @@ Please check out our main [ARCADIA repository](https://github.com/azizilab/ARCAD
 │   ├── model_maxfuse_dataset_tonsil.py
 │   └── scMODAL_main/            # scMODAL implementation included
 │
-├── ARCADIA/                     # ARCADIA model implementation repository (cloned)
+├── ARCADIA/                     # ARCADIA model implementation repository (git submodule)
 │   ├── scripts/                 # Pipeline execution scripts
 │   │   ├── _0_preprocess_cite_seq.py
 │   │   ├── _0_preprocess_tonsil.py
@@ -116,7 +116,15 @@ MaxFuse is a method for integrating single-cell multi-omics data using maximum m
 
 ### Prerequisites
 
-Clone the ARCADIA repository to the `ARCADIA/` folder and follow the instructions in its README to set up the environment.
+**ARCADIA is included as a git submodule.** Clone this repository with submodules:
+
+```bash
+git clone --recursive https://github.com/your-repo/arcadia_reproducibility.git
+```
+
+The `ARCADIA/` folder will contain the ARCADIA repository. **You do not need to separately clone ARCADIA_public** - it's already included as a submodule.
+
+Then follow the instructions in the ARCADIA README to set up the environment.
 
 > **📖 For detailed ARCADIA installation instructions** (conda environments, Docker, manual setup), see [`ARCADIA/README.md`](ARCADIA/README.md#installation).
 
@@ -450,6 +458,10 @@ python compare_results.py --checkpoint_path "/path/to/mlruns/.../epoch_0499" --o
   - Combined UMAP plots for both models
   - Per-cell-type UMAPs
   - Moran's I spatial autocorrelation plots
+- **Automatically generates files required for publication figures:**
+  - **CN Assignment CSVs**: `{dataset}_protein_CN_assignments.csv`, `{dataset}_rna_CN_assignments.csv`
+  - **Confusion Matrices**: `data/confusion_matrices/{dataset}_ct_matching_{model}.csv`, `data/confusion_matrices/all.csv`, `data/confusion_matrices/bcells.csv` (for cite_seq)
+  - **UMAP Embeddings**: `data/{dataset}_{model}_umap.csv` or `data/{dataset}_{model}_UMAP.csv`
 - Saves results to CSV files:
   - Individual model results: `metrics/results_comparison_{model}_{dataset}_{timestamp}.csv`
   - Comparison results: `metrics/results_comparison_{dataset}_{model}.csv` (appended with each run)
@@ -473,7 +485,7 @@ Results from model comparisons are saved in `model_comparison/` with dataset-spe
 
 ### Generating Publication Figures
 
-The `generate_publication_figures_github.ipynb` notebook contains code to reproduce all publication figures from the ARCADIA paper. This includes:
+The `generate_publication_figures_github.py` script (or `generate_publication_figures_github.ipynb` notebook) contains code to reproduce all publication figures from the ARCADIA paper. This includes:
 
 - **Spatial visualizations**: Spatial embeddings colored by cell types, CN assignments, and spatial grid indices
 - **Integration quality plots**: UMAP visualizations of integrated RNA and protein modalities
@@ -481,17 +493,103 @@ The `generate_publication_figures_github.ipynb` notebook contains code to reprod
 - **Differential expression analysis**: Counterfactual spatial neighborhood DEG analysis for tonsil dataset
 - **Dot plots**: Gene expression patterns across CNs and cell types
 
+**Complete Workflow for Generating Publication Figures:**
+
+To generate all publication figures, follow these steps in order:
+
+**Step 1: Run ARCADIA Pipeline for Both Datasets**
+
+First, train ARCADIA models for both datasets:
+
+```bash
+# Run ARCADIA pipeline for cite_seq dataset
+bash run_pipeline_direct.sh cite_seq
+
+# Run ARCADIA pipeline for tonsil dataset
+bash run_pipeline_direct.sh tonsil
+```
+
+**Step 2: Run Baseline Models (scMODAL and MaxFuse)**
+
+Run the baseline comparison models for both datasets (see [Running Model Comparisons](#running-model-comparisons) section above):
+
+```bash
+cd model_comparison
+
+# Run scMODAL for cite_seq
+conda activate scmodal  # or your scMODAL environment
+python model_scmodal_dataset_cite_seq.py
+
+# Run scMODAL for tonsil
+python model_scmodal_dataset_tonsil.py
+
+# Run MaxFuse for cite_seq
+conda activate maxfuse  # or your MaxFuse environment
+python model_maxfuse_dataset_cite_seq.py
+
+# Run MaxFuse for tonsil
+python model_maxfuse_dataset_tonsil.py
+```
+
+**Step 3: Run Model Comparisons to Generate Required Files**
+
+Run `compare_results.py` for both datasets and both baseline models. This will automatically generate all CN assignments, confusion matrices, and UMAP embeddings needed for the publication figures:
+
+```bash
+cd model_comparison
+conda activate scvi  # or your ARCADIA environment
+
+# Compare ARCADIA vs scMODAL on cite_seq
+python compare_results.py --experiment_name "cite_seq" --other_model_name "scmodal"
+
+# Compare ARCADIA vs MaxFuse on cite_seq
+python compare_results.py --experiment_name "cite_seq" --other_model_name "maxfuse"
+
+# Compare ARCADIA vs scMODAL on tonsil
+python compare_results.py --experiment_name "tonsil" --other_model_name "scmodal"
+
+# Compare ARCADIA vs MaxFuse on tonsil
+python compare_results.py --experiment_name "tonsil" --other_model_name "maxfuse"
+```
+
+**What gets generated:**
+
+After running all four comparisons, the following files will be created:
+
+- **CN Assignments**: 
+  - `synthetic_protein_CN_assignments.csv`, `synthetic_rna_CN_assignments.csv` (from cite_seq runs)
+  - `tonsil_protein_CN_assignments.csv`, `tonsil_rna_CN_assignments.csv` (from tonsil runs)
+
+- **Confusion Matrices** (`data/confusion_matrices/`):
+  - `cite_seq_ct_matching_arcadia.csv`, `synthetic_ct_matching_maxfuse.csv`, `synthetic_ct_matching_scmodal.csv`
+  - `tonsil_ct_matching_arcadia.csv`, `tonsil_ct_matching_maxfuse.csv`, `tonsil_ct_matching_scmodal.csv`
+  - `all.csv`, `bcells.csv` (from cite_seq runs)
+
+- **UMAP Embeddings** (`data/`):
+  - `scModal_umap.csv`, `maxfuse_umap.csv` (from cite_seq runs)
+  - `tonsil_scModal_umap.csv`, `tonsil_maxfuse_UMAP.csv` (from tonsil runs)
+
+**Step 4: Generate Publication Figures**
+
+Once all required files are generated, run the publication figure generation script:
+
+```bash
+# Using Python script
+python generate_publication_figures_github.py
+
+# Or using Jupyter notebook
+jupyter notebook generate_publication_figures_github.ipynb
 ```
 
 **Prerequisites:**
 
-Before running the notebook, ensure you have:
-1. Completed the ARCADIA pipeline for both `cite_seq` and `tonsil` datasets
-2. Required data files in the `data/` directory (see notebook for specific file requirements)
+Before running the figure generation script, ensure you have:
+1. ✅ Completed the ARCADIA pipeline for both `cite_seq` and `tonsil` datasets (Step 1)
+2. ✅ Run baseline models (scMODAL and MaxFuse) for both datasets (Step 2)
+3. ✅ Run `compare_results.py` for both datasets and both baseline models (Step 3)
+4. ✅ Required H5AD input files exist (these should be generated by the ARCADIA pipeline)
 
-**Note:** The notebook loads pre-generated comparison data files (confusion matrices, UMAP embeddings) for scMODAL and MaxFuse. If these files don't exist and you want to generate comparison figures, you'll need to run the model comparison scripts first (see [Running Model Comparisons](#running-model-comparisons) section).
-
-The notebook saves all generated figures to the `fig_khh/` directory.
+The script saves all generated figures to the `fig_khh/` directory.
 
 ## Benchmarking Metrics
 

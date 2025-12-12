@@ -140,7 +140,6 @@ base_path = "CODEX_RNA_seq/data"
 
 # In[2]:
 
-
 # load arcadia data
 if args.checkpoint_path is not None:
     # Use explicitly provided checkpoint path (highest priority)
@@ -434,6 +433,31 @@ metrics_kwargs = {
 # Create metrics directory if it doesn't exist
 metrics_dir = PROJECT_ROOT / "metrics"
 metrics_dir.mkdir(exist_ok=True)
+
+# Helper function to save confusion matrices
+def save_confusion_matrix_csv(true_labels, predicted_labels, save_path, normalize='columns'):
+    """Save confusion matrix as percentage CSV compatible with generate_publication_figures_github.py."""
+    cm = pd.crosstab(
+        true_labels.values,
+        predicted_labels.values,
+        rownames=["True"],
+        colnames=["Predicted"],
+        margins=False,
+    )
+    
+    if normalize == 'columns':
+        # Normalize by columns (predicted) - percentage of each predicted class
+        col_sums = cm.sum(axis=0)
+        col_sums[col_sums == 0] = 1  # Avoid division by zero
+        cm_percent = (cm / col_sums) * 100
+    else:
+        cm_percent = cm
+    
+    # Ensure index name is "True" for compatibility
+    cm_percent.index.name = "True"
+    cm_percent.to_csv(save_path)
+    print(f"Saved confusion matrix to {save_path}")
+
 # %%
 # mtrc.kbet_within_cell_types(combined_latent_arcadia, group_key=None,label_key="modality")
 # 0.53 somewhat mixed
@@ -448,6 +472,39 @@ mtrc.mixing_metric_parallel(combined_latent_arcadia, group_key="modality", rep_k
 if dataset_name == "tonsil":
     assign_rna_cn_from_protein(adata_latent_arcadia_rna, adata_latent_arcadia_prot, latent_key="X")
     assign_rna_cn_from_protein(adata_latent_other_rna, adata_latent_other_prot, latent_key="X")
+
+# Save CN assignments to CSV files
+print("\n" + "=" * 80)
+print("SAVING CN ASSIGNMENTS")
+print("=" * 80)
+
+if dataset_name == "tonsil":
+    # Save ARCADIA CN assignments
+    tonsil_protein_CN_df = pd.DataFrame({
+        'CN': adata_latent_arcadia_prot.obs['CN']
+    }, index=adata_latent_arcadia_prot.obs_names)
+    tonsil_protein_CN_df.to_csv(PROJECT_ROOT / 'tonsil_protein_CN_assignments.csv')
+    print(f"Saved {PROJECT_ROOT / 'tonsil_protein_CN_assignments.csv'}")
+    
+    tonsil_rna_CN_df = pd.DataFrame({
+        'CN': adata_latent_arcadia_rna.obs['CN']
+    }, index=adata_latent_arcadia_rna.obs_names)
+    tonsil_rna_CN_df.to_csv(PROJECT_ROOT / 'tonsil_rna_CN_assignments.csv')
+    print(f"Saved {PROJECT_ROOT / 'tonsil_rna_CN_assignments.csv'}")
+    
+elif dataset_name == "cite_seq" or dataset_name == "synthetic":
+    # For synthetic/cite_seq dataset
+    synthetic_protein_CN_df = pd.DataFrame({
+        'CN': adata_latent_arcadia_prot.obs['CN']
+    }, index=adata_latent_arcadia_prot.obs_names)
+    synthetic_protein_CN_df.to_csv(PROJECT_ROOT / 'synthetic_protein_CN_assignments.csv')
+    print(f"Saved {PROJECT_ROOT / 'synthetic_protein_CN_assignments.csv'}")
+    
+    synthetic_rna_CN_df = pd.DataFrame({
+        'CN': adata_latent_arcadia_rna.obs['CN']
+    }, index=adata_latent_arcadia_rna.obs_names)
+    synthetic_rna_CN_df.to_csv(PROJECT_ROOT / 'synthetic_rna_CN_assignments.csv')
+    print(f"Saved {PROJECT_ROOT / 'synthetic_rna_CN_assignments.csv'}")
 
 if plot_flag:
     plot_individual_and_combined_umaps(adata_rna_arcadia, adata_prot_arcadia, "arcadia")
@@ -556,6 +613,68 @@ print("=" * 80)
 print(results_pivot.to_string(index=False))
 print("=" * 80)
 
+# %%
+# Compute and save confusion matrices for cell type matching
+print("\n" + "=" * 80)
+print("COMPUTING CONFUSION MATRICES")
+print("=" * 80)
+
+# Create confusion_matrices directory
+confusion_matrices_dir = PROJECT_ROOT / 'data' / 'confusion_matrices'
+confusion_matrices_dir.mkdir(parents=True, exist_ok=True)
+
+# Import calc_dist for computing nearest neighbors
+from arcadia.training.metrics import calc_dist
+
+# For ARCADIA - compute predicted cell types
+nn_celltypes_arcadia = calc_dist(adata_latent_arcadia_rna, adata_latent_arcadia_prot, label_key="cell_types")
+true_celltypes_arcadia = adata_latent_arcadia_rna.obs["cell_types"]
+
+if dataset_name == "tonsil":
+    save_confusion_matrix_csv(
+        true_celltypes_arcadia, 
+        nn_celltypes_arcadia,
+        confusion_matrices_dir / 'tonsil_ct_matching_arcadia.csv'
+    )
+elif dataset_name == "cite_seq" or dataset_name == "synthetic":
+    save_confusion_matrix_csv(
+        true_celltypes_arcadia,
+        nn_celltypes_arcadia,
+        confusion_matrices_dir / 'cite_seq_ct_matching_arcadia.csv'
+    )
+    
+    # All cell types confusion matrix
+    save_confusion_matrix_csv(
+        true_celltypes_arcadia,
+        nn_celltypes_arcadia,
+        confusion_matrices_dir / 'all.csv'
+    )
+    
+    # B cells only confusion matrix
+    bcells_mask = true_celltypes_arcadia.str.contains('B', case=False, na=False).values
+    if bcells_mask.sum() > 0:
+        save_confusion_matrix_csv(
+            true_celltypes_arcadia[bcells_mask],
+            nn_celltypes_arcadia[bcells_mask],
+            confusion_matrices_dir / 'bcells.csv'
+        )
+
+# For other model - compute predicted cell types
+nn_celltypes_other = calc_dist(adata_latent_other_rna, adata_latent_other_prot, label_key="cell_types")
+true_celltypes_other = adata_latent_other_rna.obs["cell_types"]
+
+if dataset_name == "tonsil":
+    save_confusion_matrix_csv(
+        true_celltypes_other,
+        nn_celltypes_other,
+        confusion_matrices_dir / f'tonsil_ct_matching_{other_model_name}.csv'
+    )
+elif dataset_name == "cite_seq" or dataset_name == "synthetic":
+    save_confusion_matrix_csv(
+        true_celltypes_other,
+        nn_celltypes_other,
+        confusion_matrices_dir / f'synthetic_ct_matching_{other_model_name}.csv'
+    )
 
 # %%
 
@@ -606,6 +725,78 @@ if plot_flag:
     plot_morans_i(
         adata_compare, "matched_archetype_weight", "arcadia", other_model_name, n_neighbors=15
     )
+
+# %%
+
+# Save UMAP embeddings to CSV
+print("\n" + "=" * 80)
+print("SAVING UMAP EMBEDDINGS")
+print("=" * 80)
+
+# Ensure data directory exists
+data_dir = PROJECT_ROOT / 'data'
+data_dir.mkdir(exist_ok=True)
+
+# For ARCADIA - get UMAP coordinates from combined latent
+# Check if UMAP already exists, otherwise compute it
+if 'X_umap' in combined_latent_arcadia.obsm:
+    umap_coords_arcadia = combined_latent_arcadia.obsm['X_umap']
+elif 'umap' in combined_latent_arcadia.obsm:
+    umap_coords_arcadia = combined_latent_arcadia.obsm['umap']
+else:
+    # Compute UMAP if not already computed (neighbors should already exist from line 316)
+    if 'neighbors' not in combined_latent_arcadia.uns:
+        sc.pp.neighbors(combined_latent_arcadia, use_rep='X')
+    sc.tl.umap(combined_latent_arcadia)
+    umap_coords_arcadia = combined_latent_arcadia.obsm['X_umap']
+
+# For other model - get UMAP coordinates from combined latent
+if 'X_umap' in combined_latent_other.obsm:
+    umap_coords_other = combined_latent_other.obsm['X_umap']
+elif 'umap' in combined_latent_other.obsm:
+    umap_coords_other = combined_latent_other.obsm['umap']
+else:
+    # Compute UMAP if not already computed (neighbors should already exist from line 317)
+    if 'neighbors' not in combined_latent_other.uns:
+        sc.pp.neighbors(combined_latent_other, use_rep='X')
+    sc.tl.umap(combined_latent_other)
+    umap_coords_other = combined_latent_other.obsm['X_umap']
+
+if dataset_name == "tonsil":
+    # Save tonsil UMAP for other model
+    # Handle model name capitalization to match expected file names
+    model_name_mapping = {
+        'scmodal': 'scModal',
+        'maxfuse': 'maxfuse',
+    }
+    display_model_name = model_name_mapping.get(other_model_name.lower(), other_model_name)
+    # Use uppercase UMAP for maxfuse, lowercase umap for others (matching generate_publication_figures_github.py)
+    umap_suffix = 'UMAP' if other_model_name.lower() == 'maxfuse' else 'umap'
+    
+    umap_df_other = pd.DataFrame(
+        umap_coords_other,
+        columns=['UMAP1', 'UMAP2'],
+        index=combined_latent_other.obs_names
+    )
+    umap_df_other['modality'] = combined_latent_other.obs['modality'].values
+    if 'matched_archetype_weight' in combined_latent_other.obs.columns:
+        umap_df_other['matched_archetype_weight'] = combined_latent_other.obs['matched_archetype_weight'].values
+    umap_file = data_dir / f'tonsil_{display_model_name}_{umap_suffix}.csv'
+    umap_df_other.to_csv(umap_file)
+    print(f"Saved {umap_file}")
+    
+elif dataset_name == "cite_seq" or dataset_name == "synthetic":
+    # Save synthetic UMAP for other model
+    umap_df_other = pd.DataFrame(
+        umap_coords_other,
+        columns=['UMAP1', 'UMAP2'],
+        index=combined_latent_other.obs_names
+    )
+    # Create index column matching the format expected by generate_publication_figures_github.py
+    umap_df_other['index'] = combined_latent_other.obs.index
+    umap_df_other['modality'] = combined_latent_other.obs['modality'].values
+    umap_df_other.to_csv(data_dir / f'{other_model_name}_umap.csv', index=False)
+    print(f"Saved {data_dir / f'{other_model_name}_umap.csv'}")
 
     # %%
 
