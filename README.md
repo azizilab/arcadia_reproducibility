@@ -119,7 +119,7 @@ MaxFuse is a method for integrating single-cell multi-omics data using maximum m
 **ARCADIA is included as a git submodule.** Clone this repository with submodules:
 
 ```bash
-git clone --recursive https://github.com/your-repo/arcadia_reproducibility.git
+git clone --recursive https://github.com/azizilab/arcadia_reproducibility.git
 ```
 
 The `ARCADIA/` folder will contain the ARCADIA repository. **You do not need to separately clone ARCADIA_public** - it's already included as a submodule.
@@ -204,8 +204,6 @@ cd ARCADIA
 # Start MLflow UI server
 mlflow ui
 
-# Or specify a custom port if default (5000) is in use
-mlflow ui --port 5001
 ```
 
 **Accessing MLflow in Browser:**
