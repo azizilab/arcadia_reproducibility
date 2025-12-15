@@ -44,6 +44,7 @@ sns.set_style("ticks")
 
 from arcadia.utils.args import find_checkpoint_from_experiment_name
 from arcadia.analysis.post_hoc_utils import load_checkpoint_data
+from arcadia.analysis.comparison_utils import align_data
 from arcadia.training.metrics import calc_dist
 import os
 import glob
@@ -554,10 +555,18 @@ def ct_cf_plot(cm, method_str, f1_score, save_path):
     if cm.shape[1] == 1:
         print(f"Confusion matrix for {method_str} is not in matrix format (shape: {cm.shape})")
         return
-    if cm.shape[0] != 5 or cm.shape[1] != 5:
-        raise ValueError(f"Confusion matrix for {method_str} has unexpected shape {cm.shape}, expected (5, 5)")
-    cm.columns = ['B cells','CD4 T','CD8 T','GD/NK T','cDCs']
-    cm.index = ['B cells','CD4 T','CD8 T','GD/NK T','cDCs']
+    # Expected cell types for cite_seq dataset
+    expected_cell_types = ['B cells','CD4 T','CD8 T','GD/NK T','cDCs']
+    # Ensure all expected cell types are present in rows and columns
+    for ct in expected_cell_types:
+        if ct not in cm.index:
+            cm.loc[ct] = 0
+        if ct not in cm.columns:
+            cm[ct] = 0
+    # Reorder to match expected order
+    cm = cm.reindex(index=expected_cell_types, columns=expected_cell_types, fill_value=0)
+    cm.columns = expected_cell_types
+    cm.index = expected_cell_types
     row_colors = [to_rgb(synthetic_palette[x]) for x in cm.index]
     col_colors = [to_rgb(synthetic_palette[x]) for x in cm.columns]
     fig = plt.figure(figsize=(4, 4))
@@ -743,47 +752,60 @@ scmodal_protein_file = max(scmodal_protein_files, key=os.path.getmtime)
 scmodal_rna = sc.read_h5ad(scmodal_rna_file)
 scmodal_protein = sc.read_h5ad(scmodal_protein_file)
 
-# Check if UMAP exists in obsm, if not compute it from latent representation
-if 'X_umap' not in scmodal_rna.obsm:
-    if 'latent' in scmodal_rna.obsm:
-        print("Computing UMAP for scMODAL RNA from latent representation...")
-        scmodal_rna.obsm['X_latent'] = scmodal_rna.obsm['latent']
-        sc.pp.neighbors(scmodal_rna, use_rep='X_latent')
-        sc.tl.umap(scmodal_rna)
-    else:
-        raise KeyError(f"scMODAL RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(scmodal_rna.obsm.keys())}")
-if 'X_umap' not in scmodal_protein.obsm:
-    if 'latent' in scmodal_protein.obsm:
-        print("Computing UMAP for scMODAL protein from latent representation...")
-        scmodal_protein.obsm['X_latent'] = scmodal_protein.obsm['latent']
-        sc.pp.neighbors(scmodal_protein, use_rep='X_latent')
-        sc.tl.umap(scmodal_protein)
-    else:
-        raise KeyError(f"scMODAL protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(scmodal_protein.obsm.keys())}")
+# Align scMODAL data with ARCADIA data using the same logic as compare_results.py
+print("Aligning scMODAL data with ARCADIA data...")
+synthetic_rna_aligned, scmodal_rna_aligned, _ = align_data(synthetic_rna, scmodal_rna, "rna", "scmodal")
+synthetic_protein_aligned, scmodal_protein_aligned, _ = align_data(synthetic_protein, scmodal_protein, "protein", "scmodal")
 
-# Create merged scMODAL adata with UMAP
-scmodal_rna.obs['modality'] = 'RNA'
-scmodal_protein.obs['modality'] = 'Protein'
-scmodal_merged = sc.concat([scmodal_rna, scmodal_protein], join='outer', label='modality', keys=['RNA', 'Protein'])
+# Check if UMAP exists in obsm, if not compute it from latent representation
+if 'X_umap' not in scmodal_rna_aligned.obsm:
+    if 'latent' in scmodal_rna_aligned.obsm:
+        print("Computing UMAP for scMODAL RNA from latent representation...")
+        scmodal_rna_aligned.obsm['X_latent'] = scmodal_rna_aligned.obsm['latent']
+        sc.pp.neighbors(scmodal_rna_aligned, use_rep='X_latent')
+        sc.tl.umap(scmodal_rna_aligned)
+    else:
+        raise KeyError(f"scMODAL RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(scmodal_rna_aligned.obsm.keys())}")
+if 'X_umap' not in scmodal_protein_aligned.obsm:
+    if 'latent' in scmodal_protein_aligned.obsm:
+        print("Computing UMAP for scMODAL protein from latent representation...")
+        scmodal_protein_aligned.obsm['X_latent'] = scmodal_protein_aligned.obsm['latent']
+        sc.pp.neighbors(scmodal_protein_aligned, use_rep='X_latent')
+        sc.tl.umap(scmodal_protein_aligned)
+    else:
+        raise KeyError(f"scMODAL protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(scmodal_protein_aligned.obsm.keys())}")
+
+# Create merged scMODAL adata with UMAP (already aligned with ARCADIA)
+scmodal_rna_aligned.obs['modality'] = 'RNA'
+scmodal_protein_aligned.obs['modality'] = 'Protein'
+scmodal_merged = sc.concat([scmodal_rna_aligned, scmodal_protein_aligned], join='outer', label='modality', keys=['RNA', 'Protein'])
 scmodal_merged.obs_names = scmodal_merged.obs_names + scmodal_merged.obs['modality'].astype(str)
 
-# Match with synthetic_merged by obs_names
+# Create aligned synthetic_merged for embeddings (already aligned, so obs_names should match)
+synthetic_rna_aligned.obs['modality'] = 'RNA'
+synthetic_protein_aligned.obs['modality'] = 'Protein'
+synthetic_merged_aligned = sc.concat([synthetic_rna_aligned, synthetic_protein_aligned], join='outer', label='modality', keys=['RNA', 'Protein'])
+synthetic_merged_aligned.obs_names = synthetic_merged_aligned.obs_names + synthetic_merged_aligned.obs['modality'].astype(str)
+
+# Now they should have matching obs_names, so we can directly assign UMAP
 synthetic_merged_other_embeddings = synthetic_merged.copy()
+# Find common names between aligned data and original synthetic_merged
 common_names = synthetic_merged_other_embeddings.obs_names[synthetic_merged_other_embeddings.obs_names.isin(scmodal_merged.obs_names)]
 synthetic_merged_other_embeddings = synthetic_merged_other_embeddings[synthetic_merged_other_embeddings.obs_names.isin(common_names)]
 scmodal_merged_subset = scmodal_merged[scmodal_merged.obs_names.isin(common_names)]
 
-# Align by obs_names
+# Align by obs_names (should already be aligned, but ensure order matches)
 scmodal_merged_subset = scmodal_merged_subset[synthetic_merged_other_embeddings.obs_names]
 synthetic_merged_other_embeddings.obsm['X_scmodal'] = scmodal_merged_subset.obsm['X_umap']
 
-random_indices = np.random.permutation(list(range(synthetic_merged_other_embeddings.shape[0])))
-sc.pl.embedding(synthetic_merged_other_embeddings[random_indices], 'scmodal', color=['modality','major_cell_types','minor_cell_types','CN'], 
+# Recompute random_indices after filtering
+random_indices_scmodal = np.random.permutation(list(range(synthetic_merged_other_embeddings.shape[0])))
+sc.pl.embedding(synthetic_merged_other_embeddings[random_indices_scmodal], 'scmodal', color=['modality','major_cell_types','minor_cell_types','CN'], 
                 palette=synthetic_palette, s=10, save='_synthetic_merged_scmodal.pdf')
 
-# Compute scMODAL cite_seq confusion matrix
+# Compute scMODAL cite_seq confusion matrix (using aligned data)
 print("Computing scMODAL cite_seq confusion matrix...")
-cm_scmodal_cite_seq = compute_confusion_matrix(scmodal_rna, scmodal_protein)
+cm_scmodal_cite_seq = compute_confusion_matrix(scmodal_rna_aligned, scmodal_protein_aligned)
 ct_cf_plot(cm_scmodal_cite_seq, 'scModal', 'XX%', 'fig_khh/synthetic_confusion_matrix_scmodal.pdf')
 
 
@@ -808,44 +830,52 @@ maxfuse_protein_file = max(maxfuse_protein_files, key=os.path.getmtime)
 maxfuse_rna = sc.read_h5ad(maxfuse_rna_file)
 maxfuse_protein = sc.read_h5ad(maxfuse_protein_file)
 
-# Check if UMAP exists in obsm, if not compute it from latent representation
-if 'X_umap' not in maxfuse_rna.obsm:
-    if 'latent' in maxfuse_rna.obsm:
-        print("Computing UMAP for MaxFuse RNA from latent representation...")
-        maxfuse_rna.obsm['X_latent'] = maxfuse_rna.obsm['latent']
-        sc.pp.neighbors(maxfuse_rna, use_rep='X_latent')
-        sc.tl.umap(maxfuse_rna)
-    else:
-        raise KeyError(f"MaxFuse RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(maxfuse_rna.obsm.keys())}")
-if 'X_umap' not in maxfuse_protein.obsm:
-    if 'latent' in maxfuse_protein.obsm:
-        print("Computing UMAP for MaxFuse protein from latent representation...")
-        maxfuse_protein.obsm['X_latent'] = maxfuse_protein.obsm['latent']
-        sc.pp.neighbors(maxfuse_protein, use_rep='X_latent')
-        sc.tl.umap(maxfuse_protein)
-    else:
-        raise KeyError(f"MaxFuse protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(maxfuse_protein.obsm.keys())}")
+# Align MaxFuse data with ARCADIA data using the same logic as compare_results.py
+print("Aligning MaxFuse data with ARCADIA data...")
+synthetic_rna_aligned_mf, maxfuse_rna_aligned, _ = align_data(synthetic_rna, maxfuse_rna, "rna", "maxfuse")
+synthetic_protein_aligned_mf, maxfuse_protein_aligned, _ = align_data(synthetic_protein, maxfuse_protein, "protein", "maxfuse")
 
-# Create merged MaxFuse adata with UMAP
-maxfuse_rna.obs['modality'] = 'RNA'
-maxfuse_protein.obs['modality'] = 'Protein'
-maxfuse_merged = sc.concat([maxfuse_rna, maxfuse_protein], join='outer', label='modality', keys=['RNA', 'Protein'])
+# Check if UMAP exists in obsm, if not compute it from latent representation
+if 'X_umap' not in maxfuse_rna_aligned.obsm:
+    if 'latent' in maxfuse_rna_aligned.obsm:
+        print("Computing UMAP for MaxFuse RNA from latent representation...")
+        maxfuse_rna_aligned.obsm['X_latent'] = maxfuse_rna_aligned.obsm['latent']
+        sc.pp.neighbors(maxfuse_rna_aligned, use_rep='X_latent')
+        sc.tl.umap(maxfuse_rna_aligned)
+    else:
+        raise KeyError(f"MaxFuse RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(maxfuse_rna_aligned.obsm.keys())}")
+if 'X_umap' not in maxfuse_protein_aligned.obsm:
+    if 'latent' in maxfuse_protein_aligned.obsm:
+        print("Computing UMAP for MaxFuse protein from latent representation...")
+        maxfuse_protein_aligned.obsm['X_latent'] = maxfuse_protein_aligned.obsm['latent']
+        sc.pp.neighbors(maxfuse_protein_aligned, use_rep='X_latent')
+        sc.tl.umap(maxfuse_protein_aligned)
+    else:
+        raise KeyError(f"MaxFuse protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(maxfuse_protein_aligned.obsm.keys())}")
+
+# Create merged MaxFuse adata with UMAP (already aligned with ARCADIA)
+maxfuse_rna_aligned.obs['modality'] = 'RNA'
+maxfuse_protein_aligned.obs['modality'] = 'Protein'
+maxfuse_merged = sc.concat([maxfuse_rna_aligned, maxfuse_protein_aligned], join='outer', label='modality', keys=['RNA', 'Protein'])
 maxfuse_merged.obs_names = maxfuse_merged.obs_names + maxfuse_merged.obs['modality'].astype(str)
 
-# Match with synthetic_merged_other_embeddings by obs_names
+# Match with synthetic_merged_other_embeddings by obs_names (should already be aligned)
 common_names = synthetic_merged_other_embeddings.obs_names[synthetic_merged_other_embeddings.obs_names.isin(maxfuse_merged.obs_names)]
+synthetic_merged_other_embeddings = synthetic_merged_other_embeddings[synthetic_merged_other_embeddings.obs_names.isin(common_names)]
 maxfuse_merged_subset = maxfuse_merged[maxfuse_merged.obs_names.isin(common_names)]
 
-# Align by obs_names
+# Align by obs_names (should already be aligned, but ensure order matches)
 maxfuse_merged_subset = maxfuse_merged_subset[synthetic_merged_other_embeddings.obs_names]
 synthetic_merged_other_embeddings.obsm['X_maxfuse'] = maxfuse_merged_subset.obsm['X_umap']
 
-sc.pl.embedding(synthetic_merged_other_embeddings[random_indices], 'maxfuse', color=['modality','major_cell_types','minor_cell_types','CN'], 
+# Recompute random_indices after filtering
+random_indices_maxfuse = np.random.permutation(list(range(synthetic_merged_other_embeddings.shape[0])))
+sc.pl.embedding(synthetic_merged_other_embeddings[random_indices_maxfuse], 'maxfuse', color=['modality','major_cell_types','minor_cell_types','CN'], 
                 palette=synthetic_palette, s=10, save='_synthetic_merged_maxfuse.pdf')
 
-# Compute MaxFuse cite_seq confusion matrix
+# Compute MaxFuse cite_seq confusion matrix (using aligned data)
 print("Computing MaxFuse cite_seq confusion matrix...")
-cm_maxfuse_cite_seq = compute_confusion_matrix(maxfuse_rna, maxfuse_protein)
+cm_maxfuse_cite_seq = compute_confusion_matrix(maxfuse_rna_aligned, maxfuse_protein_aligned)
 ct_cf_plot(cm_maxfuse_cite_seq, 'MaxFuse', 'XX%', 'fig_khh/synthetic_confusion_matrix_maxfuse.pdf')
 
 
@@ -980,30 +1010,35 @@ tonsil_scmodal_protein_file = max(tonsil_scmodal_protein_files, key=os.path.getm
 tonsil_scmodal_rna = sc.read_h5ad(tonsil_scmodal_rna_file)
 tonsil_scmodal_protein = sc.read_h5ad(tonsil_scmodal_protein_file)
 
-# Check if UMAP exists in obsm, if not compute it from latent representation
-if 'X_umap' not in tonsil_scmodal_rna.obsm:
-    if 'latent' in tonsil_scmodal_rna.obsm:
-        print("Computing UMAP for tonsil scMODAL RNA from latent representation...")
-        tonsil_scmodal_rna.obsm['X_latent'] = tonsil_scmodal_rna.obsm['latent']
-        sc.pp.neighbors(tonsil_scmodal_rna, use_rep='X_latent')
-        sc.tl.umap(tonsil_scmodal_rna)
-    else:
-        raise KeyError(f"Tonsil scMODAL RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_scmodal_rna.obsm.keys())}")
-if 'X_umap' not in tonsil_scmodal_protein.obsm:
-    if 'latent' in tonsil_scmodal_protein.obsm:
-        print("Computing UMAP for tonsil scMODAL protein from latent representation...")
-        tonsil_scmodal_protein.obsm['X_latent'] = tonsil_scmodal_protein.obsm['latent']
-        sc.pp.neighbors(tonsil_scmodal_protein, use_rep='X_latent')
-        sc.tl.umap(tonsil_scmodal_protein)
-    else:
-        raise KeyError(f"Tonsil scMODAL protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_scmodal_protein.obsm.keys())}")
+# Align scMODAL tonsil data with ARCADIA tonsil data using the same logic as compare_results.py
+print("Aligning scMODAL tonsil data with ARCADIA tonsil data...")
+tonsil_rna_aligned, tonsil_scmodal_rna_aligned, _ = align_data(tonsil_rna, tonsil_scmodal_rna, "rna", "scmodal")
+tonsil_protein_aligned, tonsil_scmodal_protein_aligned, _ = align_data(tonsil_protein, tonsil_scmodal_protein, "protein", "scmodal")
 
-tonsil_scmodal_rna.obs['modality'] = 'scRNA-seq'
-tonsil_scmodal_protein.obs['modality'] = 'CODEX'
-tonsil_scmodal_adata = sc.concat([tonsil_scmodal_protein, tonsil_scmodal_rna], join='outer', label='modality', keys=['CODEX', 'scRNA-seq'])
+# Check if UMAP exists in obsm, if not compute it from latent representation
+if 'X_umap' not in tonsil_scmodal_rna_aligned.obsm:
+    if 'latent' in tonsil_scmodal_rna_aligned.obsm:
+        print("Computing UMAP for tonsil scMODAL RNA from latent representation...")
+        tonsil_scmodal_rna_aligned.obsm['X_latent'] = tonsil_scmodal_rna_aligned.obsm['latent']
+        sc.pp.neighbors(tonsil_scmodal_rna_aligned, use_rep='X_latent')
+        sc.tl.umap(tonsil_scmodal_rna_aligned)
+    else:
+        raise KeyError(f"Tonsil scMODAL RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_scmodal_rna_aligned.obsm.keys())}")
+if 'X_umap' not in tonsil_scmodal_protein_aligned.obsm:
+    if 'latent' in tonsil_scmodal_protein_aligned.obsm:
+        print("Computing UMAP for tonsil scMODAL protein from latent representation...")
+        tonsil_scmodal_protein_aligned.obsm['X_latent'] = tonsil_scmodal_protein_aligned.obsm['latent']
+        sc.pp.neighbors(tonsil_scmodal_protein_aligned, use_rep='X_latent')
+        sc.tl.umap(tonsil_scmodal_protein_aligned)
+    else:
+        raise KeyError(f"Tonsil scMODAL protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_scmodal_protein_aligned.obsm.keys())}")
+
+tonsil_scmodal_rna_aligned.obs['modality'] = 'scRNA-seq'
+tonsil_scmodal_protein_aligned.obs['modality'] = 'CODEX'
+tonsil_scmodal_adata = sc.concat([tonsil_scmodal_protein_aligned, tonsil_scmodal_rna_aligned], join='outer', label='modality', keys=['CODEX', 'scRNA-seq'])
 tonsil_scmodal_adata.obsm['X_scmodal'] = np.vstack([
-    tonsil_scmodal_protein.obsm['X_umap'],
-    tonsil_scmodal_rna.obsm['X_umap']
+    tonsil_scmodal_protein_aligned.obsm['X_umap'],
+    tonsil_scmodal_rna_aligned.obsm['X_umap']
 ])
 
 # subsample protein 20%
@@ -1024,9 +1059,9 @@ tonsil_scmodal_adata_subsampled_copy = tonsil_scmodal_adata_subsampled.copy() # 
 sc.pl.embedding(tonsil_scmodal_adata_subsampled_copy, 'scmodal', color=['CN'], mask_obs=(tonsil_scmodal_adata_subsampled_copy.obs['modality'] == 'scRNA-seq'),
                 palette=tonsil_palette, s=10, save='_tonsil_merged_scmodal_CN_rna.pdf', show=False)
 
-# Compute scMODAL tonsil confusion matrix
+# Compute scMODAL tonsil confusion matrix (using aligned data)
 print("Computing scMODAL tonsil confusion matrix...")
-cm_scmodal_tonsil = compute_confusion_matrix(tonsil_scmodal_rna, tonsil_scmodal_protein)
+cm_scmodal_tonsil = compute_confusion_matrix(tonsil_scmodal_rna_aligned, tonsil_scmodal_protein_aligned)
 ct_cf_plot_tonsil(cm_scmodal_tonsil, 'scModal', 'XX%', 'fig_khh/tonsil_confusion_matrix_scmodal.pdf')
 
 
@@ -1048,30 +1083,35 @@ tonsil_maxfuse_protein_file = max(tonsil_maxfuse_protein_files, key=os.path.getm
 tonsil_maxfuse_rna = sc.read_h5ad(tonsil_maxfuse_rna_file)
 tonsil_maxfuse_protein = sc.read_h5ad(tonsil_maxfuse_protein_file)
 
-# Check if UMAP exists in obsm, if not compute it from latent representation
-if 'X_umap' not in tonsil_maxfuse_rna.obsm:
-    if 'latent' in tonsil_maxfuse_rna.obsm:
-        print("Computing UMAP for tonsil MaxFuse RNA from latent representation...")
-        tonsil_maxfuse_rna.obsm['X_latent'] = tonsil_maxfuse_rna.obsm['latent']
-        sc.pp.neighbors(tonsil_maxfuse_rna, use_rep='X_latent')
-        sc.tl.umap(tonsil_maxfuse_rna)
-    else:
-        raise KeyError(f"Tonsil MaxFuse RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_maxfuse_rna.obsm.keys())}")
-if 'X_umap' not in tonsil_maxfuse_protein.obsm:
-    if 'latent' in tonsil_maxfuse_protein.obsm:
-        print("Computing UMAP for tonsil MaxFuse protein from latent representation...")
-        tonsil_maxfuse_protein.obsm['X_latent'] = tonsil_maxfuse_protein.obsm['latent']
-        sc.pp.neighbors(tonsil_maxfuse_protein, use_rep='X_latent')
-        sc.tl.umap(tonsil_maxfuse_protein)
-    else:
-        raise KeyError(f"Tonsil MaxFuse protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_maxfuse_protein.obsm.keys())}")
+# Align MaxFuse tonsil data with ARCADIA tonsil data using the same logic as compare_results.py
+print("Aligning MaxFuse tonsil data with ARCADIA tonsil data...")
+tonsil_rna_aligned_mf, tonsil_maxfuse_rna_aligned, _ = align_data(tonsil_rna, tonsil_maxfuse_rna, "rna", "maxfuse")
+tonsil_protein_aligned_mf, tonsil_maxfuse_protein_aligned, _ = align_data(tonsil_protein, tonsil_maxfuse_protein, "protein", "maxfuse")
 
-tonsil_maxfuse_rna.obs['modality'] = 'scRNA-seq'
-tonsil_maxfuse_protein.obs['modality'] = 'CODEX'
-tonsil_maxfuse_adata = sc.concat([tonsil_maxfuse_protein, tonsil_maxfuse_rna], join='outer', label='modality', keys=['CODEX', 'scRNA-seq'])
+# Check if UMAP exists in obsm, if not compute it from latent representation
+if 'X_umap' not in tonsil_maxfuse_rna_aligned.obsm:
+    if 'latent' in tonsil_maxfuse_rna_aligned.obsm:
+        print("Computing UMAP for tonsil MaxFuse RNA from latent representation...")
+        tonsil_maxfuse_rna_aligned.obsm['X_latent'] = tonsil_maxfuse_rna_aligned.obsm['latent']
+        sc.pp.neighbors(tonsil_maxfuse_rna_aligned, use_rep='X_latent')
+        sc.tl.umap(tonsil_maxfuse_rna_aligned)
+    else:
+        raise KeyError(f"Tonsil MaxFuse RNA adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_maxfuse_rna_aligned.obsm.keys())}")
+if 'X_umap' not in tonsil_maxfuse_protein_aligned.obsm:
+    if 'latent' in tonsil_maxfuse_protein_aligned.obsm:
+        print("Computing UMAP for tonsil MaxFuse protein from latent representation...")
+        tonsil_maxfuse_protein_aligned.obsm['X_latent'] = tonsil_maxfuse_protein_aligned.obsm['latent']
+        sc.pp.neighbors(tonsil_maxfuse_protein_aligned, use_rep='X_latent')
+        sc.tl.umap(tonsil_maxfuse_protein_aligned)
+    else:
+        raise KeyError(f"Tonsil MaxFuse protein adata object doesn't have 'X_umap' or 'latent' in obsm. Available keys: {list(tonsil_maxfuse_protein_aligned.obsm.keys())}")
+
+tonsil_maxfuse_rna_aligned.obs['modality'] = 'scRNA-seq'
+tonsil_maxfuse_protein_aligned.obs['modality'] = 'CODEX'
+tonsil_maxfuse_adata = sc.concat([tonsil_maxfuse_protein_aligned, tonsil_maxfuse_rna_aligned], join='outer', label='modality', keys=['CODEX', 'scRNA-seq'])
 tonsil_maxfuse_adata.obsm['X_maxfuse'] = np.vstack([
-    tonsil_maxfuse_protein.obsm['X_umap'],
-    tonsil_maxfuse_rna.obsm['X_umap']
+    tonsil_maxfuse_protein_aligned.obsm['X_umap'],
+    tonsil_maxfuse_rna_aligned.obsm['X_umap']
 ])
 
 # subsample protein 20%
@@ -1092,9 +1132,9 @@ tonsil_maxfuse_adata_subsampled_copy = tonsil_maxfuse_adata_subsampled.copy() # 
 sc.pl.embedding(tonsil_maxfuse_adata_subsampled_copy, 'maxfuse', color=['CN'], mask_obs=(tonsil_maxfuse_adata_subsampled_copy.obs['modality'] == 'scRNA-seq'),
                 palette=tonsil_palette, s=10, save='_tonsil_merged_maxfuse_CN_rna.pdf', show=False)
 
-# Compute MaxFuse tonsil confusion matrix
+# Compute MaxFuse tonsil confusion matrix (using aligned data)
 print("Computing MaxFuse tonsil confusion matrix...")
-cm_maxfuse_tonsil = compute_confusion_matrix(tonsil_maxfuse_rna, tonsil_maxfuse_protein)
+cm_maxfuse_tonsil = compute_confusion_matrix(tonsil_maxfuse_rna_aligned, tonsil_maxfuse_protein_aligned)
 ct_cf_plot_tonsil(cm_maxfuse_tonsil, 'MaxFuse', 'XX%', 'fig_khh/tonsil_confusion_matrix_maxfuse.pdf')
 
 
@@ -1136,13 +1176,20 @@ gene_mask = tonsil_rna.var[tonsil_rna.var['pct_cells'] > 0.05].index
 
 # B-Ki67: CN_3, CN_7, CN_9 (germinal centers)
 bcells = tonsil_rna[tonsil_rna.obs['cell_types'] == 'B-Ki67']
-sc.tl.rank_genes_groups(bcells, groupby='CN', method='wilcoxon')
-deg_df = sc.get.rank_genes_groups_df(bcells, group=None)
-deg_df = deg_df[deg_df['group'].isin(['CN_3', 'CN_7', 'CN_9'])].sort_values('logfoldchanges', ascending=False)
-
-deg_df_filtered = deg_df[deg_df['names'].isin(gene_mask)]
-deg_df_filtered = deg_df_filtered[deg_df_filtered['pvals_adj'] < 0.05]
-deg_df_filtered.to_csv('B_Ki67_deg_df.csv')
+if bcells.n_obs > 0:
+    sc.tl.rank_genes_groups(bcells, groupby='CN', method='wilcoxon')
+    deg_df = sc.get.rank_genes_groups_df(bcells, group=None)
+    if len(deg_df) > 0 and 'group' in deg_df.columns:
+        deg_df = deg_df[deg_df['group'].isin(['CN_3', 'CN_7', 'CN_9'])].sort_values('logfoldchanges', ascending=False)
+        deg_df_filtered = deg_df[deg_df['names'].isin(gene_mask)]
+        deg_df_filtered = deg_df_filtered[deg_df_filtered['pvals_adj'] < 0.05]
+        deg_df_filtered.to_csv('B_Ki67_deg_df.csv')
+    else:
+        print("Warning: 'group' column not found in deg_df or deg_df is empty. Skipping DEG analysis for B-Ki67.")
+        deg_df_filtered = pd.DataFrame()  # Empty dataframe
+else:
+    print("Warning: No B-Ki67 cells found. Skipping DEG analysis.")
+    deg_df_filtered = pd.DataFrame()  # Empty dataframe
 
 
 # In[ ]:
@@ -1154,26 +1201,29 @@ keep_cn = ['CN_0', 'CN_1', 'CN_2', 'CN_3', 'CN_6','CN_7', 'CN_9'] # do not exami
 # In[ ]:
 
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_3') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_3:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_3') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_3:')
-print(df.iloc[:100]['names'].tolist())
+if len(deg_df_filtered) > 0 and 'group' in deg_df_filtered.columns and 'names' in deg_df_filtered.columns:
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_3') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_3:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_3') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_3:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_7') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_7:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_7') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_7:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_7') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_7:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_7') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_7:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_9') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_9:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_9') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_9:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_9') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_9:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_9') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_9:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+else:
+    print("Skipping DEG analysis output - deg_df_filtered is empty or missing required columns")
 
 
 # In[ ]:
@@ -1189,26 +1239,41 @@ CN_9 = ['HIST1H1B', 'FAM111B', 'TK1', 'DHFR', 'RRM2', 'DUT', 'CLSPN', 'LMO2', 'T
 
 
 # visualize top 50 in supplemental
-dp = sc.pl.dotplot(bcells[bcells.obs['CN'].isin(keep_cn)], CN_3[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_3.pdf', bbox_inches='tight')
+bcells_filtered = bcells[bcells.obs['CN'].isin(keep_cn)]
+if bcells_filtered.n_obs > 0:
+    # Check if genes exist in the data
+    cn3_genes = [g for g in CN_3[:50] if g in bcells_filtered.var_names]
+    cn7_genes = [g for g in CN_7[:50] if g in bcells_filtered.var_names]
+    cn9_genes = [g for g in CN_9[:50] if g in bcells_filtered.var_names]
+    
+    if len(cn3_genes) > 0:
+        dp = sc.pl.dotplot(bcells_filtered, cn3_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_3.pdf', bbox_inches='tight')
+        plt.clf()
 
-dp = sc.pl.dotplot(bcells[bcells.obs['CN'].isin(keep_cn)], CN_7[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_7.pdf', bbox_inches='tight')
+    if len(cn7_genes) > 0:
+        dp = sc.pl.dotplot(bcells_filtered, cn7_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_7.pdf', bbox_inches='tight')
+        plt.clf()
 
-dp = sc.pl.dotplot(bcells[bcells.obs['CN'].isin(keep_cn)], CN_9[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_9.pdf', bbox_inches='tight')
+    if len(cn9_genes) > 0:
+        dp = sc.pl.dotplot(bcells_filtered, cn9_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_9.pdf', bbox_inches='tight')
+        plt.clf()
+else:
+    print("Warning: No B-Ki67 cells found with CN in keep_cn. Skipping dotplots.")
 
 
 # In[ ]:
@@ -1257,17 +1322,31 @@ bcell_degs_selected_interpretation = {
               'MYBL2', 'BIRC5',],
 }
 
-dp = sc.pl.dotplot(bcells[bcells.obs['CN'].isin(['CN_3','CN_7','CN_9'])], 
-                   bcell_degs_selected_interpretation, 
-                   groupby='CN', 
-                   standard_scale='var', 
-                   show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-
-plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_379.pdf', bbox_inches='tight')
+bcells_cn379 = bcells[bcells.obs['CN'].isin(['CN_3','CN_7','CN_9'])]
+if bcells_cn379.n_obs > 0:
+    # Filter genes to only those that exist in the data
+    bcell_degs_filtered = {}
+    for key, genes in bcell_degs_selected_interpretation.items():
+        filtered_genes = [g for g in genes if g in bcells_cn379.var_names]
+        if len(filtered_genes) > 0:
+            bcell_degs_filtered[key] = filtered_genes
+    
+    if len(bcell_degs_filtered) > 0:
+        dp = sc.pl.dotplot(bcells_cn379, 
+                           bcell_degs_filtered, 
+                           groupby='CN', 
+                           standard_scale='var', 
+                           show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_379.pdf', bbox_inches='tight')
+        plt.clf()
+    else:
+        print("Warning: No genes from bcell_degs_selected_interpretation found in data. Skipping dotplot.")
+else:
+    print("Warning: No B-Ki67 cells found with CN_3, CN_7, or CN_9. Skipping dotplot.")
 
 
 # ### CD8 T
@@ -1277,13 +1356,29 @@ plt.savefig('fig_khh/dotplot_tonsil_rna_bcells_CN_379.pdf', bbox_inches='tight')
 
 # CD8 T: CN_0, CN_1, CN_5, CN_8 (B CD22 CD40 neighboring cells)
 cd8t = tonsil_rna[tonsil_rna.obs['cell_types'] == 'CD8 T']
-sc.tl.rank_genes_groups(cd8t, groupby='CN', method='wilcoxon', groups=['CN_0','CN_1','CN_5','CN_8'])
-deg_df = sc.get.rank_genes_groups_df(cd8t, group=None)
-deg_df = deg_df[deg_df['group'].isin(['CN_0', 'CN_1', 'CN_5', 'CN_8'])].sort_values('logfoldchanges', ascending=False)
-
-deg_df_filtered = deg_df[deg_df['names'].isin(gene_mask)]
-deg_df_filtered = deg_df_filtered[deg_df_filtered['pvals_adj'] < 0.05]
-deg_df_filtered.to_csv('CD8_T_deg_df.csv')
+if cd8t.n_obs > 0:
+    # Check which CN groups are actually present
+    available_cns = cd8t.obs['CN'].unique()
+    requested_cns = ['CN_0','CN_1','CN_5','CN_8']
+    valid_cns = [cn for cn in requested_cns if cn in available_cns]
+    
+    if len(valid_cns) > 1:  # Need at least 2 groups for comparison
+        sc.tl.rank_genes_groups(cd8t, groupby='CN', method='wilcoxon', groups=valid_cns)
+        deg_df = sc.get.rank_genes_groups_df(cd8t, group=None)
+        if len(deg_df) > 0 and 'group' in deg_df.columns:
+            deg_df = deg_df[deg_df['group'].isin(valid_cns)].sort_values('logfoldchanges', ascending=False)
+            deg_df_filtered = deg_df[deg_df['names'].isin(gene_mask)]
+            deg_df_filtered = deg_df_filtered[deg_df_filtered['pvals_adj'] < 0.05]
+            deg_df_filtered.to_csv('CD8_T_deg_df.csv')
+        else:
+            print(f"Warning: DEG analysis failed for CD8 T cells. Available CNs: {available_cns}. Skipping.")
+            deg_df_filtered = pd.DataFrame()
+    else:
+        print(f"Warning: Not enough CN groups for CD8 T DEG analysis. Available CNs: {available_cns}. Skipping.")
+        deg_df_filtered = pd.DataFrame()
+else:
+    print("Warning: No CD8 T cells found. Skipping DEG analysis.")
+    deg_df_filtered = pd.DataFrame()
 
 
 # In[ ]:
@@ -1295,33 +1390,36 @@ keep_cn = ['CN_0', 'CN_1', 'CN_4', 'CN_5', 'CN_8'] # do not examine CN2, CN3, CN
 # In[ ]:
 
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_0:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_0:')
-print(df.iloc[:100]['names'].tolist())
+if len(deg_df_filtered) > 0 and 'group' in deg_df_filtered.columns and 'names' in deg_df_filtered.columns:
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_0:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_0:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_1:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_1:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_1:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_1:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_5:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_5:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_5:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_5:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_8:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_8:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_8:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_8:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+else:
+    print("Skipping CD8 T DEG analysis output - deg_df_filtered is empty or missing required columns")
 
 
 # In[ ]:
@@ -1338,19 +1436,31 @@ print(len(CN_8))
 
 
 # visualize top 50 in supplemental
-dp = sc.pl.dotplot(cd8t[cd8t.obs['CN'].isin(keep_cn)], CN_0[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_cd8t_CN_0.pdf', bbox_inches='tight')
+cd8t_filtered = cd8t[cd8t.obs['CN'].isin(keep_cn)]
+if cd8t_filtered.n_obs > 0:
+    # Check if genes exist in the data
+    cn0_genes = [g for g in CN_0[:50] if g in cd8t_filtered.var_names]
+    cn8_genes = [g for g in CN_8[:50] if g in cd8t_filtered.var_names]
+    
+    if len(cn0_genes) > 0:
+        dp = sc.pl.dotplot(cd8t_filtered, cn0_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_cd8t_CN_0.pdf', bbox_inches='tight')
+        plt.clf()
 
-dp = sc.pl.dotplot(cd8t[cd8t.obs['CN'].isin(keep_cn)], CN_8[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_cd8t_CN_8.pdf', bbox_inches='tight')
+    if len(cn8_genes) > 0:
+        dp = sc.pl.dotplot(cd8t_filtered, cn8_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_cd8t_CN_8.pdf', bbox_inches='tight')
+        plt.clf()
+else:
+    print("Warning: No CD8 T cells found with CN in keep_cn. Skipping dotplots.")
 
 
 # In[ ]:
@@ -1370,17 +1480,31 @@ cd8t_degs_selected = {
     
 }
 
-dp = sc.pl.dotplot(cd8t[cd8t.obs['CN'].isin(keep_cn)], 
-                   cd8t_degs, 
-                   groupby='CN', 
-                   standard_scale='var', 
-                   show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-
-plt.savefig('fig_khh/dotplot_tonsil_rna_cd8t_CN_08.pdf', bbox_inches='tight')
+cd8t_filtered = cd8t[cd8t.obs['CN'].isin(keep_cn)]
+if cd8t_filtered.n_obs > 0:
+    # Filter genes to only those that exist in the data
+    cd8t_degs_filtered = {}
+    for key, genes in cd8t_degs.items():
+        filtered_genes = [g for g in genes if g in cd8t_filtered.var_names]
+        if len(filtered_genes) > 0:
+            cd8t_degs_filtered[key] = filtered_genes
+    
+    if len(cd8t_degs_filtered) > 0:
+        dp = sc.pl.dotplot(cd8t_filtered, 
+                           cd8t_degs_filtered, 
+                           groupby='CN', 
+                           standard_scale='var', 
+                           show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_cd8t_CN_08.pdf', bbox_inches='tight')
+        plt.clf()
+    else:
+        print("Warning: No genes from cd8t_degs found in data. Skipping dotplot.")
+else:
+    print("Warning: No CD8 T cells found with CN in keep_cn. Skipping dotplot.")
 
 
 # ### CD4 T
@@ -1390,13 +1514,29 @@ plt.savefig('fig_khh/dotplot_tonsil_rna_cd8t_CN_08.pdf', bbox_inches='tight')
 
 # CD4 T: CN_0, CN_1, CN_5, CN_8 (B CD22 CD40 neighboring cells)
 cd4t = tonsil_rna[tonsil_rna.obs['cell_types'] == 'CD4 T']
-sc.tl.rank_genes_groups(cd4t, groupby='CN', method='wilcoxon', groups=['CN_0', 'CN_1', 'CN_5', 'CN_8'])
-deg_df = sc.get.rank_genes_groups_df(cd4t, group=None)
-deg_df = deg_df[deg_df['group'].isin(['CN_0', 'CN_1', 'CN_5', 'CN_8'])].sort_values('logfoldchanges', ascending=False)
-
-deg_df_filtered = deg_df[deg_df['names'].isin(gene_mask)]
-deg_df_filtered = deg_df_filtered[deg_df_filtered['pvals_adj'] < 0.05]
-deg_df_filtered.to_csv('CD4_T_deg_df.csv')
+if cd4t.n_obs > 0:
+    # Check which CN groups are actually present
+    available_cns = cd4t.obs['CN'].unique()
+    requested_cns = ['CN_0', 'CN_1', 'CN_5', 'CN_8']
+    valid_cns = [cn for cn in requested_cns if cn in available_cns]
+    
+    if len(valid_cns) > 1:  # Need at least 2 groups for comparison
+        sc.tl.rank_genes_groups(cd4t, groupby='CN', method='wilcoxon', groups=valid_cns)
+        deg_df = sc.get.rank_genes_groups_df(cd4t, group=None)
+        if len(deg_df) > 0 and 'group' in deg_df.columns:
+            deg_df = deg_df[deg_df['group'].isin(valid_cns)].sort_values('logfoldchanges', ascending=False)
+            deg_df_filtered = deg_df[deg_df['names'].isin(gene_mask)]
+            deg_df_filtered = deg_df_filtered[deg_df_filtered['pvals_adj'] < 0.05]
+            deg_df_filtered.to_csv('CD4_T_deg_df.csv')
+        else:
+            print(f"Warning: DEG analysis failed for CD4 T cells. Available CNs: {available_cns}. Skipping.")
+            deg_df_filtered = pd.DataFrame()
+    else:
+        print(f"Warning: Not enough CN groups for CD4 T DEG analysis. Available CNs: {available_cns}. Skipping.")
+        deg_df_filtered = pd.DataFrame()
+else:
+    print("Warning: No CD4 T cells found. Skipping DEG analysis.")
+    deg_df_filtered = pd.DataFrame()
 
 
 # In[ ]:
@@ -1408,33 +1548,36 @@ keep_cn = ['CN_0', 'CN_1', 'CN_4', 'CN_5', 'CN_8'] # do not examine CN2, CN3, CN
 # In[ ]:
 
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_0:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_0:')
-print(df.iloc[:100]['names'].tolist())
+if len(deg_df_filtered) > 0 and 'group' in deg_df_filtered.columns and 'names' in deg_df_filtered.columns:
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_0:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_0') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_0:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_1:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_1:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_1:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_1') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_1:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_5:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_5:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_5:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_5') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_5:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
 
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
-print('upregulated genes in CN_8:')
-print(df.iloc[:100]['names'].tolist())
-df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
-print('downregulated genes in CN_8:')
-print(df.iloc[:100]['names'].tolist())
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] > 0)].sort_values('logfoldchanges', ascending=False)
+    print('upregulated genes in CN_8:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+    df = deg_df_filtered[(deg_df_filtered['group'] == 'CN_8') & (deg_df_filtered['logfoldchanges'] < 0)].sort_values('logfoldchanges', ascending=True)
+    print('downregulated genes in CN_8:')
+    print(df.iloc[:100]['names'].tolist() if len(df) > 0 else [])
+else:
+    print("Skipping CD4 T DEG analysis output - deg_df_filtered is empty or missing required columns")
 
 
 # In[ ]:
@@ -1455,33 +1598,51 @@ print(len(CN_8))
 
 
 # visualize top 50 in supplemental
-dp = sc.pl.dotplot(cd4t[cd4t.obs['CN'].isin(keep_cn)], CN_0[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_0.pdf', bbox_inches='tight')
+cd4t_filtered = cd4t[cd4t.obs['CN'].isin(keep_cn)]
+if cd4t_filtered.n_obs > 0:
+    # Check if genes exist in the data
+    cn0_genes = [g for g in CN_0[:50] if g in cd4t_filtered.var_names]
+    cn1_genes = [g for g in CN_1[:50] if g in cd4t_filtered.var_names]
+    cn5_genes = [g for g in CN_5[:50] if g in cd4t_filtered.var_names]
+    cn8_genes = [g for g in CN_8[:50] if g in cd4t_filtered.var_names]
+    
+    if len(cn0_genes) > 0:
+        dp = sc.pl.dotplot(cd4t_filtered, cn0_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_0.pdf', bbox_inches='tight')
+        plt.clf()
 
-dp = sc.pl.dotplot(cd4t[cd4t.obs['CN'].isin(keep_cn)], CN_1[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_1.pdf', bbox_inches='tight')
+    if len(cn1_genes) > 0:
+        dp = sc.pl.dotplot(cd4t_filtered, cn1_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_1.pdf', bbox_inches='tight')
+        plt.clf()
 
-dp = sc.pl.dotplot(cd4t[cd4t.obs['CN'].isin(keep_cn)], CN_5[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_5.pdf', bbox_inches='tight')
+    if len(cn5_genes) > 0:
+        dp = sc.pl.dotplot(cd4t_filtered, cn5_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_5.pdf', bbox_inches='tight')
+        plt.clf()
 
-dp = sc.pl.dotplot(cd4t[cd4t.obs['CN'].isin(keep_cn)], CN_8[:50], groupby='CN', standard_scale='var', show=False)
-ax = dp["mainplot_ax"]
-for l in ax.get_yticklabels():
-    l.set_color(tonsil_palette[l.get_text()])
-    l.set_fontweight("bold")
-plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_8.pdf', bbox_inches='tight')
+    if len(cn8_genes) > 0:
+        dp = sc.pl.dotplot(cd4t_filtered, cn8_genes, groupby='CN', standard_scale='var', show=False)
+        ax = dp["mainplot_ax"]
+        for l in ax.get_yticklabels():
+            l.set_color(tonsil_palette[l.get_text()])
+            l.set_fontweight("bold")
+        plt.savefig('fig_khh/dotplot_tonsil_rna_cd4t_CN_8.pdf', bbox_inches='tight')
+        plt.clf()
+else:
+    print("Warning: No CD4 T cells found with CN in keep_cn. Skipping dotplots.")
 
 
 # In[ ]:
