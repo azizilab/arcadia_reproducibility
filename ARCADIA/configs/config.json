@@ -1,0 +1,12 @@
+{
+  "subsample": {
+    "num_rna_cells": 50000,
+    "num_protein_cells": 50000
+  },
+  "plot_flag": true,
+  "use_spatial_injection": false,
+  "residualize_spatial_features": true,
+  "training": {
+    "max_epochs": 200
+  }
+}
