@@ -121,14 +121,15 @@ MaxFuse is a method for integrating single-cell multi-omics data using maximum m
 ```bash
 git clone https://github.com/azizilab/arcadia_reproducibility.git
 ```
+The `ARCADIA/` folder already contains the full ARCADIA code, so **you do not need to clone `ARCADIA_public` separately**. When you freshly clone this repository, you get the version of ARCADIA that was current at the time this repository was last updated.
 
-The `ARCADIA/` folder will contain the ARCADIA code. **You do not need to separately clone ARCADIA_public** - it's already included.
-
-To update ARCADIA to the latest version from the main branch:
+If you cloned this repository a while ago and want to **refresh ARCADIA to the latest `main` from `ARCADIA_public`**, you can run:
 
 ```bash
 git subtree pull --prefix=ARCADIA https://github.com/azizilab/ARCADIA_public.git main --squash
 ```
+
+This command is **optional** and only useful if `ARCADIA_public` has received new commits since you originally cloned this repository.
 
 Then follow the instructions in the ARCADIA README to set up the environment.
 
