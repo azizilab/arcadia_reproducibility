@@ -31,7 +31,7 @@ Please check out our main [ARCADIA repository](https://github.com/azizilab/ARCAD
 │   ├── model_maxfuse_dataset_tonsil.py
 │   └── scMODAL_main/            # scMODAL implementation included
 │
-├── ARCADIA/                     # ARCADIA model implementation repository (git submodule)
+├── ARCADIA/                     # ARCADIA model implementation repository (git subtree)
 │   ├── scripts/                 # Pipeline execution scripts
 │   │   ├── _0_preprocess_cite_seq.py
 │   │   ├── _0_preprocess_tonsil.py
@@ -116,13 +116,19 @@ MaxFuse is a method for integrating single-cell multi-omics data using maximum m
 
 ### Prerequisites
 
-**ARCADIA is included as a git submodule.** Clone this repository with submodules:
+**ARCADIA is included as a git subtree.** Simply clone this repository:
 
 ```bash
-git clone --recursive https://github.com/azizilab/arcadia_reproducibility.git
+git clone https://github.com/azizilab/arcadia_reproducibility.git
 ```
 
-The `ARCADIA/` folder will contain the ARCADIA repository. **You do not need to separately clone ARCADIA_public** - it's already included as a submodule.
+The `ARCADIA/` folder will contain the ARCADIA code. **You do not need to separately clone ARCADIA_public** - it's already included.
+
+To update ARCADIA to the latest version from the main branch:
+
+```bash
+git subtree pull --prefix=ARCADIA https://github.com/azizilab/ARCADIA_public.git main --squash
+```
 
 Then follow the instructions in the ARCADIA README to set up the environment.
 

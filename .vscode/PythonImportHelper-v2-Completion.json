@@ -108,6 +108,14 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "timedelta",
         "importPath": "datetime",
         "description": "datetime",
@@ -161,6 +169,46 @@
         "description": "datetime",
         "isExtraImport": true,
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
         "documentation": {}
     },
     {
@@ -478,6 +526,14 @@
     },
     {
         "label": "find",
+        "importPath": "scipy.sparse",
+        "description": "scipy.sparse",
+        "isExtraImport": true,
+        "detail": "scipy.sparse",
+        "documentation": {}
+    },
+    {
+        "label": "issparse",
         "importPath": "scipy.sparse",
         "description": "scipy.sparse",
         "isExtraImport": true,
@@ -1082,14 +1138,6 @@
         "documentation": {}
     },
     {
-        "label": "metadata",
-        "importPath": "arcadia.utils",
-        "description": "arcadia.utils",
-        "isExtraImport": true,
-        "detail": "arcadia.utils",
-        "documentation": {}
-    },
-    {
         "label": "matplotlib.colors",
         "kind": 6,
         "isExtraImport": true,
@@ -1160,15 +1208,6 @@
         "description": "itertools",
         "isExtraImport": true,
         "detail": "itertools",
-        "documentation": {}
-    },
-    {
-        "label": "seaborn",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "seaborn",
-        "description": "seaborn",
-        "detail": "seaborn",
         "documentation": {}
     },
     {
@@ -1262,6 +1301,14 @@
     },
     {
         "label": "parse_pipeline_arguments",
+        "importPath": "arcadia.utils.args",
+        "description": "arcadia.utils.args",
+        "isExtraImport": true,
+        "detail": "arcadia.utils.args",
+        "documentation": {}
+    },
+    {
+        "label": "find_checkpoint_from_experiment_name",
         "importPath": "arcadia.utils.args",
         "description": "arcadia.utils.args",
         "isExtraImport": true,
@@ -1438,6 +1485,31 @@
         "documentation": {}
     },
     {
+        "label": "AnnData",
+        "importPath": "anndata",
+        "description": "anndata",
+        "isExtraImport": true,
+        "detail": "anndata",
+        "documentation": {}
+    },
+    {
+        "label": "AnnData",
+        "importPath": "anndata",
+        "description": "anndata",
+        "isExtraImport": true,
+        "detail": "anndata",
+        "documentation": {}
+    },
+    {
+        "label": "seaborn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "seaborn",
+        "description": "seaborn",
+        "detail": "seaborn",
+        "documentation": {}
+    },
+    {
         "label": "KMeans",
         "importPath": "sklearn.cluster",
         "description": "sklearn.cluster",
@@ -1463,6 +1535,22 @@
     },
     {
         "label": "f1_score",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "pairwise_distances",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "r2_score",
         "importPath": "sklearn.metrics",
         "description": "sklearn.metrics",
         "isExtraImport": true,
@@ -1567,6 +1655,14 @@
     },
     {
         "label": "plot_protein_vs_cn_statistics",
+        "importPath": "arcadia.plotting.spatial",
+        "description": "arcadia.plotting.spatial",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.spatial",
+        "documentation": {}
+    },
+    {
+        "label": "plot_residualization_comparison",
         "importPath": "arcadia.plotting.spatial",
         "description": "arcadia.plotting.spatial",
         "isExtraImport": true,
@@ -1703,14 +1799,6 @@
     },
     {
         "label": "plot_archetype_heatmaps",
-        "importPath": "arcadia.plotting.archetypes",
-        "description": "arcadia.plotting.archetypes",
-        "isExtraImport": true,
-        "detail": "arcadia.plotting.archetypes",
-        "documentation": {}
-    },
-    {
-        "label": "plot_extreme_archetypes_alignment",
         "importPath": "arcadia.plotting.archetypes",
         "description": "arcadia.plotting.archetypes",
         "isExtraImport": true,
@@ -1894,6 +1982,14 @@
         "documentation": {}
     },
     {
+        "label": "train_vae",
+        "importPath": "arcadia.training",
+        "description": "arcadia.training",
+        "isExtraImport": true,
+        "detail": "arcadia.training",
+        "documentation": {}
+    },
+    {
         "label": "validate_scvi_training_mixin",
         "importPath": "arcadia.training",
         "description": "arcadia.training",
@@ -1966,7 +2062,23 @@
         "documentation": {}
     },
     {
+        "label": "train_vae",
+        "importPath": "arcadia.training",
+        "description": "arcadia.training",
+        "isExtraImport": true,
+        "detail": "arcadia.training",
+        "documentation": {}
+    },
+    {
         "label": "validate_scvi_training_mixin",
+        "importPath": "arcadia.training",
+        "description": "arcadia.training",
+        "isExtraImport": true,
+        "detail": "arcadia.training",
+        "documentation": {}
+    },
+    {
+        "label": "metrics",
         "importPath": "arcadia.training",
         "description": "arcadia.training",
         "isExtraImport": true,
@@ -2137,40 +2249,6 @@
         "documentation": {}
     },
     {
-        "label": "hashlib",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "hashlib",
-        "description": "hashlib",
-        "detail": "hashlib",
-        "documentation": {}
-    },
-    {
-        "label": "time",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "time",
-        "description": "time",
-        "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "time",
-        "importPath": "time",
-        "description": "time",
-        "isExtraImport": true,
-        "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "pprint",
-        "importPath": "pprint",
-        "description": "pprint",
-        "isExtraImport": true,
-        "detail": "pprint",
-        "documentation": {}
-    },
-    {
         "label": "mlflow",
         "kind": 6,
         "isExtraImport": true,
@@ -2180,29 +2258,75 @@
         "documentation": {}
     },
     {
-        "label": "scvi",
-        "kind": 6,
+        "label": "determine_dataset_path",
+        "importPath": "arcadia.data_utils.loading",
+        "description": "arcadia.data_utils.loading",
         "isExtraImport": true,
-        "importPath": "scvi",
-        "description": "scvi",
-        "detail": "scvi",
+        "detail": "arcadia.data_utils.loading",
         "documentation": {}
     },
     {
-        "label": "torch",
-        "kind": 6,
+        "label": "load_adata_latest",
+        "importPath": "arcadia.data_utils.loading",
+        "description": "arcadia.data_utils.loading",
         "isExtraImport": true,
-        "importPath": "torch",
-        "description": "torch",
-        "detail": "torch",
+        "detail": "arcadia.data_utils.loading",
         "documentation": {}
     },
     {
-        "label": "nn",
-        "importPath": "torch",
-        "description": "torch",
+        "label": "convert_to_sparse_csr",
+        "importPath": "arcadia.data_utils.preprocessing",
+        "description": "arcadia.data_utils.preprocessing",
         "isExtraImport": true,
-        "detail": "torch",
+        "detail": "arcadia.data_utils.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "log1p_rna",
+        "importPath": "arcadia.data_utils.preprocessing",
+        "description": "arcadia.data_utils.preprocessing",
+        "isExtraImport": true,
+        "detail": "arcadia.data_utils.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "analyze_and_visualize",
+        "importPath": "arcadia.data_utils.preprocessing",
+        "description": "arcadia.data_utils.preprocessing",
+        "isExtraImport": true,
+        "detail": "arcadia.data_utils.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "log1p_rna",
+        "importPath": "arcadia.data_utils.preprocessing",
+        "description": "arcadia.data_utils.preprocessing",
+        "isExtraImport": true,
+        "detail": "arcadia.data_utils.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "qc_metrics",
+        "importPath": "arcadia.data_utils.preprocessing",
+        "description": "arcadia.data_utils.preprocessing",
+        "isExtraImport": true,
+        "detail": "arcadia.data_utils.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "plot_batch_specific_umaps",
+        "importPath": "arcadia.plotting.training",
+        "description": "arcadia.plotting.training",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.training",
+        "documentation": {}
+    },
+    {
+        "label": "plot_pre_training_visualizations",
+        "importPath": "arcadia.plotting.training",
+        "description": "arcadia.plotting.training",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.training",
         "documentation": {}
     },
     {
@@ -2215,14 +2339,6 @@
     },
     {
         "label": "plot_first_batch_umaps",
-        "importPath": "arcadia.plotting.training",
-        "description": "arcadia.plotting.training",
-        "isExtraImport": true,
-        "detail": "arcadia.plotting.training",
-        "documentation": {}
-    },
-    {
-        "label": "plot_rna_protein_matching_means_and_scale",
         "importPath": "arcadia.plotting.training",
         "description": "arcadia.plotting.training",
         "isExtraImport": true,
@@ -2302,27 +2418,91 @@
         "documentation": {}
     },
     {
-        "label": "DualVAETrainingPlan",
-        "importPath": "arcadia.training.dual_vae_training_plan",
-        "description": "arcadia.training.dual_vae_training_plan",
+        "label": "extract_training_metrics_from_history",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
         "isExtraImport": true,
-        "detail": "arcadia.training.dual_vae_training_plan",
+        "detail": "arcadia.training.metrics",
         "documentation": {}
     },
     {
-        "label": "load_loss_scales_from_cache",
-        "importPath": "arcadia.training.loss_scaling",
-        "description": "arcadia.training.loss_scaling",
+        "label": "process_post_training_metrics",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
         "isExtraImport": true,
-        "detail": "arcadia.training.loss_scaling",
+        "detail": "arcadia.training.metrics",
         "documentation": {}
     },
     {
-        "label": "save_loss_scales_to_cache",
-        "importPath": "arcadia.training.loss_scaling",
-        "description": "arcadia.training.loss_scaling",
+        "label": "mixing_score",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
         "isExtraImport": true,
-        "detail": "arcadia.training.loss_scaling",
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_iLISI",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
+        "isExtraImport": true,
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "compute_ari_f1",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
+        "isExtraImport": true,
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "compute_silhouette_f1",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
+        "isExtraImport": true,
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "kbet_within_cell_types",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
+        "isExtraImport": true,
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "matching_accuracy",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
+        "isExtraImport": true,
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "calc_dist",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
+        "isExtraImport": true,
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "calc_dist",
+        "importPath": "arcadia.training.metrics",
+        "description": "arcadia.training.metrics",
+        "isExtraImport": true,
+        "detail": "arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "log_training_summary",
+        "importPath": "arcadia.utils.logging",
+        "description": "arcadia.utils.logging",
+        "isExtraImport": true,
+        "detail": "arcadia.utils.logging",
         "documentation": {}
     },
     {
@@ -2335,6 +2515,22 @@
     },
     {
         "label": "setup_logger",
+        "importPath": "arcadia.utils.logging",
+        "description": "arcadia.utils.logging",
+        "isExtraImport": true,
+        "detail": "arcadia.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "setup_mlflow_experiment",
+        "importPath": "arcadia.utils.logging",
+        "description": "arcadia.utils.logging",
+        "isExtraImport": true,
+        "detail": "arcadia.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
         "importPath": "arcadia.utils.logging",
         "description": "arcadia.utils.logging",
         "isExtraImport": true,
@@ -2366,6 +2562,14 @@
         "documentation": {}
     },
     {
+        "label": "logger",
+        "importPath": "arcadia.utils.logging",
+        "description": "arcadia.utils.logging",
+        "isExtraImport": true,
+        "detail": "arcadia.utils.logging",
+        "documentation": {}
+    },
+    {
         "label": "setup_logger",
         "importPath": "arcadia.utils.logging",
         "description": "arcadia.utils.logging",
@@ -2375,6 +2579,14 @@
     },
     {
         "label": "setup_logger",
+        "importPath": "arcadia.utils.logging",
+        "description": "arcadia.utils.logging",
+        "isExtraImport": true,
+        "detail": "arcadia.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
         "importPath": "arcadia.utils.logging",
         "description": "arcadia.utils.logging",
         "isExtraImport": true,
@@ -2462,6 +2674,14 @@
         "documentation": {}
     },
     {
+        "label": "setup_logger",
+        "importPath": "arcadia.utils.logging",
+        "description": "arcadia.utils.logging",
+        "isExtraImport": true,
+        "detail": "arcadia.utils.logging",
+        "documentation": {}
+    },
+    {
         "label": "logger",
         "importPath": "arcadia.utils.logging",
         "description": "arcadia.utils.logging",
@@ -2478,20 +2698,212 @@
         "documentation": {}
     },
     {
-        "label": "SCVI",
-        "importPath": "scvi.model",
-        "description": "scvi.model",
+        "label": "assign_rna_cn_from_protein",
+        "importPath": "arcadia.analysis.post_hoc_utils",
+        "description": "arcadia.analysis.post_hoc_utils",
         "isExtraImport": true,
-        "detail": "scvi.model",
+        "detail": "arcadia.analysis.post_hoc_utils",
         "documentation": {}
     },
     {
-        "label": "importlib.util",
+        "label": "load_checkpoint_data",
+        "importPath": "arcadia.analysis.post_hoc_utils",
+        "description": "arcadia.analysis.post_hoc_utils",
+        "isExtraImport": true,
+        "detail": "arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_models_from_checkpoint",
+        "importPath": "arcadia.analysis.post_hoc_utils",
+        "description": "arcadia.analysis.post_hoc_utils",
+        "isExtraImport": true,
+        "detail": "arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "assign_rna_cn_from_protein",
+        "importPath": "arcadia.analysis.post_hoc_utils",
+        "description": "arcadia.analysis.post_hoc_utils",
+        "isExtraImport": true,
+        "detail": "arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_checkpoint_data",
+        "importPath": "arcadia.analysis.post_hoc_utils",
+        "description": "arcadia.analysis.post_hoc_utils",
+        "isExtraImport": true,
+        "detail": "arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_checkpoint_data",
+        "importPath": "arcadia.analysis.post_hoc_utils",
+        "description": "arcadia.analysis.post_hoc_utils",
+        "isExtraImport": true,
+        "detail": "arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "clean_uns_for_h5ad",
+        "importPath": "arcadia.data_utils.cleaning",
+        "description": "arcadia.data_utils.cleaning",
+        "isExtraImport": true,
+        "detail": "arcadia.data_utils.cleaning",
+        "documentation": {}
+    },
+    {
+        "label": "clean_uns_for_h5ad",
+        "importPath": "arcadia.data_utils.cleaning",
+        "description": "arcadia.data_utils.cleaning",
+        "isExtraImport": true,
+        "detail": "arcadia.data_utils.cleaning",
+        "documentation": {}
+    },
+    {
+        "label": "clean_uns_for_h5ad",
+        "importPath": "arcadia.data_utils.cleaning",
+        "description": "arcadia.data_utils.cleaning",
+        "isExtraImport": true,
+        "detail": "arcadia.data_utils.cleaning",
+        "documentation": {}
+    },
+    {
+        "label": "plot_latent_space_mixing",
+        "importPath": "arcadia.plotting.post_hoc",
+        "description": "arcadia.plotting.post_hoc",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_individual_and_combined_umaps",
+        "importPath": "arcadia.plotting.post_hoc",
+        "description": "arcadia.plotting.post_hoc",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_morans_i",
+        "importPath": "arcadia.plotting.post_hoc",
+        "description": "arcadia.plotting.post_hoc",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_umap_latent_arcadia",
+        "importPath": "arcadia.plotting.post_hoc",
+        "description": "arcadia.plotting.post_hoc",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_umap_per_cell_type",
+        "importPath": "arcadia.plotting.post_hoc",
+        "description": "arcadia.plotting.post_hoc",
+        "isExtraImport": true,
+        "detail": "arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "validate_scvi_training_mixin",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_counterfactual_adata",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_latent_embedding",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "compute_pairwise_distances",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "compute_pairwise_kl_two_items",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_counterfactual_adata",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_latent_embedding",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "predict_rna_cn_from_protein_neighbors",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "log_memory_usage",
+        "importPath": "arcadia.training.utils",
+        "description": "arcadia.training.utils",
+        "isExtraImport": true,
+        "detail": "arcadia.training.utils",
+        "documentation": {}
+    },
+    {
+        "label": "time",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "importlib.util",
-        "description": "importlib.util",
-        "detail": "importlib.util",
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
         "documentation": {}
     },
     {
@@ -2504,11 +2916,60 @@
         "documentation": {}
     },
     {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "nn",
+        "importPath": "torch",
+        "description": "torch",
+        "isExtraImport": true,
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
         "label": "ParameterGrid",
         "importPath": "sklearn.model_selection",
         "description": "sklearn.model_selection",
         "isExtraImport": true,
         "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "DualVAETrainingPlan",
+        "importPath": "arcadia.training.dual_vae_training_plan",
+        "description": "arcadia.training.dual_vae_training_plan",
+        "isExtraImport": true,
+        "detail": "arcadia.training.dual_vae_training_plan",
+        "documentation": {}
+    },
+    {
+        "label": "DualVAETrainingPlan",
+        "importPath": "arcadia.training.dual_vae_training_plan",
+        "description": "arcadia.training.dual_vae_training_plan",
+        "isExtraImport": true,
+        "detail": "arcadia.training.dual_vae_training_plan",
+        "documentation": {}
+    },
+    {
+        "label": "Parallel",
+        "importPath": "joblib",
+        "description": "joblib",
+        "isExtraImport": true,
+        "detail": "joblib",
+        "documentation": {}
+    },
+    {
+        "label": "delayed",
+        "importPath": "joblib",
+        "description": "joblib",
+        "isExtraImport": true,
+        "detail": "joblib",
         "documentation": {}
     },
     {
@@ -2889,6 +3350,14 @@
         "documentation": {}
     },
     {
+        "label": "cdist",
+        "importPath": "scipy.spatial.distance",
+        "description": "scipy.spatial.distance",
+        "isExtraImport": true,
+        "detail": "scipy.spatial.distance",
+        "documentation": {}
+    },
+    {
         "label": "identify_extreme_archetypes_percentile",
         "importPath": "arcadia.archetypes.cell_representations",
         "description": "arcadia.archetypes.cell_representations",
@@ -2926,70 +3395,6 @@
         "description": "sklearn.preprocessing",
         "isExtraImport": true,
         "detail": "sklearn.preprocessing",
-        "documentation": {}
-    },
-    {
-        "label": "mixing_score",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "calculate_iLISI",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "compute_ari_f1",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "compute_silhouette_f1",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "kbet_within_cell_types",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "matching_accuracy",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "calc_dist",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "calc_dist",
-        "importPath": "arcadia.training.metrics",
-        "description": "arcadia.training.metrics",
-        "isExtraImport": true,
-        "detail": "arcadia.training.metrics",
         "documentation": {}
     },
     {
@@ -3039,6 +3444,14 @@
         "isExtraImport": true,
         "importPath": "sklearn.neighbors",
         "description": "sklearn.neighbors",
+        "detail": "sklearn.neighbors",
+        "documentation": {}
+    },
+    {
+        "label": "NearestNeighbors",
+        "importPath": "sklearn.neighbors",
+        "description": "sklearn.neighbors",
+        "isExtraImport": true,
         "detail": "sklearn.neighbors",
         "documentation": {}
     },
@@ -3176,11 +3589,12 @@
         "documentation": {}
     },
     {
-        "label": "mmread",
-        "importPath": "scipy.io",
-        "description": "scipy.io",
+        "label": "scvi",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "scipy.io",
+        "importPath": "scvi",
+        "description": "scvi",
+        "detail": "scvi",
         "documentation": {}
     },
     {
@@ -3192,19 +3606,11 @@
         "documentation": {}
     },
     {
-        "label": "clean_uns_for_h5ad",
-        "importPath": "arcadia.data_utils.cleaning",
-        "description": "arcadia.data_utils.cleaning",
+        "label": "mmread",
+        "importPath": "scipy.io",
+        "description": "scipy.io",
         "isExtraImport": true,
-        "detail": "arcadia.data_utils.cleaning",
-        "documentation": {}
-    },
-    {
-        "label": "clean_uns_for_h5ad",
-        "importPath": "arcadia.data_utils.cleaning",
-        "description": "arcadia.data_utils.cleaning",
-        "isExtraImport": true,
-        "detail": "arcadia.data_utils.cleaning",
+        "detail": "scipy.io",
         "documentation": {}
     },
     {
@@ -3329,38 +3735,6 @@
         "documentation": {}
     },
     {
-        "label": "log1p_rna",
-        "importPath": "arcadia.data_utils.preprocessing",
-        "description": "arcadia.data_utils.preprocessing",
-        "isExtraImport": true,
-        "detail": "arcadia.data_utils.preprocessing",
-        "documentation": {}
-    },
-    {
-        "label": "analyze_and_visualize",
-        "importPath": "arcadia.data_utils.preprocessing",
-        "description": "arcadia.data_utils.preprocessing",
-        "isExtraImport": true,
-        "detail": "arcadia.data_utils.preprocessing",
-        "documentation": {}
-    },
-    {
-        "label": "log1p_rna",
-        "importPath": "arcadia.data_utils.preprocessing",
-        "description": "arcadia.data_utils.preprocessing",
-        "isExtraImport": true,
-        "detail": "arcadia.data_utils.preprocessing",
-        "documentation": {}
-    },
-    {
-        "label": "qc_metrics",
-        "importPath": "arcadia.data_utils.preprocessing",
-        "description": "arcadia.data_utils.preprocessing",
-        "isExtraImport": true,
-        "detail": "arcadia.data_utils.preprocessing",
-        "documentation": {}
-    },
-    {
         "label": "psutil",
         "kind": 6,
         "isExtraImport": true,
@@ -3442,43 +3816,21 @@
         "documentation": {}
     },
     {
-        "label": "compute_pairwise_distances",
-        "importPath": "arcadia.training.utils",
-        "description": "arcadia.training.utils",
+        "label": "hashlib",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "arcadia.training.utils",
+        "importPath": "hashlib",
+        "description": "hashlib",
+        "detail": "hashlib",
         "documentation": {}
     },
     {
-        "label": "compute_pairwise_kl_two_items",
-        "importPath": "arcadia.training.utils",
-        "description": "arcadia.training.utils",
+        "label": "torch.nn.functional",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "arcadia.training.utils",
-        "documentation": {}
-    },
-    {
-        "label": "create_counterfactual_adata",
-        "importPath": "arcadia.training.utils",
-        "description": "arcadia.training.utils",
-        "isExtraImport": true,
-        "detail": "arcadia.training.utils",
-        "documentation": {}
-    },
-    {
-        "label": "get_latent_embedding",
-        "importPath": "arcadia.training.utils",
-        "description": "arcadia.training.utils",
-        "isExtraImport": true,
-        "detail": "arcadia.training.utils",
-        "documentation": {}
-    },
-    {
-        "label": "predict_rna_cn_from_protein_neighbors",
-        "importPath": "arcadia.training.utils",
-        "description": "arcadia.training.utils",
-        "isExtraImport": true,
-        "detail": "arcadia.training.utils",
+        "importPath": "torch.nn.functional",
+        "description": "torch.nn.functional",
+        "detail": "torch.nn.functional",
         "documentation": {}
     },
     {
@@ -3487,6 +3839,30 @@
         "description": "torch.nn.functional",
         "isExtraImport": true,
         "detail": "torch.nn.functional",
+        "documentation": {}
+    },
+    {
+        "label": "pprint",
+        "importPath": "pprint",
+        "description": "pprint",
+        "isExtraImport": true,
+        "detail": "pprint",
+        "documentation": {}
+    },
+    {
+        "label": "load_loss_scales_from_cache",
+        "importPath": "arcadia.training.loss_scaling",
+        "description": "arcadia.training.loss_scaling",
+        "isExtraImport": true,
+        "detail": "arcadia.training.loss_scaling",
+        "documentation": {}
+    },
+    {
+        "label": "save_loss_scales_to_cache",
+        "importPath": "arcadia.training.loss_scaling",
+        "description": "arcadia.training.loss_scaling",
+        "isExtraImport": true,
+        "detail": "arcadia.training.loss_scaling",
         "documentation": {}
     },
     {
@@ -3533,6 +3909,48 @@
         "documentation": {}
     },
     {
+        "label": "torch.nn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.nn",
+        "description": "torch.nn",
+        "detail": "torch.nn",
+        "documentation": {}
+    },
+    {
+        "label": "torch.optim",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.optim",
+        "description": "torch.optim",
+        "detail": "torch.optim",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "scmodal.networks",
+        "description": "scmodal.networks",
+        "isExtraImport": true,
+        "detail": "scmodal.networks",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "scmodal.utils",
+        "description": "scmodal.utils",
+        "isExtraImport": true,
+        "detail": "scmodal.utils",
+        "documentation": {}
+    },
+    {
+        "label": "AnnoyIndex",
+        "importPath": "annoy",
+        "description": "annoy",
+        "isExtraImport": true,
+        "detail": "annoy",
+        "documentation": {}
+    },
+    {
         "label": "align_data",
         "importPath": "arcadia.analysis.comparison_utils",
         "description": "arcadia.analysis.comparison_utils",
@@ -3570,70 +3988,6 @@
         "description": "arcadia.analysis.comparison_utils",
         "isExtraImport": true,
         "detail": "arcadia.analysis.comparison_utils",
-        "documentation": {}
-    },
-    {
-        "label": "assign_rna_cn_from_protein",
-        "importPath": "arcadia.analysis.post_hoc_utils",
-        "description": "arcadia.analysis.post_hoc_utils",
-        "isExtraImport": true,
-        "detail": "arcadia.analysis.post_hoc_utils",
-        "documentation": {}
-    },
-    {
-        "label": "load_checkpoint_data",
-        "importPath": "arcadia.analysis.post_hoc_utils",
-        "description": "arcadia.analysis.post_hoc_utils",
-        "isExtraImport": true,
-        "detail": "arcadia.analysis.post_hoc_utils",
-        "documentation": {}
-    },
-    {
-        "label": "load_checkpoint_data",
-        "importPath": "arcadia.analysis.post_hoc_utils",
-        "description": "arcadia.analysis.post_hoc_utils",
-        "isExtraImport": true,
-        "detail": "arcadia.analysis.post_hoc_utils",
-        "documentation": {}
-    },
-    {
-        "label": "load_adata_latest",
-        "importPath": "arcadia.data_utils.loading",
-        "description": "arcadia.data_utils.loading",
-        "isExtraImport": true,
-        "detail": "arcadia.data_utils.loading",
-        "documentation": {}
-    },
-    {
-        "label": "plot_individual_and_combined_umaps",
-        "importPath": "arcadia.plotting.post_hoc",
-        "description": "arcadia.plotting.post_hoc",
-        "isExtraImport": true,
-        "detail": "arcadia.plotting.post_hoc",
-        "documentation": {}
-    },
-    {
-        "label": "plot_morans_i",
-        "importPath": "arcadia.plotting.post_hoc",
-        "description": "arcadia.plotting.post_hoc",
-        "isExtraImport": true,
-        "detail": "arcadia.plotting.post_hoc",
-        "documentation": {}
-    },
-    {
-        "label": "plot_umap_latent_arcadia",
-        "importPath": "arcadia.plotting.post_hoc",
-        "description": "arcadia.plotting.post_hoc",
-        "isExtraImport": true,
-        "detail": "arcadia.plotting.post_hoc",
-        "documentation": {}
-    },
-    {
-        "label": "plot_umap_per_cell_type",
-        "importPath": "arcadia.plotting.post_hoc",
-        "description": "arcadia.plotting.post_hoc",
-        "isExtraImport": true,
-        "detail": "arcadia.plotting.post_hoc",
         "documentation": {}
     },
     {
@@ -3768,7 +4122,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
         "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "start_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\ndirectories = [\n    \"checkpoints\",",
+        "peekOfCode": "start_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\nos.makedirs('processed_data', exist_ok=True)\n# %% --- Load CITE-seq Data ---",
         "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
         "documentation": {}
     },
@@ -3777,7 +4131,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
         "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "timestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\ndirectories = [\n    \"checkpoints\",\n    \"processed_data\",",
+        "peekOfCode": "timestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\nos.makedirs('processed_data', exist_ok=True)\n# %% --- Load CITE-seq Data ---\n# available_batches = [\"SLN111-D1\",  \"SLN208-D1\", \"SLN111-D2\",\"SLN208-D2\"]",
         "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
         "documentation": {}
     },
@@ -3786,16 +4140,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
         "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "base_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\ndirectories = [\n    \"checkpoints\",\n    \"processed_data\",\n    \"raw_data/schreiber\",\n    \"raw_data/tonsil\",\n    \"raw_data/cite_seq\",\n    \"trained_data\",",
-        "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "documentation": {}
-    },
-    {
-        "label": "directories",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "directories = [\n    \"checkpoints\",\n    \"processed_data\",\n    \"raw_data/schreiber\",\n    \"raw_data/tonsil\",\n    \"raw_data/cite_seq\",\n    \"trained_data\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\nfor rel_path in directories:",
+        "peekOfCode": "base_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\nos.makedirs('processed_data', exist_ok=True)\n# %% --- Load CITE-seq Data ---\n# available_batches = [\"SLN111-D1\",  \"SLN208-D1\", \"SLN111-D2\",\"SLN208-D2\"]\nselected_batches = [\"SLN111-D1\", \"SLN208-D1\"]\nadata = load_cite_seq_data(batches=selected_batches)\n# todo remove this if we want to use batches\nadata.obs[\"batch\"] = \"batch_1\"  # ignore bacthes for now",
         "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
         "documentation": {}
     },
@@ -4236,7 +4581,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
         "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "adata_rna = filter_unwanted_cell_types(adata_rna, [\"tumor\", \"dead\"])\nadata_prot = filter_unwanted_cell_types(adata_prot, [\"tumor\", \"dead\"])\npp_plots.plot_protein_violin(adata_prot, plot_flag)\nplt.figure(figsize=(10, 6))\nplt.title(\"Protein expression before outlier removal\")\nadata_prot_plot = adata_prot[np.random.choice(adata_prot.n_obs, size=2000, replace=False)].copy()\n# sort by cell_types\nadata_prot_plot = adata_prot_plot[adata_prot_plot.obs[\"cell_types\"].argsort(), :].copy()\nplt.plot(np.sort(adata_prot_plot.X[:, :50], axis=0))\nplt.show()",
+        "peekOfCode": "adata_rna = filter_unwanted_cell_types(adata_rna, [\"tumor\", \"dead\"])\nadata_prot = filter_unwanted_cell_types(adata_prot, [\"tumor\", \"dead\"])\npp_plots.plot_protein_violin(adata_prot, plot_flag)\nif plot_flag:\n    plt.figure(figsize=(10, 6))\n    plt.title(\"Protein expression before outlier removal\")\n    adata_prot_plot = adata_prot[\n        np.random.choice(adata_prot.n_obs, size=2000, replace=False)\n    ].copy()\n    # sort by cell_types",
         "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
         "documentation": {}
     },
@@ -4245,25 +4590,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
         "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "adata_prot = filter_unwanted_cell_types(adata_prot, [\"tumor\", \"dead\"])\npp_plots.plot_protein_violin(adata_prot, plot_flag)\nplt.figure(figsize=(10, 6))\nplt.title(\"Protein expression before outlier removal\")\nadata_prot_plot = adata_prot[np.random.choice(adata_prot.n_obs, size=2000, replace=False)].copy()\n# sort by cell_types\nadata_prot_plot = adata_prot_plot[adata_prot_plot.obs[\"cell_types\"].argsort(), :].copy()\nplt.plot(np.sort(adata_prot_plot.X[:, :50], axis=0))\nplt.show()\nadata_prot = mad_outlier_removal(adata_prot.copy()).copy()",
-        "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "documentation": {}
-    },
-    {
-        "label": "adata_prot_plot",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "adata_prot_plot = adata_prot[np.random.choice(adata_prot.n_obs, size=2000, replace=False)].copy()\n# sort by cell_types\nadata_prot_plot = adata_prot_plot[adata_prot_plot.obs[\"cell_types\"].argsort(), :].copy()\nplt.plot(np.sort(adata_prot_plot.X[:, :50], axis=0))\nplt.show()\nadata_prot = mad_outlier_removal(adata_prot.copy()).copy()\nplt.figure(figsize=(10, 6))\nplt.title(\"Protein expression after outlier removal\")\nplt.plot(np.sort(adata_prot.X[:, :50], axis=0))\nplt.show()",
-        "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "documentation": {}
-    },
-    {
-        "label": "adata_prot_plot",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "adata_prot_plot = adata_prot_plot[adata_prot_plot.obs[\"cell_types\"].argsort(), :].copy()\nplt.plot(np.sort(adata_prot_plot.X[:, :50], axis=0))\nplt.show()\nadata_prot = mad_outlier_removal(adata_prot.copy()).copy()\nplt.figure(figsize=(10, 6))\nplt.title(\"Protein expression after outlier removal\")\nplt.plot(np.sort(adata_prot.X[:, :50], axis=0))\nplt.show()\n# Add major_cell_types column (needed for downstream compatibility)\nadata_rna.obs[\"major_cell_types\"] = adata_rna.obs[\"cell_types\"]",
+        "peekOfCode": "adata_prot = filter_unwanted_cell_types(adata_prot, [\"tumor\", \"dead\"])\npp_plots.plot_protein_violin(adata_prot, plot_flag)\nif plot_flag:\n    plt.figure(figsize=(10, 6))\n    plt.title(\"Protein expression before outlier removal\")\n    adata_prot_plot = adata_prot[\n        np.random.choice(adata_prot.n_obs, size=2000, replace=False)\n    ].copy()\n    # sort by cell_types\n    adata_prot_plot = adata_prot_plot[adata_prot_plot.obs[\"cell_types\"].argsort(), :].copy()",
         "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
         "documentation": {}
     },
@@ -4272,7 +4599,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_cite_seq",
         "description": "ARCADIA.scripts._0_preprocess_cite_seq",
-        "peekOfCode": "adata_prot = mad_outlier_removal(adata_prot.copy()).copy()\nplt.figure(figsize=(10, 6))\nplt.title(\"Protein expression after outlier removal\")\nplt.plot(np.sort(adata_prot.X[:, :50], axis=0))\nplt.show()\n# Add major_cell_types column (needed for downstream compatibility)\nadata_rna.obs[\"major_cell_types\"] = adata_rna.obs[\"cell_types\"]\nadata_prot.obs[\"major_cell_types\"] = adata_prot.obs[\"cell_types\"]\n# %% --- Protein Analysis Following MaxFuse Methodology ---\npp_plots.plot_protein_analysis(adata_prot, plot_flag=plot_flag, modality=\"Protein\")",
+        "peekOfCode": "adata_prot = mad_outlier_removal(adata_prot.copy()).copy()\nif plot_flag:\n    plt.figure(figsize=(10, 6))\n    plt.title(\"Protein expression after outlier removal\")\n    plt.plot(np.sort(adata_prot.X[:, :50], axis=0))\n    plt.show()\n    plt.close()\n# Add major_cell_types column (needed for downstream compatibility)\nadata_rna.obs[\"major_cell_types\"] = adata_rna.obs[\"cell_types\"]\nadata_prot.obs[\"major_cell_types\"] = adata_prot.obs[\"cell_types\"]",
         "detail": "ARCADIA.scripts._0_preprocess_cite_seq",
         "documentation": {}
     },
@@ -4416,7 +4743,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "start_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nbase_path = \".\"\ndataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    \"raw_datasets/{dataset_name}\",",
+        "peekOfCode": "start_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nbase_path = \".\"\ndataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    f\"raw_datasets/{dataset_name}\",",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4425,7 +4752,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "timestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nbase_path = \".\"\ndataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    \"raw_datasets/{dataset_name}\",\n]",
+        "peekOfCode": "timestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nbase_path = \".\"\ndataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    f\"raw_datasets/{dataset_name}\",\n]",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4434,7 +4761,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "base_path = \".\"\ndataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    \"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:",
+        "peekOfCode": "base_path = \".\"\ndataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    f\"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4443,7 +4770,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "dataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    \"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:\n    full_path = os.path.join(base_path, rel_path)",
+        "peekOfCode": "dataset_name = \"schreiber\"\nFILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    f\"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:\n    full_path = os.path.join(base_path, rel_path)",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4452,7 +4779,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "FILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    \"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:\n    full_path = os.path.join(base_path, rel_path)\n    os.makedirs(full_path, exist_ok=True)",
+        "peekOfCode": "FILENAME = f\"_0_preprocess_{dataset_name}.py\"\ndirectories = [\n    \"processed_data\",\n    f\"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:\n    full_path = os.path.join(base_path, rel_path)\n    os.makedirs(full_path, exist_ok=True)",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4461,7 +4788,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "directories = [\n    \"processed_data\",\n    \"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:\n    full_path = os.path.join(base_path, rel_path)\n    os.makedirs(full_path, exist_ok=True)\n# %%",
+        "peekOfCode": "directories = [\n    \"processed_data\",\n    f\"raw_datasets/{dataset_name}\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\ndataset_path = f\"raw_datasets/{dataset_name}\"\nfor rel_path in directories:\n    full_path = os.path.join(base_path, rel_path)\n    os.makedirs(full_path, exist_ok=True)\n# %%",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4731,7 +5058,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "adata_prot_subsampled = adata_prot[\n    np.random.choice(adata_prot.n_obs, size=min(4000, adata_prot.n_obs), replace=False)\n]\nsc.pp.pca(adata_prot_subsampled)\nsc.pp.neighbors(adata_prot_subsampled, use_rep=\"X_pca\")\nsc.tl.umap(adata_prot_subsampled)\nsc.pl.umap(adata_prot_subsampled, color=\"cell_types\")\nsc.pl.umap(adata_prot_subsampled, color=\"condition\")\nsc.pl.umap(\n    adata_prot_subsampled[adata_prot_subsampled.obs[\"condition\"] == \"ICT\",], color=\"cell_types\"",
+        "peekOfCode": "adata_prot_subsampled = adata_prot[\n    np.random.choice(adata_prot.n_obs, size=min(4000, adata_prot.n_obs), replace=False)\n]\nsc.pp.pca(adata_prot_subsampled)\nsc.pp.neighbors(adata_prot_subsampled, use_rep=\"X_pca\")\nsc.tl.umap(adata_prot_subsampled)\nif plot_flag:\n    sc.pl.umap(adata_prot_subsampled, color=\"cell_types\")\n    sc.pl.umap(adata_prot_subsampled, color=\"condition\")\n    sc.pl.umap(",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4740,7 +5067,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "adata_rna_subsampled = adata_rna[\n    np.random.choice(adata_rna.n_obs, size=min(4000, adata_rna.n_obs), replace=False)\n]\nsc.pp.pca(adata_rna_subsampled)\nsc.pp.neighbors(adata_rna_subsampled)\nsc.tl.umap(adata_rna_subsampled)\nsc.pl.umap(adata_rna_subsampled, color=\"cell_types\")\n# %%\nif plot_flag:\n    images = set(adata_prot.obs[\"Image\"])",
+        "peekOfCode": "adata_rna_subsampled = adata_rna[\n    np.random.choice(adata_rna.n_obs, size=min(4000, adata_rna.n_obs), replace=False)\n]\nsc.pp.pca(adata_rna_subsampled)\nsc.pp.neighbors(adata_rna_subsampled)\nsc.tl.umap(adata_rna_subsampled)\nif plot_flag:\n    sc.pl.umap(adata_rna_subsampled, color=\"cell_types\")\n# %%\nif plot_flag:",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4803,34 +5130,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
         "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "adata_prot = mad_outlier_removal(adata_prot)\n# Finalize pipeline metadata before saving\npipeline_metadata_utils.finalize_preprocess_metadata(adata_rna, adata_prot, [\"batch_0\"])\nfig, axs = plt.subplots(5, 6, figsize=(10, 6))\nplt.subplots_adjust(hspace=1.0)  # Increase hspace for more vertical space\nadata_prot_subsampled = sc.pp.subsample(adata_prot, n_obs=1000, copy=True)\nlayer = \"z_normalized\"\nfor i in range(30):\n    sns.kdeplot(\n        adata_prot_subsampled.to_df(layer=layer).iloc[:, i], legend=False, ax=axs[i // 6, i % 6]",
-        "detail": "ARCADIA.scripts._0_preprocess_schreiber",
-        "documentation": {}
-    },
-    {
-        "label": "adata_prot_subsampled",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
-        "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "adata_prot_subsampled = sc.pp.subsample(adata_prot, n_obs=1000, copy=True)\nlayer = \"z_normalized\"\nfor i in range(30):\n    sns.kdeplot(\n        adata_prot_subsampled.to_df(layer=layer).iloc[:, i], legend=False, ax=axs[i // 6, i % 6]\n    )\n    axs[i // 6, i % 6].set_title(adata_prot_subsampled.var_names[i])\n    axs[i // 6, i % 6].set_xlabel(None)\n    axs[i // 6, i % 6].set_ylabel(None)\n    # axs[i//6, i%6].set_xticks([])",
-        "detail": "ARCADIA.scripts._0_preprocess_schreiber",
-        "documentation": {}
-    },
-    {
-        "label": "layer",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
-        "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "layer = \"z_normalized\"\nfor i in range(30):\n    sns.kdeplot(\n        adata_prot_subsampled.to_df(layer=layer).iloc[:, i], legend=False, ax=axs[i // 6, i % 6]\n    )\n    axs[i // 6, i % 6].set_title(adata_prot_subsampled.var_names[i])\n    axs[i // 6, i % 6].set_xlabel(None)\n    axs[i // 6, i % 6].set_ylabel(None)\n    # axs[i//6, i%6].set_xticks([])\n    axs[i // 6, i % 6].set_yticks([])",
-        "detail": "ARCADIA.scripts._0_preprocess_schreiber",
-        "documentation": {}
-    },
-    {
-        "label": "adata_prot_subsampled",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_schreiber",
-        "description": "ARCADIA.scripts._0_preprocess_schreiber",
-        "peekOfCode": "adata_prot_subsampled = sc.pp.subsample(adata_prot, n_obs=1000, copy=True)\nfor i in range(30):\n    sns.kdeplot(adata_prot_subsampled.to_df().iloc[:, i], legend=False, ax=axs[i // 6, i % 6])\n    axs[i // 6, i % 6].set_title(adata_prot_subsampled.var_names[i])\n    axs[i // 6, i % 6].set_xlabel(None)\n    axs[i // 6, i % 6].set_ylabel(None)\n    # axs[i//6, i%6].set_xticks([])\n    axs[i // 6, i % 6].set_yticks([])\n# # take a subsample of the data\n# adata_prot_subsampled = adata_prot_normalized[",
+        "peekOfCode": "adata_prot = mad_outlier_removal(adata_prot)\n# Finalize pipeline metadata before saving\npipeline_metadata_utils.finalize_preprocess_metadata(adata_rna, adata_prot, [\"batch_0\"])\n# Plot protein feature distributions\npp_plots.plot_protein_feature_distributions(\n    adata_prot, layer=\"z_normalized\", n_features=30, n_cells=1000, plot_flag=plot_flag\n)\npp_plots.plot_protein_feature_distributions(\n    adata_prot, layer=None, n_features=30, n_cells=1000, plot_flag=plot_flag\n)",
         "detail": "ARCADIA.scripts._0_preprocess_schreiber",
         "documentation": {}
     },
@@ -4866,7 +5166,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_tonsil",
         "description": "ARCADIA.scripts._0_preprocess_tonsil",
-        "peekOfCode": "FILENAME = \"_0_preprocess_tonsil.py\"\ndataset_name = \"tonsil\"\nstart_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs",
+        "peekOfCode": "FILENAME = \"_0_preprocess_tonsil.py\"\ndataset_name = \"tonsil\"\nstart_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nos.makedirs(\"processed_data\", exist_ok=True)\n# %% --- MaxFuse Data Download and Loading Functions ---\n# %% --- Load MaxFuse Data ---\n# Setup paths",
         "detail": "ARCADIA.scripts._0_preprocess_tonsil",
         "documentation": {}
     },
@@ -4875,7 +5175,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_tonsil",
         "description": "ARCADIA.scripts._0_preprocess_tonsil",
-        "peekOfCode": "dataset_name = \"tonsil\"\nstart_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\ndirectories = [",
+        "peekOfCode": "dataset_name = \"tonsil\"\nstart_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nos.makedirs(\"processed_data\", exist_ok=True)\n# %% --- MaxFuse Data Download and Loading Functions ---\n# %% --- Load MaxFuse Data ---\n# Setup paths\ndata_dir = Path(\"raw_datasets/tonsil\")",
         "detail": "ARCADIA.scripts._0_preprocess_tonsil",
         "documentation": {}
     },
@@ -4884,7 +5184,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_tonsil",
         "description": "ARCADIA.scripts._0_preprocess_tonsil",
-        "peekOfCode": "start_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\ndirectories = [\n    \"checkpoints\",",
+        "peekOfCode": "start_time = datetime.now()\ntimestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nos.makedirs(\"processed_data\", exist_ok=True)\n# %% --- MaxFuse Data Download and Loading Functions ---\n# %% --- Load MaxFuse Data ---\n# Setup paths\ndata_dir = Path(\"raw_datasets/tonsil\")\ndata_dir.mkdir(parents=True, exist_ok=True)",
         "detail": "ARCADIA.scripts._0_preprocess_tonsil",
         "documentation": {}
     },
@@ -4893,25 +5193,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_tonsil",
         "description": "ARCADIA.scripts._0_preprocess_tonsil",
-        "peekOfCode": "timestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\n# Base path relative to the project root\nbase_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\ndirectories = [\n    \"checkpoints\",\n    \"processed_data\",",
-        "detail": "ARCADIA.scripts._0_preprocess_tonsil",
-        "documentation": {}
-    },
-    {
-        "label": "base_path",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_tonsil",
-        "description": "ARCADIA.scripts._0_preprocess_tonsil",
-        "peekOfCode": "base_path = \"raw_datasets\"\n# Core directories to be created under the base path\n# Sub-directories are handled automatically by os.makedirs\ndirectories = [\n    \"checkpoints\",\n    \"processed_data\",\n    \"raw_data/tonsil\",\n    \"trained_data\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")",
-        "detail": "ARCADIA.scripts._0_preprocess_tonsil",
-        "documentation": {}
-    },
-    {
-        "label": "directories",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._0_preprocess_tonsil",
-        "description": "ARCADIA.scripts._0_preprocess_tonsil",
-        "peekOfCode": "directories = [\n    \"checkpoints\",\n    \"processed_data\",\n    \"raw_data/tonsil\",\n    \"trained_data\",\n]\nprint(f\"Creating directory structure under: {os.path.abspath(base_path)}\")\nfor rel_path in directories:\n    full_path = os.path.join(base_path, rel_path)\n    os.makedirs(full_path, exist_ok=True)",
+        "peekOfCode": "timestamp_str = start_time.strftime(\"%Y%m%d_%H%M%S\")\nsc.settings.set_figure_params(dpi=50, facecolor=\"white\")\n# %% --- Directory Structure Definition ---\nos.makedirs(\"processed_data\", exist_ok=True)\n# %% --- MaxFuse Data Download and Loading Functions ---\n# %% --- Load MaxFuse Data ---\n# Setup paths\ndata_dir = Path(\"raw_datasets/tonsil\")\ndata_dir.mkdir(parents=True, exist_ok=True)\n# Download and load data",
         "detail": "ARCADIA.scripts._0_preprocess_tonsil",
         "documentation": {}
     },
@@ -4920,7 +5202,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._0_preprocess_tonsil",
         "description": "ARCADIA.scripts._0_preprocess_tonsil",
-        "peekOfCode": "data_dir = Path(\"raw_datasets\")\ndata_dir.mkdir(parents=True, exist_ok=True)\n# Download and load data\ndownload_tonsil_data(data_dir)\nadata_rna = load_tonsil_rna(data_dir)\nadata_prot = load_tonsil_protein(data_dir)\nprint(f\"Loaded RNA data: {adata_rna.shape}\")\nprint(f\"Loaded protein data: {adata_prot.shape}\")\n# Initialize pipeline metadata with start time\nadata_rna.uns[\"pipeline_metadata\"] = pipeline_metadata_utils.initialize_pipeline_metadata(",
+        "peekOfCode": "data_dir = Path(\"raw_datasets/tonsil\")\ndata_dir.mkdir(parents=True, exist_ok=True)\n# Download and load data\ndownload_tonsil_data(data_dir)\nadata_rna = load_tonsil_rna(data_dir)\nadata_prot = load_tonsil_protein(data_dir)\nprint(f\"Loaded RNA data: {adata_rna.shape}\")\nprint(f\"Loaded protein data: {adata_prot.shape}\")\n# Initialize pipeline metadata with start time\nadata_rna.uns[\"pipeline_metadata\"] = pipeline_metadata_utils.initialize_pipeline_metadata(",
         "detail": "ARCADIA.scripts._0_preprocess_tonsil",
         "documentation": {}
     },
@@ -6045,7 +6327,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._2_spatial_integrate",
         "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "feature_types = spatial_adata.var[\"feature_type\"]\nmean_features = spatial_adata.X.mean(axis=0)\n# Create DataFrame for easier plotting\ndf = pd.DataFrame({\"mean_value\": mean_features, \"feature_type\": feature_types})\n# Plot feature mean distributions before scaling\nfrom arcadia.plotting.spatial import plot_feature_mean_distributions\nplot_feature_mean_distributions(spatial_adata, plot_flag=plot_flag)\n# Subsample for plotting\nspatial_adata_plot = (\n    spatial_adata[:2000].copy() if spatial_adata.n_obs > 2000 else spatial_adata.copy()",
+        "peekOfCode": "feature_types = spatial_adata.var[\"feature_type\"]\nmean_features = spatial_adata.X.mean(axis=0)\n# Create DataFrame for easier plotting\ndf = pd.DataFrame({\"mean_value\": mean_features, \"feature_type\": feature_types})\n# Plot feature mean distributions before scaling\nfrom arcadia.plotting.spatial import plot_feature_mean_distributions\nplot_feature_mean_distributions(spatial_adata, plot_flag=plot_flag)\nif plot_flag:\n    # Subsample for plotting\n    spatial_adata_plot = (",
         "detail": "ARCADIA.scripts._2_spatial_integrate",
         "documentation": {}
     },
@@ -6054,7 +6336,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._2_spatial_integrate",
         "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "mean_features = spatial_adata.X.mean(axis=0)\n# Create DataFrame for easier plotting\ndf = pd.DataFrame({\"mean_value\": mean_features, \"feature_type\": feature_types})\n# Plot feature mean distributions before scaling\nfrom arcadia.plotting.spatial import plot_feature_mean_distributions\nplot_feature_mean_distributions(spatial_adata, plot_flag=plot_flag)\n# Subsample for plotting\nspatial_adata_plot = (\n    spatial_adata[:2000].copy() if spatial_adata.n_obs > 2000 else spatial_adata.copy()\n)",
+        "peekOfCode": "mean_features = spatial_adata.X.mean(axis=0)\n# Create DataFrame for easier plotting\ndf = pd.DataFrame({\"mean_value\": mean_features, \"feature_type\": feature_types})\n# Plot feature mean distributions before scaling\nfrom arcadia.plotting.spatial import plot_feature_mean_distributions\nplot_feature_mean_distributions(spatial_adata, plot_flag=plot_flag)\nif plot_flag:\n    # Subsample for plotting\n    spatial_adata_plot = (\n        spatial_adata[:2000].copy() if spatial_adata.n_obs > 2000 else spatial_adata.copy()",
         "detail": "ARCADIA.scripts._2_spatial_integrate",
         "documentation": {}
     },
@@ -6063,34 +6345,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._2_spatial_integrate",
         "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "df = pd.DataFrame({\"mean_value\": mean_features, \"feature_type\": feature_types})\n# Plot feature mean distributions before scaling\nfrom arcadia.plotting.spatial import plot_feature_mean_distributions\nplot_feature_mean_distributions(spatial_adata, plot_flag=plot_flag)\n# Subsample for plotting\nspatial_adata_plot = (\n    spatial_adata[:2000].copy() if spatial_adata.n_obs > 2000 else spatial_adata.copy()\n)\nsns.heatmap(spatial_adata_plot.X[:1000])\nplt.show()",
-        "detail": "ARCADIA.scripts._2_spatial_integrate",
-        "documentation": {}
-    },
-    {
-        "label": "spatial_adata_plot",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._2_spatial_integrate",
-        "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "spatial_adata_plot = (\n    spatial_adata[:2000].copy() if spatial_adata.n_obs > 2000 else spatial_adata.copy()\n)\nsns.heatmap(spatial_adata_plot.X[:1000])\nplt.show()\nsc.pp.pca(spatial_adata_plot)\nsc.pp.neighbors(spatial_adata_plot)\nsc.tl.umap(spatial_adata_plot)\nsc.pl.pca(spatial_adata_plot, color=\"cell_types\")\nsc.pl.umap(spatial_adata_plot, color=\"cell_types\")",
-        "detail": "ARCADIA.scripts._2_spatial_integrate",
-        "documentation": {}
-    },
-    {
-        "label": "means_only_adata",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._2_spatial_integrate",
-        "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "means_only_adata = spatial_adata[:, spatial_adata.var[\"feature_type\"] == \"neighbor_mean\"].copy()\n# Subsample for plotting\nmeans_only_adata_plot = (\n    means_only_adata[:2000].copy() if means_only_adata.n_obs > 2000 else means_only_adata.copy()\n)\nsc.pp.pca(means_only_adata_plot)\nsc.pp.neighbors(means_only_adata_plot)\nsc.tl.umap(means_only_adata_plot)\nsc.pl.pca(means_only_adata_plot, color=\"cell_types\")\nsc.pl.umap(means_only_adata_plot, color=\"cell_types\")",
-        "detail": "ARCADIA.scripts._2_spatial_integrate",
-        "documentation": {}
-    },
-    {
-        "label": "means_only_adata_plot",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._2_spatial_integrate",
-        "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "means_only_adata_plot = (\n    means_only_adata[:2000].copy() if means_only_adata.n_obs > 2000 else means_only_adata.copy()\n)\nsc.pp.pca(means_only_adata_plot)\nsc.pp.neighbors(means_only_adata_plot)\nsc.tl.umap(means_only_adata_plot)\nsc.pl.pca(means_only_adata_plot, color=\"cell_types\")\nsc.pl.umap(means_only_adata_plot, color=\"cell_types\")\nfrom arcadia.plotting.spatial import plot_feature_means_line\nplot_feature_means_line(adata_protein_neigh_means_and_covet, plot_flag=plot_flag)",
+        "peekOfCode": "df = pd.DataFrame({\"mean_value\": mean_features, \"feature_type\": feature_types})\n# Plot feature mean distributions before scaling\nfrom arcadia.plotting.spatial import plot_feature_mean_distributions\nplot_feature_mean_distributions(spatial_adata, plot_flag=plot_flag)\nif plot_flag:\n    # Subsample for plotting\n    spatial_adata_plot = (\n        spatial_adata[:2000].copy() if spatial_adata.n_obs > 2000 else spatial_adata.copy()\n    )\n    sns.heatmap(spatial_adata_plot.X[:1000])",
         "detail": "ARCADIA.scripts._2_spatial_integrate",
         "documentation": {}
     },
@@ -6243,16 +6498,34 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._2_spatial_integrate",
         "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "n_protein_features = adata_prot.shape[1]\nprint(f\"Number of protein features: {n_protein_features}\")\nif n_protein_features > 200:\n    adata_original_for_vae_plots = adata_prot.copy()\n    # Generate target cluster structure from protein features\n    use_unsupervised_clustering = False\n    if use_unsupervised_clustering:\n        target_cluster_structure, cluster_labels, target_silhouette_score = (\n            generate_target_cluster_structure_unsuprvised(\n                adata_original_for_vae_plots, orginal_num_features, clustering_resolution=None",
+        "peekOfCode": "n_protein_features = adata_prot.shape[1]\nprint(f\"Number of protein features: {n_protein_features}\")\nadata_prot.obsm[\"protein+neighbors_means+covet\"] = pd.DataFrame(\n    adata_prot.X,\n    index=adata_prot.obs_names,\n    columns=adata_prot.var_names,\n)\nadata_2_prot_before_batch_correction = adata_prot[:, adata_prot.var[\"highly_variable\"] == True]\nprint(f\"Using original protein data. Shape: {adata_prot.shape}\")\nadata_prot = adata_2_prot_before_batch_correction",
         "detail": "ARCADIA.scripts._2_spatial_integrate",
         "documentation": {}
     },
     {
-        "label": "vae_hyperparams_for_metadata",
+        "label": "adata_prot.obsm[\"protein+neighbors_means+covet\"]",
         "kind": 5,
         "importPath": "ARCADIA.scripts._2_spatial_integrate",
         "description": "ARCADIA.scripts._2_spatial_integrate",
-        "peekOfCode": "vae_hyperparams_for_metadata = None\nif \"vae_hyperparams\" in locals() and vae_hyperparams is not None:\n    vae_hyperparams_for_metadata = {\n        \"latent_dim\": vae_hyperparams[\"latent_dim\"],\n        \"n_hidden\": vae_hyperparams[\"n_hidden\"],\n        \"learning_rate\": vae_hyperparams[\"learning_rate\"],\n        \"kl_weight\": vae_hyperparams[\"kl_weight\"],\n        \"n_layers\": vae_hyperparams[\"n_layers\"],\n    }\npipeline_metadata_utils.finalize_spatial_info_integrate_metadata(",
+        "peekOfCode": "adata_prot.obsm[\"protein+neighbors_means+covet\"] = pd.DataFrame(\n    adata_prot.X,\n    index=adata_prot.obs_names,\n    columns=adata_prot.var_names,\n)\nadata_2_prot_before_batch_correction = adata_prot[:, adata_prot.var[\"highly_variable\"] == True]\nprint(f\"Using original protein data. Shape: {adata_prot.shape}\")\nadata_prot = adata_2_prot_before_batch_correction\n# %% <<< VAE INTEGRATION END >>>\nsave_processed_data(",
+        "detail": "ARCADIA.scripts._2_spatial_integrate",
+        "documentation": {}
+    },
+    {
+        "label": "adata_2_prot_before_batch_correction",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._2_spatial_integrate",
+        "description": "ARCADIA.scripts._2_spatial_integrate",
+        "peekOfCode": "adata_2_prot_before_batch_correction = adata_prot[:, adata_prot.var[\"highly_variable\"] == True]\nprint(f\"Using original protein data. Shape: {adata_prot.shape}\")\nadata_prot = adata_2_prot_before_batch_correction\n# %% <<< VAE INTEGRATION END >>>\nsave_processed_data(\n    adata_rna,\n    adata_prot,\n    \"processed_data\",\n    caller_filename=FILENAME,\n)",
+        "detail": "ARCADIA.scripts._2_spatial_integrate",
+        "documentation": {}
+    },
+    {
+        "label": "adata_prot",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._2_spatial_integrate",
+        "description": "ARCADIA.scripts._2_spatial_integrate",
+        "peekOfCode": "adata_prot = adata_2_prot_before_batch_correction\n# %% <<< VAE INTEGRATION END >>>\nsave_processed_data(\n    adata_rna,\n    adata_prot,\n    \"processed_data\",\n    caller_filename=FILENAME,\n)",
         "detail": "ARCADIA.scripts._2_spatial_integrate",
         "documentation": {}
     },
@@ -6288,7 +6561,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "adata_rna_viz = adata_rna.copy()\n# todo: try to make the log1p before and make sure it is set as la\nsc.pp.pca(adata_rna_viz)\nsc.pp.neighbors(adata_rna_viz)\nsc.tl.umap(adata_rna_viz)\nsc.pl.umap(adata_rna_viz, color=\"cell_types\")\nsc.pl.pca(adata_rna_viz, color=\"cell_types\")\nadata_rna.X = adata_rna_viz.X.copy()\n# Copy embedding back to original adata\nadata_rna.obsm[\"X_pca\"] = adata_rna_viz.obsm[\"X_pca\"]",
+        "peekOfCode": "adata_rna_viz = adata_rna.copy()\n# todo: try to make the log1p before and make sure it is set as la\nsc.pp.pca(adata_rna_viz)\nsc.pp.neighbors(adata_rna_viz)\nsc.tl.umap(adata_rna_viz)\nif plot_flag:\n    sc.pl.umap(adata_rna_viz, color=\"cell_types\")\n    sc.pl.pca(adata_rna_viz, color=\"cell_types\")\nadata_rna.X = adata_rna_viz.X.copy()\n# Copy embedding back to original adata",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6315,7 +6588,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "adata_rna.obsm[\"X_umap\"] = adata_rna_viz.obsm[\"X_umap\"]\nadata_rna.uns[\"pca\"] = adata_rna_viz.uns[\"pca\"]\nadata_rna.uns[\"neighbors\"] = adata_rna_viz.uns[\"neighbors\"]\nadata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\nsns.heatmap(adata_prot.X[:100, :100], linewidths=0)",
+        "peekOfCode": "adata_rna.obsm[\"X_umap\"] = adata_rna_viz.obsm[\"X_umap\"]\nadata_rna.uns[\"pca\"] = adata_rna_viz.uns[\"pca\"]\nadata_rna.uns[\"neighbors\"] = adata_rna_viz.uns[\"neighbors\"]\nadata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\n# Optional debug heatmap",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6324,7 +6597,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "adata_rna.uns[\"pca\"] = adata_rna_viz.uns[\"pca\"]\nadata_rna.uns[\"neighbors\"] = adata_rna_viz.uns[\"neighbors\"]\nadata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\nsns.heatmap(adata_prot.X[:100, :100], linewidths=0)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering",
+        "peekOfCode": "adata_rna.uns[\"pca\"] = adata_rna_viz.uns[\"pca\"]\nadata_rna.uns[\"neighbors\"] = adata_rna_viz.uns[\"neighbors\"]\nadata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\n# Optional debug heatmap\npp_plots.plot_protein_data_heatmap(adata_prot, n_cells=100, n_features=100, plot_flag=plot_flag)",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6333,7 +6606,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "adata_rna.uns[\"neighbors\"] = adata_rna_viz.uns[\"neighbors\"]\nadata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\nsns.heatmap(adata_prot.X[:100, :100], linewidths=0)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied",
+        "peekOfCode": "adata_rna.uns[\"neighbors\"] = adata_rna_viz.uns[\"neighbors\"]\nadata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\n# Optional debug heatmap\npp_plots.plot_protein_data_heatmap(adata_prot, n_cells=100, n_features=100, plot_flag=plot_flag)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6342,7 +6615,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "adata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\nsns.heatmap(adata_prot.X[:100, :100], linewidths=0)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied\nprint(\"\\\\n=== Applying batch correction to protein data (after VAE/HV filtering) ===\")",
+        "peekOfCode": "adata_rna.uns[\"umap\"] = adata_rna_viz.uns[\"umap\"]\nadata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\n# Optional debug heatmap\npp_plots.plot_protein_data_heatmap(adata_prot, n_cells=100, n_features=100, plot_flag=plot_flag)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6351,7 +6624,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "adata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\nsns.heatmap(adata_prot.X[:100, :100], linewidths=0)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied\nprint(\"\\\\n=== Applying batch correction to protein data (after VAE/HV filtering) ===\")\n# Update the main adata_2_prot to include the highly variable filtered version with spatial features",
+        "peekOfCode": "adata_rna.obsp[\"distances\"] = adata_rna_viz.obsp[\"distances\"]\nadata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\n# Optional debug heatmap\npp_plots.plot_protein_data_heatmap(adata_prot, n_cells=100, n_features=100, plot_flag=plot_flag)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied\nprint(\"\\\\n=== Applying batch correction to protein data (after VAE/HV filtering) ===\")",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6360,7 +6633,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "adata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\nsns.heatmap(adata_prot.X[:100, :100], linewidths=0)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied\nprint(\"\\\\n=== Applying batch correction to protein data (after VAE/HV filtering) ===\")\n# Update the main adata_2_prot to include the highly variable filtered version with spatial features\n# Ensure batch column exists",
+        "peekOfCode": "adata_rna.obsp[\"connectivities\"] = adata_rna_viz.obsp[\"connectivities\"]\nrna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\n# Optional debug heatmap\npp_plots.plot_protein_data_heatmap(adata_prot, n_cells=100, n_features=100, plot_flag=plot_flag)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied\nprint(\"\\\\n=== Applying batch correction to protein data (after VAE/HV filtering) ===\")\n# Update the main adata_2_prot to include the highly variable filtered version with spatial features",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6369,7 +6642,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._3_generate_archetypes",
         "description": "ARCADIA.scripts._3_generate_archetypes",
-        "peekOfCode": "rna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\nsns.heatmap(adata_prot.X[:100, :100], linewidths=0)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied\nprint(\"\\\\n=== Applying batch correction to protein data (after VAE/HV filtering) ===\")\n# Update the main adata_2_prot to include the highly variable filtered version with spatial features\n# Ensure batch column exists\nif \"batch\" not in adata_prot.obs.columns:",
+        "peekOfCode": "rna_archetype_embedding_name = \"X_pca\"\nprint(\"Using X_pca embedding for RNA archetype analysis\")\n# %% Data processing\n# Optional debug heatmap\npp_plots.plot_protein_data_heatmap(adata_prot, n_cells=100, n_features=100, plot_flag=plot_flag)\n# %% %% Apply Batch Correction to Protein Data AFTER VAE/HV Filtering\n# Now that spatial features (neighbor means and COVET) have been added AND VAE/HV filtering applied\nprint(\"\\\\n=== Applying batch correction to protein data (after VAE/HV filtering) ===\")\n# Update the main adata_2_prot to include the highly variable filtered version with spatial features\n# Ensure batch column exists",
         "detail": "ARCADIA.scripts._3_generate_archetypes",
         "documentation": {}
     },
@@ -6864,7 +7137,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._4_prepare_training",
         "description": "ARCADIA.scripts._4_prepare_training",
-        "peekOfCode": "spatial_only = adata_prot[:, adata_prot.var[\"feature_type\"] != \"protein\"]\nif spatial_only.n_vars > 0 and spatial_only.n_obs > 0:\n    # Subsample FIRST before any processing to prevent memory issues\n    if spatial_only.n_obs > 5000:\n        sc.pp.subsample(spatial_only, n_obs=5000)\n    sc.pp.pca(spatial_only)\n    sc.pp.neighbors(spatial_only)\n    sc.tl.umap(spatial_only)\n    if \"CN\" in spatial_only.obs.columns:\n        sc.pl.umap(spatial_only, color=\"CN\")",
+        "peekOfCode": "spatial_only = adata_prot[:, adata_prot.var[\"feature_type\"] != \"protein\"]\nif spatial_only.n_vars > 0 and spatial_only.n_obs > 0:\n    # Subsample FIRST before any processing to prevent memory issues\n    if spatial_only.n_obs > 5000:\n        sc.pp.subsample(spatial_only, n_obs=5000)\n    sc.pp.pca(spatial_only)\n    sc.pp.neighbors(spatial_only)\n    sc.tl.umap(spatial_only)\n    if plot_flag:\n        if \"CN\" in spatial_only.obs.columns:",
         "detail": "ARCADIA.scripts._4_prepare_training",
         "documentation": {}
     },
@@ -7139,20 +7412,11 @@
         "documentation": {}
     },
     {
-        "label": "train_vae",
-        "kind": 2,
-        "importPath": "ARCADIA.scripts._5_train_vae",
-        "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "def train_vae(\n    adata_rna_subset,\n    adata_prot_subset,\n    model_checkpoints_folder=None,\n    max_epochs=10,\n    batch_size=128,\n    lr=1e-3,\n    contrastive_weight=1.0,\n    similarity_weight=0.5,\n    similarity_dynamic=True,",
-        "detail": "ARCADIA.scripts._5_train_vae",
-        "documentation": {}
-    },
-    {
         "label": "FILENAME",
         "kind": 5,
         "importPath": "ARCADIA.scripts._5_train_vae",
         "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "FILENAME = \"_5_train_vae.py\"\n# %% Processing\n\"\"\" DO NOT REMOVE THIS COMMENT!!!\nTO use this script, you need to add the training plan to use the DualVAETrainingPlan (version 1.2.2.post2) class in scVI library.\nin _training_mixin.py, line 131, you need to change the line:\ntraining_plan = self._training_plan_cls(self.module, **plan_kwargs) # existing line\nself._training_plan = training_plan # add this line\n\"\"\"\nimport hashlib\nimport json",
+        "peekOfCode": "FILENAME = \"_5_train_vae.py\"\n\"\"\" DO NOT REMOVE THIS COMMENT!!!\nTO use this script, you need to add the training plan to use the DualVAETrainingPlan (version 1.2.2.post2) class in scVI library.\nin _training_mixin.py, line 131, you need to change the line:\ntraining_plan = self._training_plan_cls(self.module, **plan_kwargs) # existing line\nself._training_plan = training_plan # add this line\n\"\"\"\nimport json\nimport os\nfrom pathlib import Path",
         "detail": "ARCADIA.scripts._5_train_vae",
         "documentation": {}
     },
@@ -7161,7 +7425,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._5_train_vae",
         "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "training_plan = self._training_plan_cls(self.module, **plan_kwargs) # existing line\nself._training_plan = training_plan # add this line\n\"\"\"\nimport hashlib\nimport json\nimport os\nimport sys\nimport time\nimport warnings\nfrom datetime import datetime",
+        "peekOfCode": "training_plan = self._training_plan_cls(self.module, **plan_kwargs) # existing line\nself._training_plan = training_plan # add this line\n\"\"\"\nimport json\nimport os\nfrom pathlib import Path\nimport matplotlib as mpl\nimport mlflow\nimport numpy as np\nimport pandas as pd",
         "detail": "ARCADIA.scripts._5_train_vae",
         "documentation": {}
     },
@@ -7170,43 +7434,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._5_train_vae",
         "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "self._training_plan = training_plan # add this line\n\"\"\"\nimport hashlib\nimport json\nimport os\nimport sys\nimport time\nimport warnings\nfrom datetime import datetime\nfrom pathlib import Path",
-        "detail": "ARCADIA.scripts._5_train_vae",
-        "documentation": {}
-    },
-    {
-        "label": "log_timestamp",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._5_train_vae",
-        "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "log_timestamp = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\nfrom arcadia.plotting.training import plot_umap_with_extremes\n# Validate scVI training mixin before proceeding\n# Import training utilities\nfrom arcadia.training import (\n    calculate_post_training_metrics,\n    clear_memory,\n    generate_post_training_visualizations,\n    log_memory_usage,\n    log_parameters,",
-        "detail": "ARCADIA.scripts._5_train_vae",
-        "documentation": {}
-    },
-    {
-        "label": "project_root",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._5_train_vae",
-        "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "project_root = str(ROOT)\n# Paths already set above, no need to add again\nimport matplotlib as mpl\nimport mlflow\nimport numpy as np\nimport pandas as pd\nimport scanpy as sc\nimport scvi\nimport torch\nfrom scvi.model import SCVI",
-        "detail": "ARCADIA.scripts._5_train_vae",
-        "documentation": {}
-    },
-    {
-        "label": "pd.options.display.max_rows",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._5_train_vae",
-        "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "pd.options.display.max_rows = 10\npd.options.display.max_columns = 10\nnp.set_printoptions(threshold=100)\n# %% Load configuration\nconfig_path = str(ROOT / \"configs\" / \"config.json\")\nif os.path.exists(config_path):\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]",
-        "detail": "ARCADIA.scripts._5_train_vae",
-        "documentation": {}
-    },
-    {
-        "label": "pd.options.display.max_columns",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts._5_train_vae",
-        "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "pd.options.display.max_columns = 10\nnp.set_printoptions(threshold=100)\n# %% Load configuration\nconfig_path = str(ROOT / \"configs\" / \"config.json\")\nif os.path.exists(config_path):\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]",
+        "peekOfCode": "self._training_plan = training_plan # add this line\n\"\"\"\nimport json\nimport os\nfrom pathlib import Path\nimport matplotlib as mpl\nimport mlflow\nimport numpy as np\nimport pandas as pd\nimport scanpy as sc",
         "detail": "ARCADIA.scripts._5_train_vae",
         "documentation": {}
     },
@@ -7215,8 +7443,350 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts._5_train_vae",
         "description": "ARCADIA.scripts._5_train_vae",
-        "peekOfCode": "config_path = str(ROOT / \"configs\" / \"config.json\")\nif os.path.exists(config_path):\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]\nelse:\n    num_rna_cells = num_protein_cells = 2000\n    plot_flag = True",
+        "peekOfCode": "config_path = str(ROOT / \"configs\" / \"config.json\")\nif os.path.exists(config_path):\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]\n    max_epochs = config_.get(\"training\", {}).get(\"max_epochs\", 3)\nelse:\n    num_rna_cells = num_protein_cells = 2000",
         "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "dataset_name",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "dataset_name = None\nmodel_checkpoints_folder = None\n# %% Parse command line arguments\ntry:\n    args = parse_pipeline_arguments()\n    if args.dataset_name is not None:\n        dataset_name = args.dataset_name\n    if args.model_checkpoints_folder is not None:\n        model_checkpoints_folder = args.model_checkpoints_folder\nexcept SystemExit:",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "model_checkpoints_folder",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "model_checkpoints_folder = None\n# %% Parse command line arguments\ntry:\n    args = parse_pipeline_arguments()\n    if args.dataset_name is not None:\n        dataset_name = args.dataset_name\n    if args.model_checkpoints_folder is not None:\n        model_checkpoints_folder = args.model_checkpoints_folder\nexcept SystemExit:\n    # If running in notebook/papermill, variables are already set from parameters cell",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "save_dir",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "save_dir = ROOT / \"processed_data\"\nprint(f\"Selected dataset: {dataset_name if dataset_name else 'default (latest)'}\")\nsave_dir, load_dataset_name = determine_dataset_path(save_dir, dataset_name)\nload_path = str(save_dir.resolve())\nadata_rna_subset, adata_prot_subset = load_adata_latest(\n    load_path,\n    [\"rna\", \"protein\"],\n    exact_step=4,\n    index_from_end=0,\n    dataset_name=load_dataset_name,",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "load_path",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "load_path = str(save_dir.resolve())\nadata_rna_subset, adata_prot_subset = load_adata_latest(\n    load_path,\n    [\"rna\", \"protein\"],\n    exact_step=4,\n    index_from_end=0,\n    dataset_name=load_dataset_name,\n)\nlog_memory_usage(\"Before sparse conversion: \")\nadata_rna_subset, adata_prot_subset = convert_to_sparse_csr(",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "spatial_only",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "spatial_only = adata_prot_subset[:, adata_prot_subset.var[\"feature_type\"] != \"protein\"]\nsc.pp.pca(spatial_only)\nsc.pp.neighbors(spatial_only)\nsc.tl.umap(spatial_only)\nplot_umap_with_extremes(spatial_only, color_key=[\"CN\", \"cell_types\"], title=\"spatial only\")\nsc.pp.subsample(adata_rna_subset, n_obs=min(num_rna_cells, len(adata_rna_subset)))\nsc.pp.subsample(adata_prot_subset, n_obs=min(num_protein_cells, len(adata_prot_subset)))\nplot_pre_training_visualizations(adata_rna_subset, adata_prot_subset, plot_flag=plot_flag)\nplot_batch_specific_umaps(adata_rna_subset, plot_flag=plot_flag)\n# Determine dataset name for experiment (prefer from args, then from adata, then default)",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "logger = setup_logger(log_file=log_file_path, level=\"INFO\")\nlogger.info(f\"logger initialized. Using log file: {log_file_path}\")\nlogger.info(\n    f\"Log file is being written directly to MLflow artifact directory: {mlflow_artifact_dir}\"\n)\nlogger.info(f\"Original RNA dataset shape: {adata_rna_subset.shape}\")\nlogger.info(f\"Original protein dataset shape: {adata_prot_subset.shape}\")\nrna_sample_size = min(len(adata_rna_subset), num_rna_cells)\nprot_sample_size = min(len(adata_prot_subset), num_protein_cells)\nadata_rna_subset = sc.pp.subsample(adata_rna_subset, n_obs=rna_sample_size, copy=True)",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "rna_sample_size",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "rna_sample_size = min(len(adata_rna_subset), num_rna_cells)\nprot_sample_size = min(len(adata_prot_subset), num_protein_cells)\nadata_rna_subset = sc.pp.subsample(adata_rna_subset, n_obs=rna_sample_size, copy=True)\nadata_prot_subset = sc.pp.subsample(adata_prot_subset, n_obs=prot_sample_size, copy=True)\n# Ensure CN and cell_type columns are categorical and have the same categories in both datasets\nfor col in [\"CN\", \"cell_type\"]:\n    if col in adata_rna_subset.obs and col in adata_prot_subset.obs:\n        cats = sorted(\n            set(adata_rna_subset.obs[col].cat.categories)\n            | set(adata_prot_subset.obs[col].cat.categories)",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "prot_sample_size",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "prot_sample_size = min(len(adata_prot_subset), num_protein_cells)\nadata_rna_subset = sc.pp.subsample(adata_rna_subset, n_obs=rna_sample_size, copy=True)\nadata_prot_subset = sc.pp.subsample(adata_prot_subset, n_obs=prot_sample_size, copy=True)\n# Ensure CN and cell_type columns are categorical and have the same categories in both datasets\nfor col in [\"CN\", \"cell_type\"]:\n    if col in adata_rna_subset.obs and col in adata_prot_subset.obs:\n        cats = sorted(\n            set(adata_rna_subset.obs[col].cat.categories)\n            | set(adata_prot_subset.obs[col].cat.categories)\n        )",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_rna_subset",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_rna_subset = sc.pp.subsample(adata_rna_subset, n_obs=rna_sample_size, copy=True)\nadata_prot_subset = sc.pp.subsample(adata_prot_subset, n_obs=prot_sample_size, copy=True)\n# Ensure CN and cell_type columns are categorical and have the same categories in both datasets\nfor col in [\"CN\", \"cell_type\"]:\n    if col in adata_rna_subset.obs and col in adata_prot_subset.obs:\n        cats = sorted(\n            set(adata_rna_subset.obs[col].cat.categories)\n            | set(adata_prot_subset.obs[col].cat.categories)\n        )\n        adata_rna_subset.obs[col] = adata_rna_subset.obs[col].cat.set_categories(cats)",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_prot_subset",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_prot_subset = sc.pp.subsample(adata_prot_subset, n_obs=prot_sample_size, copy=True)\n# Ensure CN and cell_type columns are categorical and have the same categories in both datasets\nfor col in [\"CN\", \"cell_type\"]:\n    if col in adata_rna_subset.obs and col in adata_prot_subset.obs:\n        cats = sorted(\n            set(adata_rna_subset.obs[col].cat.categories)\n            | set(adata_prot_subset.obs[col].cat.categories)\n        )\n        adata_rna_subset.obs[col] = adata_rna_subset.obs[col].cat.set_categories(cats)\n        adata_prot_subset.obs[col] = adata_prot_subset.obs[col].cat.set_categories(cats)",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_rna_subset.obs[\"cell_types\"]",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_rna_subset.obs[\"cell_types\"] = adata_rna_subset.obs[\"major_cell_types\"]\nadata_prot_subset.obs[\"cell_types\"] = adata_prot_subset.obs[\"major_cell_types\"]\nlogger.info(f\"Subsampled RNA dataset shape: {adata_rna_subset.shape}\")\nlogger.info(f\"Subsampled protein dataset shape: {adata_prot_subset.shape}\")\nlog_memory_usage(\"After subsampling: \")\ntraining_params = {\n    \"max_epochs\": max_epochs,\n    \"print_every_n_epoch\": 50,\n    \"plot_x_times\": 10,\n    \"check_val_every_n_epoch\": 100,",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_prot_subset.obs[\"cell_types\"]",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_prot_subset.obs[\"cell_types\"] = adata_prot_subset.obs[\"major_cell_types\"]\nlogger.info(f\"Subsampled RNA dataset shape: {adata_rna_subset.shape}\")\nlogger.info(f\"Subsampled protein dataset shape: {adata_prot_subset.shape}\")\nlog_memory_usage(\"After subsampling: \")\ntraining_params = {\n    \"max_epochs\": max_epochs,\n    \"print_every_n_epoch\": 50,\n    \"plot_x_times\": 10,\n    \"check_val_every_n_epoch\": 100,\n    \"save_checkpoint_every_n_epochs\": 280,",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "training_params",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "training_params = {\n    \"max_epochs\": max_epochs,\n    \"print_every_n_epoch\": 50,\n    \"plot_x_times\": 10,\n    \"check_val_every_n_epoch\": 100,\n    \"save_checkpoint_every_n_epochs\": 280,\n    \"plot_first_step\": False,\n    \"batch_size\": 1024,\n    \"outlier_detection_enabled\": True,\n    \"contrastive_weight\": 0,",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "loss_weight_keys",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "loss_weight_keys = [\n    \"rna_recon_weight\",\n    \"prot_recon_weight\",\n    \"contrastive_weight\",\n    \"similarity_weight\",\n    \"similarity_dynamic\",\n    \"matching_weight\",\n    \"cell_type_clustering_weight\",\n    \"cross_modal_cell_type_weight\",\n    \"cn_distribution_separation_weight\",",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "loss_weights",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "loss_weights = {k: training_params.get(k, 0) for k in loss_weight_keys}\nloss_weights_path = \"loss_weights.json\"\nwith open(loss_weights_path, \"w\") as f:\n    json.dump(loss_weights, f, indent=4)\nlog_parameters(training_params, 0, 1)\nmlflow.log_artifact(loss_weights_path)\nos.remove(loss_weights_path)\nmlflow.log_params(training_params)\nmlflow.log_param(\"rna_dataset_shape\", f\"{adata_rna_subset.shape[0]}x{adata_rna_subset.shape[1]}\")\nmlflow.log_param(",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "loss_weights_path",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "loss_weights_path = \"loss_weights.json\"\nwith open(loss_weights_path, \"w\") as f:\n    json.dump(loss_weights, f, indent=4)\nlog_parameters(training_params, 0, 1)\nmlflow.log_artifact(loss_weights_path)\nos.remove(loss_weights_path)\nmlflow.log_params(training_params)\nmlflow.log_param(\"rna_dataset_shape\", f\"{adata_rna_subset.shape[0]}x{adata_rna_subset.shape[1]}\")\nmlflow.log_param(\n    \"protein_dataset_shape\",",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "trained_from_scratch",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "trained_from_scratch = model_checkpoints_folder is None\nmlflow.log_param(\"trained_from_scratch\", trained_from_scratch)\nrna_vae, protein_vae = train_vae(\n    adata_rna_subset,\n    adata_prot_subset,\n    model_checkpoints_folder=model_checkpoints_folder,\n    logger=logger,\n    **training_params,\n)\nclear_memory()",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "history_",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "history_ = rna_vae._training_plan.get_history()\nmetric_mapping = {\n    \"final_train_similarity_loss\": \"train_similarity_loss\",\n    \"final_train_raw_similarity_loss\": \"train_raw_similarity_loss\",\n    \"final_train_total_loss\": \"train_total_loss\",\n    \"final_val_total_loss\": \"val_total_loss\",\n    \"final_train_cell_type_clustering_loss\": \"train_cell_type_clustering_loss\",\n    \"final_val_rna_loss\": \"val_rna_loss\",\n    \"final_val_protein_loss\": \"val_protein_loss\",\n    \"final_val_contrastive_loss\": \"val_contrastive_loss\",",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "metric_mapping",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "metric_mapping = {\n    \"final_train_similarity_loss\": \"train_similarity_loss\",\n    \"final_train_raw_similarity_loss\": \"train_raw_similarity_loss\",\n    \"final_train_total_loss\": \"train_total_loss\",\n    \"final_val_total_loss\": \"val_total_loss\",\n    \"final_train_cell_type_clustering_loss\": \"train_cell_type_clustering_loss\",\n    \"final_val_rna_loss\": \"val_rna_loss\",\n    \"final_val_protein_loss\": \"val_protein_loss\",\n    \"final_val_contrastive_loss\": \"val_contrastive_loss\",\n    \"final_val_matching_loss\": \"val_matching_loss\",",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "metrics_to_log",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "metrics_to_log = extract_training_metrics_from_history(history_, metric_mapping)\nif metrics_to_log:\n    mlflow.log_metrics(metrics_to_log)\nadata_rna = rna_vae.adata\nadata_prot = protein_vae.adata\nadata_rna = sc.pp.subsample(adata_rna, n_obs=min(len(adata_rna), 4000), copy=True)\nadata_prot = sc.pp.subsample(adata_prot, n_obs=min(len(adata_prot), 4000), copy=True)\nrna_latent, prot_latent, combined_latent = process_latent_spaces(adata_rna, adata_prot)\nmatching_results = match_cells_and_calculate_distances(rna_latent, prot_latent)\nmetrics = calculate_post_training_metrics(",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_rna",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_rna = rna_vae.adata\nadata_prot = protein_vae.adata\nadata_rna = sc.pp.subsample(adata_rna, n_obs=min(len(adata_rna), 4000), copy=True)\nadata_prot = sc.pp.subsample(adata_prot, n_obs=min(len(adata_prot), 4000), copy=True)\nrna_latent, prot_latent, combined_latent = process_latent_spaces(adata_rna, adata_prot)\nmatching_results = match_cells_and_calculate_distances(rna_latent, prot_latent)\nmetrics = calculate_post_training_metrics(\n    adata_rna, adata_prot, matching_results[\"prot_matches_in_rna\"]\n)\nvalid_metrics, nan_metrics = process_post_training_metrics(metrics)",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_prot",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_prot = protein_vae.adata\nadata_rna = sc.pp.subsample(adata_rna, n_obs=min(len(adata_rna), 4000), copy=True)\nadata_prot = sc.pp.subsample(adata_prot, n_obs=min(len(adata_prot), 4000), copy=True)\nrna_latent, prot_latent, combined_latent = process_latent_spaces(adata_rna, adata_prot)\nmatching_results = match_cells_and_calculate_distances(rna_latent, prot_latent)\nmetrics = calculate_post_training_metrics(\n    adata_rna, adata_prot, matching_results[\"prot_matches_in_rna\"]\n)\nvalid_metrics, nan_metrics = process_post_training_metrics(metrics)\nif valid_metrics:",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_rna",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_rna = sc.pp.subsample(adata_rna, n_obs=min(len(adata_rna), 4000), copy=True)\nadata_prot = sc.pp.subsample(adata_prot, n_obs=min(len(adata_prot), 4000), copy=True)\nrna_latent, prot_latent, combined_latent = process_latent_spaces(adata_rna, adata_prot)\nmatching_results = match_cells_and_calculate_distances(rna_latent, prot_latent)\nmetrics = calculate_post_training_metrics(\n    adata_rna, adata_prot, matching_results[\"prot_matches_in_rna\"]\n)\nvalid_metrics, nan_metrics = process_post_training_metrics(metrics)\nif valid_metrics:\n    mlflow.log_metrics(valid_metrics)",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "adata_prot",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "adata_prot = sc.pp.subsample(adata_prot, n_obs=min(len(adata_prot), 4000), copy=True)\nrna_latent, prot_latent, combined_latent = process_latent_spaces(adata_rna, adata_prot)\nmatching_results = match_cells_and_calculate_distances(rna_latent, prot_latent)\nmetrics = calculate_post_training_metrics(\n    adata_rna, adata_prot, matching_results[\"prot_matches_in_rna\"]\n)\nvalid_metrics, nan_metrics = process_post_training_metrics(metrics)\nif valid_metrics:\n    mlflow.log_metrics(valid_metrics)\n    logger.info(f\"Logged {len(valid_metrics)} post-training metrics\")",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "matching_results",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "matching_results = match_cells_and_calculate_distances(rna_latent, prot_latent)\nmetrics = calculate_post_training_metrics(\n    adata_rna, adata_prot, matching_results[\"prot_matches_in_rna\"]\n)\nvalid_metrics, nan_metrics = process_post_training_metrics(metrics)\nif valid_metrics:\n    mlflow.log_metrics(valid_metrics)\n    logger.info(f\"Logged {len(valid_metrics)} post-training metrics\")\nif nan_metrics:\n    logger.warning(f\"Skipped {len(nan_metrics)} NaN/invalid post-training metrics: {nan_metrics}\")",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "metrics",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._5_train_vae",
+        "description": "ARCADIA.scripts._5_train_vae",
+        "peekOfCode": "metrics = calculate_post_training_metrics(\n    adata_rna, adata_prot, matching_results[\"prot_matches_in_rna\"]\n)\nvalid_metrics, nan_metrics = process_post_training_metrics(metrics)\nif valid_metrics:\n    mlflow.log_metrics(valid_metrics)\n    logger.info(f\"Logged {len(valid_metrics)} post-training metrics\")\nif nan_metrics:\n    logger.warning(f\"Skipped {len(nan_metrics)} NaN/invalid post-training metrics: {nan_metrics}\")\ngenerate_post_training_visualizations(",
+        "detail": "ARCADIA.scripts._5_train_vae",
+        "documentation": {}
+    },
+    {
+        "label": "FILENAME",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "FILENAME = \"_6_post_hoc_analysis.py\"\n# Handle notebook execution\np = globals().get(\"__vsc_ipynb_file__\")\nif p:\n    __file__ = p\n# Set working directory to project root\n_script_dir = Path(__file__).resolve().parent if \"__file__\" in globals() else Path.cwd()\nROOT = _script_dir.parent\nos.chdir(ROOT)\n# Create log directory if it doesn't exist",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "p",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "p = globals().get(\"__vsc_ipynb_file__\")\nif p:\n    __file__ = p\n# Set working directory to project root\n_script_dir = Path(__file__).resolve().parent if \"__file__\" in globals() else Path.cwd()\nROOT = _script_dir.parent\nos.chdir(ROOT)\n# Create log directory if it doesn't exist\nos.makedirs(\"logs\", exist_ok=True)\nlog_timestamp = datetime.now().strftime(\"%Y%m%d_%H%M%S\")",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "_script_dir",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "_script_dir = Path(__file__).resolve().parent if \"__file__\" in globals() else Path.cwd()\nROOT = _script_dir.parent\nos.chdir(ROOT)\n# Create log directory if it doesn't exist\nos.makedirs(\"logs\", exist_ok=True)\nlog_timestamp = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\n# Configure plotting\nmpl.rcParams.update(\n    {\n        \"savefig.format\": \"pdf\",",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "ROOT",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "ROOT = _script_dir.parent\nos.chdir(ROOT)\n# Create log directory if it doesn't exist\nos.makedirs(\"logs\", exist_ok=True)\nlog_timestamp = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\n# Configure plotting\nmpl.rcParams.update(\n    {\n        \"savefig.format\": \"pdf\",\n        \"figure.figsize\": (6, 4),",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "log_timestamp",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "log_timestamp = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\n# Configure plotting\nmpl.rcParams.update(\n    {\n        \"savefig.format\": \"pdf\",\n        \"figure.figsize\": (6, 4),\n        \"font.size\": 10,\n        \"axes.labelsize\": 10,\n        \"xtick.labelsize\": 9,\n        \"ytick.labelsize\": 9,",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "config_path",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "config_path = Path(str(ROOT / \"configs\" / \"config.json\"))\nif config_path.exists():\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]\nelse:\n    num_rna_cells = num_protein_cells = 2000\n    plot_flag = True",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "experiment_name",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "experiment_name = \"single_vae_training\"\nlogger.info(f\"Finding latest checkpoint from experiment: {experiment_name}\")\ncheckpoint_path, experiment_id, run_id = find_checkpoint_from_experiment_name(experiment_name)\nlogger.info(f\"Found checkpoint: {checkpoint_path}\")\nlogger.info(f\"Experiment ID: {experiment_id}, Run ID: {run_id}\")\nconfig_path = Path(checkpoint_path).parent.parent / \"model_config.json\"\ncheckpoint_folder = Path(checkpoint_path)\nadata_rna, adata_prot = load_checkpoint_data(checkpoint_folder)\nsc.pp.subsample(adata_rna, n_obs=min(len(adata_rna), num_rna_cells))\n# %% Align Data Indices",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "config_path",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "config_path = Path(checkpoint_path).parent.parent / \"model_config.json\"\ncheckpoint_folder = Path(checkpoint_path)\nadata_rna, adata_prot = load_checkpoint_data(checkpoint_folder)\nsc.pp.subsample(adata_rna, n_obs=min(len(adata_rna), num_rna_cells))\n# %% Align Data Indices\nif (\n    adata_rna.obs_names.isin(adata_prot.obs_names).sum() > 2000\n):  # if we are dealing with adata with the same index\n    adata_prot = adata_prot[adata_prot.obs_names.isin(adata_rna.obs_names)]\n    adata_rna = adata_rna[adata_rna.obs_names.isin(adata_prot.obs_names)]",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "checkpoint_folder",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "checkpoint_folder = Path(checkpoint_path)\nadata_rna, adata_prot = load_checkpoint_data(checkpoint_folder)\nsc.pp.subsample(adata_rna, n_obs=min(len(adata_rna), num_rna_cells))\n# %% Align Data Indices\nif (\n    adata_rna.obs_names.isin(adata_prot.obs_names).sum() > 2000\n):  # if we are dealing with adata with the same index\n    adata_prot = adata_prot[adata_prot.obs_names.isin(adata_rna.obs_names)]\n    adata_rna = adata_rna[adata_rna.obs_names.isin(adata_prot.obs_names)]\n    common_index = set(adata_prot.obs_names).intersection(set(adata_rna.obs_names))",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "combined_latent_comparison",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "combined_latent_comparison = plot_latent_space_mixing(adata_rna, adata_prot)\n# save the adata files\nclean_uns_for_h5ad(adata_rna)\nclean_uns_for_h5ad(adata_prot)\nsave_path_rna = ROOT / f\"adata_rna_{adata_rna.uns.get('dataset_name', 'latest')}.h5ad\"\nsave_path_prot = ROOT / f\"adata_prot_{adata_prot.uns.get('dataset_name', 'latest')}.h5ad\"\nadata_rna.write(save_path_rna)\nadata_prot.write(save_path_prot)\nlogger.info(f\"Saved adata files to root folder:\")\nlogger.info(f\"  - {save_path_rna}\")",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "save_path_rna",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "save_path_rna = ROOT / f\"adata_rna_{adata_rna.uns.get('dataset_name', 'latest')}.h5ad\"\nsave_path_prot = ROOT / f\"adata_prot_{adata_prot.uns.get('dataset_name', 'latest')}.h5ad\"\nadata_rna.write(save_path_rna)\nadata_prot.write(save_path_prot)\nlogger.info(f\"Saved adata files to root folder:\")\nlogger.info(f\"  - {save_path_rna}\")\nlogger.info(f\"  - {save_path_prot}\")",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
+        "documentation": {}
+    },
+    {
+        "label": "save_path_prot",
+        "kind": 5,
+        "importPath": "ARCADIA.scripts._6_post_hoc_analysis",
+        "description": "ARCADIA.scripts._6_post_hoc_analysis",
+        "peekOfCode": "save_path_prot = ROOT / f\"adata_prot_{adata_prot.uns.get('dataset_name', 'latest')}.h5ad\"\nadata_rna.write(save_path_rna)\nadata_prot.write(save_path_prot)\nlogger.info(f\"Saved adata files to root folder:\")\nlogger.info(f\"  - {save_path_rna}\")\nlogger.info(f\"  - {save_path_prot}\")",
+        "detail": "ARCADIA.scripts._6_post_hoc_analysis",
         "documentation": {}
     },
     {
@@ -7224,34 +7794,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts.hyperparameter_search",
         "description": "ARCADIA.scripts.hyperparameter_search",
-        "peekOfCode": "dataset_name = None\n# Import train_vae from train_vae script\nimport importlib.util\n# %% Setup and imports\nimport json\nimport os\nimport time\nimport traceback\nimport warnings\nfrom datetime import datetime, timedelta",
-        "detail": "ARCADIA.scripts.hyperparameter_search",
-        "documentation": {}
-    },
-    {
-        "label": "train_vae_spec",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts.hyperparameter_search",
-        "description": "ARCADIA.scripts.hyperparameter_search",
-        "peekOfCode": "train_vae_spec = importlib.util.spec_from_file_location(\n    \"train_vae_module\", ROOT / \"scripts\" / \"_5_train_vae.py\"\n)\ntrain_vae_module = importlib.util.module_from_spec(train_vae_spec)\ntrain_vae_spec.loader.exec_module(train_vae_module)\ntrain_vae = train_vae_module.train_vae\n# Set the filename for this script\nFILENAME = \"hyperparameter_search.py\"\n# %% Load configuration\nconfig_path = ROOT / \"configs\" / \"config.json\"",
-        "detail": "ARCADIA.scripts.hyperparameter_search",
-        "documentation": {}
-    },
-    {
-        "label": "train_vae_module",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts.hyperparameter_search",
-        "description": "ARCADIA.scripts.hyperparameter_search",
-        "peekOfCode": "train_vae_module = importlib.util.module_from_spec(train_vae_spec)\ntrain_vae_spec.loader.exec_module(train_vae_module)\ntrain_vae = train_vae_module.train_vae\n# Set the filename for this script\nFILENAME = \"hyperparameter_search.py\"\n# %% Load configuration\nconfig_path = ROOT / \"configs\" / \"config.json\"\nif config_path.exists():\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)",
-        "detail": "ARCADIA.scripts.hyperparameter_search",
-        "documentation": {}
-    },
-    {
-        "label": "train_vae",
-        "kind": 5,
-        "importPath": "ARCADIA.scripts.hyperparameter_search",
-        "description": "ARCADIA.scripts.hyperparameter_search",
-        "peekOfCode": "train_vae = train_vae_module.train_vae\n# Set the filename for this script\nFILENAME = \"hyperparameter_search.py\"\n# %% Load configuration\nconfig_path = ROOT / \"configs\" / \"config.json\"\nif config_path.exists():\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]",
+        "peekOfCode": "dataset_name = None\n# %% Setup and imports\nimport json\nimport os\nimport time\nimport traceback\nimport warnings\nfrom datetime import datetime, timedelta\nimport mlflow\nimport numpy as np",
         "detail": "ARCADIA.scripts.hyperparameter_search",
         "documentation": {}
     },
@@ -7260,7 +7803,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts.hyperparameter_search",
         "description": "ARCADIA.scripts.hyperparameter_search",
-        "peekOfCode": "FILENAME = \"hyperparameter_search.py\"\n# %% Load configuration\nconfig_path = ROOT / \"configs\" / \"config.json\"\nif config_path.exists():\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]\nelse:",
+        "peekOfCode": "FILENAME = \"hyperparameter_search.py\"\n# %% Load configuration\nconfig_path = ROOT / \"configs\" / \"config.json\"\nif config_path.exists():\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]\n    max_epochs = config_.get(\"training\", {}).get(\"max_epochs\", 400)",
         "detail": "ARCADIA.scripts.hyperparameter_search",
         "documentation": {}
     },
@@ -7269,7 +7812,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts.hyperparameter_search",
         "description": "ARCADIA.scripts.hyperparameter_search",
-        "peekOfCode": "config_path = ROOT / \"configs\" / \"config.json\"\nif config_path.exists():\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]\nelse:\n    num_rna_cells = num_protein_cells = 2000\n    plot_flag = True",
+        "peekOfCode": "config_path = ROOT / \"configs\" / \"config.json\"\nif config_path.exists():\n    with open(config_path, \"r\") as f:\n        config_ = json.load(f)\n    num_rna_cells = config_[\"subsample\"][\"num_rna_cells\"]\n    num_protein_cells = config_[\"subsample\"][\"num_protein_cells\"]\n    plot_flag = config_[\"plot_flag\"]\n    max_epochs = config_.get(\"training\", {}).get(\"max_epochs\", 400)\nelse:\n    num_rna_cells = num_protein_cells = 2000",
         "detail": "ARCADIA.scripts.hyperparameter_search",
         "documentation": {}
     },
@@ -7341,7 +7884,7 @@
         "kind": 5,
         "importPath": "ARCADIA.scripts.hyperparameter_search",
         "description": "ARCADIA.scripts.hyperparameter_search",
-        "peekOfCode": "base_param_grid = {\n    \"plot_x_times\": [10],\n    \"check_val_every_n_epoch\": [100],\n    \"max_epochs\": [400],\n    \"save_checkpoint_every_n_epochs\": [280],\n    \"batch_size\": [1024],\n    \"print_every_n_epoch\": [50],\n    \"plot_first_step\": [False],\n    \"outlier_detection_enabled\": [True],\n    \"contrastive_weight\": [0],",
+        "peekOfCode": "base_param_grid = {\n    \"plot_x_times\": [10],\n    \"check_val_every_n_epoch\": [100],\n    \"max_epochs\": [max_epochs],\n    \"save_checkpoint_every_n_epochs\": [280],\n    \"batch_size\": [1024],\n    \"print_every_n_epoch\": [50],\n    \"plot_first_step\": [False],\n    \"outlier_detection_enabled\": [True],\n    \"contrastive_weight\": [0],",
         "detail": "ARCADIA.scripts.hyperparameter_search",
         "documentation": {}
     },
@@ -7514,6 +8057,141 @@
         "description": "ARCADIA.scripts.hyperparameter_search",
         "peekOfCode": "results_df = pd.DataFrame(results)\nresults_df.to_csv(\n    f\"hyperparameter_search_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv\", index=False\n)\nlogger.success(\n    f\"\\nHyperparameter search completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\"\n)",
         "detail": "ARCADIA.scripts.hyperparameter_search",
+        "documentation": {}
+    },
+    {
+        "label": "align_data",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "description": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "peekOfCode": "def align_data(adata_arcadia, adata_other, modality, other_model_name):\n    \"\"\"\n    Align two AnnData objects by finding common indices and features.\n    Args:\n        adata_arcadia: ARCADIA AnnData object\n        adata_other: Other model AnnData object\n        modality: \"rna\" or \"protein\"\n        other_model_name: Name of the other model (for logging)\n    Returns:\n        tuple: (aligned_adata_arcadia, aligned_adata_other, common_indices)",
+        "detail": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_metrics_funcs",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "description": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "peekOfCode": "def get_metrics_funcs(plot_flag=True):\n    \"\"\"Get metric functions and their kwargs for model comparison.\"\"\"\n    # Define metrics (using original names from compare_results.py)\n    metrics_funcs_two_modalities = {\n        \"combined_latent_silhouette_f1\": mtrc.compute_silhouette_f1,\n        \"cross_modality_cell_type_accuracy\": mtrc.matching_accuracy,\n        \"cross_modality_cn_accuracy\": mtrc.cross_modality_cn_accuracy,\n        \"f1_score\": mtrc.f1_score_calc,\n        \"cn_f1_score\": mtrc.f1_score_calc,\n        \"ari_score\": mtrc.ari_score_calc,",
+        "detail": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_single_model_metrics",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "description": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "peekOfCode": "def calculate_single_model_metrics(\n    adata_latent_rna,\n    adata_latent_prot,\n    combined_latent,\n    model_name=\"model\",\n    combined_distances=None,\n    cross_modal_distances=None,\n    metrics_funcs_two_modalities=None,\n    metric_funcs_one_modality=None,\n    metric_funcs_combined_modalities=None,",
+        "detail": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "documentation": {}
+    },
+    {
+        "label": "merge_model_results",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "description": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "peekOfCode": "def merge_model_results(results_df_arcadia, results_df_other=None, other_model_name=\"other\"):\n    \"\"\"\n    Merge two model results DataFrames and create comparison columns.\n    Parameters:\n    -----------\n    results_df_arcadia : pd.DataFrame\n        Results DataFrame for ARCADIA model with 'metric' and 'value' columns\n    results_df_other : pd.DataFrame or None\n        Results DataFrame for other model with 'metric' and 'value' columns.\n        If None, creates a results table with just ARCADIA and NaN for other model.",
+        "detail": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "documentation": {}
+    },
+    {
+        "label": "save_comparison_results",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "description": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "peekOfCode": "def save_comparison_results(results_pivot, output_file=\"results_comparison_accumulated.csv\"):\n    \"\"\"Save comparison results to CSV file.\"\"\"\n    output_path = Path(output_file).resolve()\n    if os.path.exists(output_file):\n        try:\n            existing_df = pd.read_csv(output_file)\n            # Check if existing file is empty or has no valid data\n            if existing_df.empty or len(existing_df.columns) == 0:\n                print(f\"\\nWarning: Existing file is empty, overwriting...\")\n                results_pivot.to_csv(output_file, index=False)",
+        "detail": "ARCADIA.src.arcadia.analysis.comparison_utils",
+        "documentation": {}
+    },
+    {
+        "label": "find_latest_checkpoint_folder",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def find_latest_checkpoint_folder():\n    \"\"\"Find the latest checkpoint folder in MLflow artifacts.\"\"\"\n    mlruns_path = Path(\"mlruns\")\n    if not mlruns_path.exists():\n        logger.error(\"MLruns directory not found\")\n        return None\n    # Find all experiment directories\n    experiment_dirs = [d for d in mlruns_path.iterdir() if d.is_dir() and d.name.isdigit()]\n    if not experiment_dirs:\n        logger.error(\"No experiment directories found in mlruns\")",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_checkpoint_data",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def load_checkpoint_data(checkpoint_folder):\n    \"\"\"Load RNA and protein AnnData objects from checkpoint folder.\"\"\"\n    rna_file = checkpoint_folder / \"adata_rna.h5ad\"\n    prot_file = checkpoint_folder / \"adata_prot.h5ad\"\n    if not rna_file.exists() or not prot_file.exists():\n        raise FileNotFoundError(f\"Checkpoint files not found in {checkpoint_folder}\")\n    logger.info(f\"Loading RNA data from: {rna_file}\")\n    adata_rna = sc.read_h5ad(rna_file)\n    logger.info(f\"Loading protein data from: {prot_file}\")\n    adata_prot = sc.read_h5ad(prot_file)",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_combined_latent_space",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def create_combined_latent_space(adata_rna: AnnData, adata_prot: AnnData):\n    \"\"\"Create combined latent space AnnData object from RNA and protein data.\"\"\"\n    # Extract latent embeddings\n    rna_latent = adata_rna.obsm[\"X_scVI\"]\n    prot_latent = adata_prot.obsm[\"X_scVI\"]\n    # Create AnnData objects for latent spaces\n    rna_latent_adata = AnnData(rna_latent)\n    rna_latent_adata.obs = adata_rna.obs.copy()\n    prot_latent_adata = AnnData(prot_latent)\n    prot_latent_adata.obs = adata_prot.obs.copy()",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "load_models_from_checkpoint",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def load_models_from_checkpoint(checkpoint_path, adata_rna, adata_prot, config_path=None):\n    \"\"\"\n    Load RNA and protein VAE models from checkpoint.\n    Args:\n        checkpoint_path: Path to the checkpoint directory\n        adata_rna: AnnData object for RNA data\n        adata_prot: AnnData object for protein data\n    Returns:\n        rna_vae: Loaded RNA VAE model\n        protein_vae: Loaded protein VAE model",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "generate_counterfactual_data",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def generate_counterfactual_data(rna_vae, protein_vae, adata_rna, adata_prot, plot_flag=False):\n    \"\"\"\n    Generate counterfactual data using the loaded models.\n    Args:\n        rna_vae: RNA VAE model\n        protein_vae: Protein VAE model\n        adata_rna: AnnData object for RNA data\n        adata_prot: AnnData object for protein data\n    Returns:\n        same_modal_adata_rna: RNA reconstruction (RNA→RNA encoder→RNA decoder)",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "generate_counterfactual_distributions",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def generate_counterfactual_distributions(rna_vae, protein_vae, adata_rna, adata_prot):\n    \"\"\"\n    Generate counterfactual distributions by returning the full decoder outputs instead of just means.\n    This allows sampling from the distributions later.\n    Returns:\n        dict with keys:\n        - 'rna_same_modal_dist': RNA reconstruction distribution (RNA→RNA encoder→RNA decoder)\n        - 'rna_counterfactual_dist': RNA counterfactual distribution (Protein→Protein encoder→RNA decoder)\n        - 'protein_same_modal_dist': Protein reconstruction distribution (Protein→Protein encoder→Protein decoder)\n        - 'protein_counterfactual_dist': Protein counterfactual distribution (RNA→RNA encoder→Protein decoder)",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "sample_from_counterfactual_distributions",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def sample_from_counterfactual_distributions(\n    distributions, n_samples=10, batch_size=10, use_float16=False\n):\n    \"\"\"\n    Sample from counterfactual distributions to generate multiple realizations with memory optimization.\n    Args:\n        distributions: Output from generate_counterfactual_distributions()\n        n_samples: Number of samples to draw from each distribution\n        batch_size: Process samples in batches to save memory (default: 10)\n        use_float16: Use float16 to save memory (default: False)",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "compare_same_modal_vs_counterfactual_rna_differential_expression",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def compare_same_modal_vs_counterfactual_rna_differential_expression(\n    same_modal_adata_rna, counterfactual_adata_rna\n):\n    \"\"\"\n    Compare same modal vs counterfactual RNA differential expression.\n    Args:\n        same_modal_adata_rna: AnnData object for same modal RNA data\n        counterfactual_adata_rna: AnnData object for counterfactual RNA data\n    Returns:\n        r2_scores: list of R2 scores",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "assign_rna_cn_from_protein",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def assign_rna_cn_from_protein(adata_rna: sc.AnnData, adata_prot: sc.AnnData, latent_key=\"X_scVI\"):\n    \"\"\"\n    Assign CN to each RNA cell based on the closest protein cell in the latent space.\n    Args:\n        adata_rna: AnnData object with RNA data\n        adata_prot: AnnData object with protein data\n    Returns:\n        adata_rna: AnnData object with assigned CN\n    \"\"\"\n    if latent_key == \"X\":",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "documentation": {}
+    },
+    {
+        "label": "align_rna_prot_indices",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "description": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
+        "peekOfCode": "def align_rna_prot_indices(adata_rna: sc.AnnData, adata_prot: sc.AnnData, num_protein_cells=None):\n    \"\"\"\n    Align RNA and protein AnnData objects by their indices.\n    If more than 2000 cells share the same indices, align them directly.\n    Otherwise, subsample and sort both datasets independently.\n    Args:\n        adata_rna: AnnData object with RNA data\n        adata_prot: AnnData object with protein data\n        num_protein_cells: Number of protein cells to subsample (if not matching indices)\n    Returns:",
+        "detail": "ARCADIA.src.arcadia.analysis.post_hoc_utils",
         "documentation": {}
     },
     {
@@ -8376,7 +9054,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.data_utils.loading",
         "description": "ARCADIA.src.arcadia.data_utils.loading",
-        "peekOfCode": "def load_tonsil_protein(data_dir):\n    \"\"\"Load and process Tonsil protein data.\n    Args:\n        data_dir: Path to data directory\n    Returns:\n        AnnData: Protein data with spatial coordinates\n    \"\"\"\n    print(\"Loading protein data...\")\n    protein = pd.read_csv(data_dir / \"tonsil/tonsil_codex.csv\")\n    protein_features = [",
+        "peekOfCode": "def load_tonsil_protein(data_dir):\n    \"\"\"Load and process Tonsil protein data.\n    Args:\n        data_dir: Path to data directory\n    Returns:\n        AnnData: Protein data with spatial coordinates\n    \"\"\"\n    print(\"Loading protein data...\")\n    protein = pd.read_csv(data_dir / \"tonsil_codex.csv\")\n    protein_features = [",
         "detail": "ARCADIA.src.arcadia.data_utils.loading",
         "documentation": {}
     },
@@ -8385,7 +9063,16 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.data_utils.loading",
         "description": "ARCADIA.src.arcadia.data_utils.loading",
-        "peekOfCode": "def load_tonsil_rna(data_dir):\n    \"\"\"Load and process Tonsil RNA data.\n    Args:\n        data_dir: Path to data directory\n    Returns:\n        AnnData: RNA data with metadata\n    \"\"\"\n    print(\"Loading RNA data...\")\n    rna = mmread(data_dir / \"tonsil/tonsil_rna_counts.txt\")\n    rna_names = pd.read_csv(data_dir / \"tonsil/tonsil_rna_names.csv\")[\"names\"].to_numpy()",
+        "peekOfCode": "def load_tonsil_rna(data_dir):\n    \"\"\"Load and process Tonsil RNA data.\n    Args:\n        data_dir: Path to data directory\n    Returns:\n        AnnData: RNA data with metadata\n    \"\"\"\n    print(\"Loading RNA data...\")\n    rna = mmread(data_dir / \"tonsil_rna_counts.txt\")\n    rna_names = pd.read_csv(data_dir / \"tonsil_rna_names.csv\")[\"names\"].to_numpy()",
+        "detail": "ARCADIA.src.arcadia.data_utils.loading",
+        "documentation": {}
+    },
+    {
+        "label": "determine_dataset_path",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.data_utils.loading",
+        "description": "ARCADIA.src.arcadia.data_utils.loading",
+        "peekOfCode": "def determine_dataset_path(save_dir, dataset_name):\n    \"\"\"Determine dataset directory and load path for data loading.\n    Args:\n        save_dir: Base directory for processed data\n        dataset_name: Optional dataset name to search in specific subdirectory\n    Returns:\n        tuple: (save_dir Path, load_dataset_name str or None)\n    \"\"\"\n    save_dir = Path(save_dir)\n    load_dataset_name = None",
         "detail": "ARCADIA.src.arcadia.data_utils.loading",
         "documentation": {}
     },
@@ -8597,6 +9284,15 @@
         "documentation": {}
     },
     {
+        "label": "convert_to_sparse_csr",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.data_utils.preprocessing",
+        "description": "ARCADIA.src.arcadia.data_utils.preprocessing",
+        "peekOfCode": "def convert_to_sparse_csr(adata_rna, adata_prot, logger=None):\n    \"\"\"Convert data matrices to sparse CSR format for memory efficiency.\n    Args:\n        adata_rna: RNA AnnData object\n        adata_prot: Protein AnnData object\n        logger: Optional logger instance\n    Returns:\n        tuple: (adata_rna, adata_prot) with converted matrices\n    \"\"\"\n    if logger:",
+        "detail": "ARCADIA.src.arcadia.data_utils.preprocessing",
+        "documentation": {}
+    },
+    {
         "label": "plot_cross_modal_archetype_similarity_matrix",
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.archetypes",
@@ -8738,6 +9434,96 @@
         "description": "ARCADIA.src.arcadia.plotting.general",
         "peekOfCode": "def plot_preprocessing_results(adata_1, adata_2, plot_flag=True):\n    \"\"\"Plot results after preprocessing\"\"\"\n    if not plot_flag:\n        return\n    logger.info(\"Plotting preprocessing results...\")\n    fig, axes = plt.subplots(2, 2, figsize=(15, 15))\n    # RNA data (log-transformed)\n    sc.pl.pca(adata_1, color=\"cell_types\", show=False, ax=axes[0, 0])\n    axes[0, 0].set_title(\"RNA PCA (Log-transformed)\")\n    sc.pl.umap(adata_1, color=\"cell_types\", show=False, ax=axes[0, 1])",
         "detail": "ARCADIA.src.arcadia.plotting.general",
+        "documentation": {}
+    },
+    {
+        "label": "plot_umap_latent_arcadia",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_umap_latent_arcadia(latent_arcadia):\n    cmap = mpl.colormaps.get_cmap(\"tab20\")\n    X = latent_arcadia.obsm[\"X_umap\"]  # (n_obs, 2)\n    ct = latent_arcadia.obs[\"cell_types\"].astype(\"category\")\n    archetype_label = latent_arcadia.obs[\"archetype_label\"].astype(\"category\")\n    matched_archetype_weight = latent_arcadia.obs[\"matched_archetype_weight\"].to_numpy()\n    is_extreme = latent_arcadia.obs[\"is_extreme_archetype\"].values\n    groups = list(ct.cat.categories)\n    arch_groups = list(archetype_label.cat.categories)\n    # assign colors per cell type and per archetype",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_morans_i",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_morans_i(adata, score_key, emb1_key, emb2_key, n_neighbors=15):\n    from arcadia.training.metrics import morans_i as morans_i_func\n    key1 = f\"morans_{emb1_key}\"\n    key2 = f\"morans_{emb2_key}\"\n    sc.pp.neighbors(adata, use_rep=emb1_key, n_neighbors=n_neighbors, key_added=key1)\n    sc.pp.neighbors(adata, use_rep=emb2_key, n_neighbors=n_neighbors, key_added=key2)\n    # Visualization for Moran's I: Moran scatter plots and bar comparison\n    def _compute_spatial_lag(adata, score_key, neighbors_key):\n        z = adata.obs[score_key].to_numpy()\n        z_std = (z - z.mean()) / z.std()",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_umap_per_cell_type",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_umap_per_cell_type(adata_latent, modality, model_name):\n    \"\"\"Plot UMAP per cell type with opacity based on matched_archetype_weight.\"\"\"\n    import matplotlib.pyplot as plt\n    import numpy as np\n    import scanpy as sc\n    cell_types = adata_latent.obs[\"cell_types\"].astype(\"category\").cat.categories  # ordered groups\n    layer = None  # or e.g., \"log1p\" if you keep normalized counts in a layer\n    # figure layout\n    ncols = 3\n    nrows = int(np.ceil(len(cell_types) / ncols))",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_individual_and_combined_umaps",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_individual_and_combined_umaps(adata_rna, adata_prot, model_name, plot_flag=True):\n    if not plot_flag:\n        return None\n    dataset_name = adata_rna.uns[\"dataset_name\"]\n    sc.pp.neighbors(adata_rna, use_rep=\"latent\", n_neighbors=15, key_added=\"neighbors_scvi\")\n    sc.tl.umap(adata_rna, neighbors_key=\"neighbors_scvi\")\n    sc.pl.embedding(\n        adata_rna,\n        basis=\"X_umap\",\n        color=[\"cell_types\", \"CN\", \"matched_archetype_weight\"],",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_latent_space_mixing",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_latent_space_mixing(adata_rna, adata_prot, subsample_size=8000):\n    \"\"\"Plot latent space mixing between RNA and protein data.\"\"\"\n    combined_latent_comparison = AnnData(\n        np.vstack([adata_rna.obsm[\"X_scVI\"], adata_prot.obsm[\"X_scVI\"]])\n    )\n    combined_latent_comparison.obs = pd.concat([adata_rna.obs, adata_prot.obs])\n    combined_latent_comparison.obs[\"modality\"] = [\"RNA\"] * len(adata_rna) + [\"Protein\"] * len(\n        adata_prot\n    )\n    if combined_latent_comparison.n_obs > subsample_size:",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "generate_cn_umap_plots",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def generate_cn_umap_plots(combined_latent, metrics_dict, subsample_size=2000):\n    \"\"\"Generate UMAP plots for each cell type with CN as colors using scanpy.\n    Args:\n        combined_latent: Combined latent space AnnData object\n        metrics_dict: Dictionary containing all calculated metrics with keys:\n            - 'overall': dict with overall scores (cn_ilisi_score, color_entropy_score, etc.)\n            - 'per_cell_type': dict with per-cell-type metrics\n        subsample_size: Maximum number of cells to use for plotting (default: 2000)\n    \"\"\"\n    logger.info(",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_metrics_by_cell_type",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_metrics_by_cell_type(metrics_dict, save_path=None):\n    \"\"\"\n    Create bar plots of metrics clustered by cell types.\n    Args:\n        metrics_dict: Dictionary containing metrics with 'overall' and 'per_cell_type' keys\n        save_path: Path to save the plots (optional)\n    \"\"\"\n    logger.info(\"Creating bar plots of metrics by cell type...\")\n    # Extract per-cell-type metrics\n    cell_type_metrics = metrics_dict[\"per_cell_type\"]",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_grouped_metrics",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_grouped_metrics(metrics_dict, save_path=None):\n    \"\"\"\n    Create a grouped bar chart to compare all metrics across cell types.\n    Args:\n        metrics_dict: Dictionary containing metrics with 'overall' and 'per_cell_type' keys\n        save_path: Path to save the plot (optional)\n    \"\"\"\n    logger.info(\"Creating grouped bar chart of all metrics...\")\n    # Extract per-cell-type metrics\n    cell_type_metrics = metrics_dict[\"per_cell_type\"]",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_counterfactual_distribution_histograms",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_counterfactual_distribution_histograms(\n    samples_dict, random_seed=42, bins=30, figsize=(18, 12)\n):\n    \"\"\"\n    Plot distribution histograms for randomly selected cells from counterfactual samples.\n    Args:\n        samples_dict: Output from sample_from_counterfactual_distributions()\n        random_seed: Random seed for reproducible cell selection\n        bins: Number of histogram bins\n        figsize: Figure size tuple",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "documentation": {}
+    },
+    {
+        "label": "plot_same_modal_vs_counterfactual_rna_differential_expression_and_umap",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "description": "ARCADIA.src.arcadia.plotting.post_hoc",
+        "peekOfCode": "def plot_same_modal_vs_counterfactual_rna_differential_expression_and_umap(\n    adata_rna, same_modal_adata_rna, counterfactual_adata_rna\n):\n    for cell_type in adata_rna.obs[\"cell_types\"].unique():\n        adata_rna_current_cell = adata_rna[adata_rna.obs[\"cell_types\"] == cell_type].copy()\n        # Filter out CN groups with fewer than 2 samples\n        cn_counts = adata_rna_current_cell.obs[\"CN\"].value_counts()\n        valid_cns = cn_counts[cn_counts >= 2].index\n        logger.info(f\"Cell type: {cell_type}, CN counts: {cn_counts.to_dict()}\")\n        if len(valid_cns) < 2:",
+        "detail": "ARCADIA.src.arcadia.plotting.post_hoc",
         "documentation": {}
     },
     {
@@ -8916,7 +9702,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.preprocessing",
         "description": "ARCADIA.src.arcadia.plotting.preprocessing",
-        "peekOfCode": "def plot_original_vs_new_protein_umap(\n    adata_prot, original_key=\"X_original_umap\", new_key=\"X_umap\", plot_flag=True, save_flag=True\n):\n    if not plot_flag:\n        return\n    import time\n    # use a subsample to speed up the plotting\n    adata_prot_subsampled = sc.pp.subsample(\n        adata_prot, n_obs=min(2000, adata_prot.n_obs), copy=True\n    )",
+        "peekOfCode": "def plot_original_vs_new_protein_umap(\n    adata_prot, original_key=\"X_original_umap\", new_key=\"X_umap\", plot_flag=True, save_flag=False\n):\n    if not plot_flag:\n        return\n    import time\n    # use a subsample to speed up the plotting\n    adata_prot_subsampled = sc.pp.subsample(\n        adata_prot, n_obs=min(2000, adata_prot.n_obs), copy=True\n    )",
         "detail": "ARCADIA.src.arcadia.plotting.preprocessing",
         "documentation": {}
     },
@@ -8952,7 +9738,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.preprocessing",
         "description": "ARCADIA.src.arcadia.plotting.preprocessing",
-        "peekOfCode": "def plot_extreme_archetype_confusion(\n    adata_prot, y_true_extreme, y_pred_extreme, plot_flag=True, save_flag=True\n):\n    import time\n    from sklearn.metrics import f1_score\n    if not plot_flag:\n        return\n    f1_extreme = f1_score(y_true_extreme, y_pred_extreme, average=\"weighted\")\n    scale_factor = adata_prot.uns[\"pipeline_metadata\"].get(\"scale_factor\")\n    plt.figure(figsize=(12, 10))",
+        "peekOfCode": "def plot_extreme_archetype_confusion(\n    adata_prot, y_true_extreme, y_pred_extreme, plot_flag=True, save_flag=False\n):\n    import time\n    from sklearn.metrics import f1_score\n    if not plot_flag:\n        return\n    f1_extreme = f1_score(y_true_extreme, y_pred_extreme, average=\"weighted\")\n    scale_factor = adata_prot.uns[\"pipeline_metadata\"].get(\"scale_factor\")\n    plt.figure(figsize=(12, 10))",
         "detail": "ARCADIA.src.arcadia.plotting.preprocessing",
         "documentation": {}
     },
@@ -9056,6 +9842,24 @@
         "documentation": {}
     },
     {
+        "label": "plot_protein_feature_distributions",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.preprocessing",
+        "description": "ARCADIA.src.arcadia.plotting.preprocessing",
+        "peekOfCode": "def plot_protein_feature_distributions(\n    adata_prot, layer=None, n_features=30, n_cells=1000, plot_flag=True\n):\n    \"\"\"Plot KDE distributions of protein features in subplots.\n    Creates a grid of KDE plots showing the distribution of protein features.\n    Useful for visualizing feature distributions before and after normalization.\n    Parameters\n    ----------\n    adata_prot : AnnData\n        Protein AnnData object",
+        "detail": "ARCADIA.src.arcadia.plotting.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "plot_protein_data_heatmap",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.preprocessing",
+        "description": "ARCADIA.src.arcadia.plotting.preprocessing",
+        "peekOfCode": "def plot_protein_data_heatmap(adata_prot, n_cells=100, n_features=100, plot_flag=True):\n    \"\"\"Plot heatmap of protein data (debug/exploratory visualization).\n    Creates a simple heatmap showing a subset of protein expression data.\n    Useful for quick visual inspection of data structure.\n    Parameters\n    ----------\n    adata_prot : AnnData\n        Protein AnnData object\n    n_cells : int, optional\n        Number of cells to plot, by default 100",
+        "detail": "ARCADIA.src.arcadia.plotting.preprocessing",
+        "documentation": {}
+    },
+    {
         "label": "plot_elbow_method",
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.spatial",
@@ -9069,7 +9873,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.spatial",
         "description": "ARCADIA.src.arcadia.plotting.spatial",
-        "peekOfCode": "def plot_spatial_data(adata_prot, max_cells=5000, plot_flag=True):\n    \"\"\"Plot spatial data for protein dataset\"\"\"\n    if not plot_flag:\n        return\n    logger.info(\"Plotting spatial data...\")\n    plt.figure(figsize=(10, 10))\n    # Subsample if needed\n    subsample_n_obs = min(max_cells, len(adata_prot))\n    adata_prot_sub = adata_prot[np.random.choice(len(adata_prot), subsample_n_obs, replace=False)]\n    # Get unique cell types and create a color map",
+        "peekOfCode": "def plot_spatial_data(adata_prot, max_cells=5000, plot_flag=True, save_flag=False):\n    \"\"\"Plot spatial data for protein dataset\"\"\"\n    if not plot_flag:\n        return\n    logger.info(\"Plotting spatial data...\")\n    plt.figure(figsize=(10, 10))\n    # Subsample if needed\n    subsample_n_obs = min(max_cells, len(adata_prot))\n    adata_prot_sub = adata_prot[np.random.choice(len(adata_prot), subsample_n_obs, replace=False)]\n    # Get unique cell types and create a color map",
         "detail": "ARCADIA.src.arcadia.plotting.spatial",
         "documentation": {}
     },
@@ -9092,6 +9896,24 @@
         "documentation": {}
     },
     {
+        "label": "plot_minor_cell_types_spatial_distribution",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.spatial",
+        "description": "ARCADIA.src.arcadia.plotting.spatial",
+        "peekOfCode": "def plot_minor_cell_types_spatial_distribution(adata_prot, plot_flag=True, max_cells=2000):\n    \"\"\"Plot spatial distribution of minor cell types with grid overlay.\n    Creates a spatial scatter plot showing how different minor cell types\n    are distributed across spatial regions, with grid lines indicating\n    spatial boundaries.\n    Parameters\n    ----------\n    adata_prot : AnnData\n        Protein AnnData object with spatial coordinates and minor_cell_types\n    plot_flag : bool, optional",
+        "detail": "ARCADIA.src.arcadia.plotting.spatial",
+        "documentation": {}
+    },
+    {
+        "label": "plot_residualization_comparison",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.spatial",
+        "description": "ARCADIA.src.arcadia.plotting.spatial",
+        "peekOfCode": "def plot_residualization_comparison(\n    spatial_adata_raw, spatial_adata_resid, cell_type_column=\"cell_types\", plot_flag=True\n):\n    \"\"\"Plot comparison of CN features before and after residualization.\n    Creates three heatmaps showing:\n    1. Cell-type mean CN features (raw)\n    2. Cell-type mean CN features (residualized)\n    3. Difference between residualized and raw means\n    Parameters\n    ----------",
+        "detail": "ARCADIA.src.arcadia.plotting.spatial",
+        "documentation": {}
+    },
+    {
         "label": "plot_spatial_features",
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.spatial",
@@ -9105,7 +9927,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.spatial",
         "description": "ARCADIA.src.arcadia.plotting.spatial",
-        "peekOfCode": "def plot_spatial_clusters(adata_prot, max_cells=2000, plot_flag=True):\n    \"\"\"Plot spatial clusters and related visualizations.\"\"\"\n    if not plot_flag:\n        return\n    # if the color pallete does not match the number of categories, add more colors\n    if \"CN_colors\" in adata_prot.uns:\n        if len(adata_prot.uns[\"CN_colors\"]) < len(adata_prot.obs[\"CN\"].cat.categories):\n            new_palette = sns.color_palette(\"tab10\", len(adata_prot.obs[\"CN\"].cat.categories))\n            adata_prot.uns[\"CN_colors\"] = new_palette.as_hex()\n    # Apply subsampling for spatial plot if too many cells",
+        "peekOfCode": "def plot_spatial_clusters(adata_prot, max_cells=2000, plot_flag=True, save_plot=False):\n    \"\"\"Plot spatial clusters and related visualizations.\"\"\"\n    if not plot_flag:\n        return\n    # if the color pallete does not match the number of categories, add more colors\n    if \"CN_colors\" in adata_prot.uns:\n        if len(adata_prot.uns[\"CN_colors\"]) < len(adata_prot.obs[\"CN\"].cat.categories):\n            new_palette = sns.color_palette(\"tab10\", len(adata_prot.obs[\"CN\"].cat.categories))\n            adata_prot.uns[\"CN_colors\"] = new_palette.as_hex()\n    # Apply subsampling for spatial plot if too many cells",
         "detail": "ARCADIA.src.arcadia.plotting.spatial",
         "documentation": {}
     },
@@ -9133,6 +9955,24 @@
         "importPath": "ARCADIA.src.arcadia.plotting.spatial",
         "description": "ARCADIA.src.arcadia.plotting.spatial",
         "peekOfCode": "def plot_modality_embeddings(adata_1_rna, adata_2_prot, max_cells=2000, plot_flag=True):\n    \"\"\"Plot PCA and UMAP embeddings for both modalities.\"\"\"\n    if not plot_flag:\n        return\n    # Subsample data if needed\n    sc.pl.pca(\n        adata_1_rna,\n        color=[\"cell_types\", \"major_cell_types\"],\n        title=[\"RNA pca minor cell types\", \"RNA pca major cell types\"],\n    )",
+        "detail": "ARCADIA.src.arcadia.plotting.spatial",
+        "documentation": {}
+    },
+    {
+        "label": "plot_minor_cell_types_spatial_distribution",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.spatial",
+        "description": "ARCADIA.src.arcadia.plotting.spatial",
+        "peekOfCode": "def plot_minor_cell_types_spatial_distribution(adata_prot, plot_flag=True, max_cells=2000):\n    \"\"\"Plot spatial distribution of minor cell types with grid overlay.\n    Creates a spatial scatter plot showing how different minor cell types\n    are distributed across spatial regions, with grid lines indicating\n    spatial boundaries.\n    Parameters\n    ----------\n    adata_prot : AnnData\n        Protein AnnData object with spatial coordinates and minor_cell_types\n    plot_flag : bool, optional",
+        "detail": "ARCADIA.src.arcadia.plotting.spatial",
+        "documentation": {}
+    },
+    {
+        "label": "plot_residualization_comparison",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.spatial",
+        "description": "ARCADIA.src.arcadia.plotting.spatial",
+        "peekOfCode": "def plot_residualization_comparison(\n    spatial_adata_raw, spatial_adata_resid, cell_type_column=\"cell_types\", plot_flag=True\n):\n    \"\"\"Plot comparison of CN features before and after residualization.\n    Creates three heatmaps showing:\n    1. Cell-type mean CN features (raw)\n    2. Cell-type mean CN features (residualized)\n    3. Difference between residualized and raw means\n    Parameters\n    ----------",
         "detail": "ARCADIA.src.arcadia.plotting.spatial",
         "documentation": {}
     },
@@ -9182,6 +10022,24 @@
         "documentation": {}
     },
     {
+        "label": "plot_minor_cell_types_spatial_distribution",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.spatial",
+        "description": "ARCADIA.src.arcadia.plotting.spatial",
+        "peekOfCode": "def plot_minor_cell_types_spatial_distribution(adata_prot, plot_flag=True, max_cells=2000):\n    \"\"\"Plot spatial distribution of minor cell types with grid overlay.\n    Creates a spatial scatter plot showing how different minor cell types\n    are distributed across spatial regions, with grid lines indicating\n    spatial boundaries.\n    Parameters\n    ----------\n    adata_prot : AnnData\n        Protein AnnData object with spatial coordinates and minor_cell_types\n    plot_flag : bool, optional",
+        "detail": "ARCADIA.src.arcadia.plotting.spatial",
+        "documentation": {}
+    },
+    {
+        "label": "plot_residualization_comparison",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.plotting.spatial",
+        "description": "ARCADIA.src.arcadia.plotting.spatial",
+        "peekOfCode": "def plot_residualization_comparison(\n    spatial_adata_raw, spatial_adata_resid, cell_type_column=\"cell_types\", plot_flag=True\n):\n    \"\"\"Plot comparison of CN features before and after residualization.\n    Creates three heatmaps showing:\n    1. Cell-type mean CN features (raw)\n    2. Cell-type mean CN features (residualized)\n    3. Difference between residualized and raw means\n    Parameters\n    ----------",
+        "detail": "ARCADIA.src.arcadia.plotting.spatial",
+        "documentation": {}
+    },
+    {
         "label": "plot_all_fits_for_gene",
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.training",
@@ -9195,7 +10053,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.training",
         "description": "ARCADIA.src.arcadia.plotting.training",
-        "peekOfCode": "def pre_train_adata_histograms_heatmap(adata, plot_name, feature_type=\"protein\"):\n    n_cells = min(1000, adata.n_obs)\n    n_features = min(200, adata.n_vars)\n    random_cells = np.random.choice(adata.obs_names, n_cells, replace=False)\n    random_features = np.random.choice(adata.var_names, n_features, replace=False)\n    subset = adata[random_cells, random_features]\n    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 16))\n    # Convert to dense if sparse\n    X_dense = subset.X.toarray() if hasattr(subset.X, \"toarray\") else subset.X\n    sns.heatmap(X_dense, cmap=\"viridis\", cbar_kws={\"label\": \"Expression\"}, ax=ax1)",
+        "peekOfCode": "def pre_train_adata_histograms_heatmap(adata, plot_name, feature_type=\"protein\"):\n    n_cells = min(1000, adata.n_obs)\n    n_features = min(200, adata.n_vars)\n    random_cells = np.random.choice(adata.obs_names, n_cells, replace=False)\n    random_features = np.random.choice(adata.var_names, n_features, replace=False)\n    subset = adata[random_cells, random_features]\n    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 16))\n    # Convert to dense if sparse\n    X_dense = subset.X.toarray() if hasattr(subset.X, \"toarray\") else subset.X\n    sns.heatmap(X_dense, cmap=\"viridis\", cbar_kws={\"label\": \"Expression\"}, ax=ax1, linewidths=0)",
         "detail": "ARCADIA.src.arcadia.plotting.training",
         "documentation": {}
     },
@@ -9204,7 +10062,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.training",
         "description": "ARCADIA.src.arcadia.plotting.training",
-        "peekOfCode": "def plot_warmup_loss_distributions(\n    warmup_raw_losses: dict, precentile: tuple[float, float] = (5, 95)\n):\n    \"\"\"\n    Plots histograms of raw loss distributions from the warmup phase,\n    showing original.\n    Args:\n        warmup_raw_losses: A dictionary where keys are loss names and\n                           values are lists of raw loss values.\n        precentile: Tuple of percentiles (lower, upper) for clipping.",
+        "peekOfCode": "def plot_warmup_loss_distributions(\n    warmup_raw_losses: dict, precentile: tuple[float, float] = (5, 95), plot_flag=True\n):\n    \"\"\"\n    Plots histograms of raw loss distributions from the warmup phase,\n    showing original.\n    Args:\n        warmup_raw_losses: A dictionary where keys are loss names and\n                           values are lists of raw loss values.\n        precentile: Tuple of percentiles (lower, upper) for clipping.",
         "detail": "ARCADIA.src.arcadia.plotting.training",
         "documentation": {}
     },
@@ -9258,7 +10116,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.training",
         "description": "ARCADIA.src.arcadia.plotting.training",
-        "peekOfCode": "def plot_train_val_normalized_losses(history_):\n    \"\"\"Plot training and validation losses normalized in the same figure.\n    Args:\n        history_: Dictionary containing training and validation loss histories\n    This function:\n    1. Uses epoch-wise means of the losses\n    2. Normalizes the losses for better visualization (0-1 range)\n    3. Plots training and validation losses in separate subplots for easier comparison\n    4. Uses consistent colors for the same loss type across both plots\n    5. Properly handles validation data collected at intervals (check_val_every_n_epoch)",
+        "peekOfCode": "def plot_train_val_normalized_losses(history_, plot_flag=True):\n    \"\"\"Plot training and validation losses normalized in the same figure.\n    Args:\n        history_: Dictionary containing training and validation loss histories\n    This function:\n    1. Uses epoch-wise means of the losses\n    2. Normalizes the losses for better visualization (0-1 range)\n    3. Plots training and validation losses in separate subplots for easier comparison\n    4. Uses consistent colors for the same loss type across both plots\n    5. Properly handles validation data collected at intervals (check_val_every_n_epoch)",
         "detail": "ARCADIA.src.arcadia.plotting.training",
         "documentation": {}
     },
@@ -9303,7 +10161,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.training",
         "description": "ARCADIA.src.arcadia.plotting.training",
-        "peekOfCode": "def plot_rna_protein_matching_means_and_scale(\n    rna_latent_mean,\n    protein_latent_mean,\n    rna_latent_std,\n    protein_latent_std,\n    archetype_dis_mat,\n    use_subsample=True,\n    global_step=None,\n):\n    \"\"\"",
+        "peekOfCode": "def plot_rna_protein_matching_means_and_scale(\n    rna_latent_mean,\n    protein_latent_mean,\n    rna_latent_std,\n    protein_latent_std,\n    archetype_dis_mat,\n    use_subsample=True,\n    global_step=None,\n    plot_flag=True,\n):",
         "detail": "ARCADIA.src.arcadia.plotting.training",
         "documentation": {}
     },
@@ -9321,7 +10179,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.training",
         "description": "ARCADIA.src.arcadia.plotting.training",
-        "peekOfCode": "def plot_similarity_loss_history(\n    similarity_loss_all_history,\n    active_similarity_loss_active_history,\n    global_step,\n    similarity_weight=None,\n    similarity_dynamic=None,\n):\n    \"\"\"\n    Plot the similarity loss history_ and highlight active steps\n    \"\"\"",
+        "peekOfCode": "def plot_similarity_loss_history(\n    similarity_loss_all_history,\n    active_similarity_loss_active_history,\n    global_step,\n    similarity_weight=None,\n    similarity_dynamic=None,\n    plot_flag=True,\n):\n    \"\"\"\n    Plot the similarity loss history_ and highlight active steps",
         "detail": "ARCADIA.src.arcadia.plotting.training",
         "documentation": {}
     },
@@ -9375,7 +10233,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.plotting.training",
         "description": "ARCADIA.src.arcadia.plotting.training",
-        "peekOfCode": "def plot_pca_umap_latent_space_during_train(prefix, combined_latent, epoch, global_step=\"\"):\n    sc.pp.pca(combined_latent)\n    # Helper function to create scatter plot with different markers for extreme archetypes\n    def plot_with_extreme_markers(ax, combined_latent, color_col, title, basis=\"X_pca\"):\n        # Check if extreme archetype information exists\n        if \"is_extreme_archetype\" in combined_latent.obs.columns:\n            extreme_mask = combined_latent.obs[\"is_extreme_archetype\"].astype(bool)\n            non_extreme_mask = ~extreme_mask\n            # Get coordinates\n            coords = combined_latent.obsm[basis]",
+        "peekOfCode": "def plot_pca_umap_latent_space_during_train(\n    prefix, combined_latent, epoch, global_step=\"\", plot_flag=True\n):\n    if not plot_flag:\n        return\n    sc.pp.pca(combined_latent)\n    # Helper function to create scatter plot with different markers for extreme archetypes\n    def plot_with_extreme_markers(ax, combined_latent, color_col, title, basis=\"X_pca\"):\n        # Check if extreme archetype information exists\n        if \"is_extreme_archetype\" in combined_latent.obs.columns:",
         "detail": "ARCADIA.src.arcadia.plotting.training",
         "documentation": {}
     },
@@ -9785,6 +10643,15 @@
         "documentation": {}
     },
     {
+        "label": "mixing_metric_parallel",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.training.metrics",
+        "description": "ARCADIA.src.arcadia.training.metrics",
+        "peekOfCode": "def mixing_metric_parallel(\n    adata, group_key=\"modality\", rep_key=\"X\", dims=None, k=5, max_k=300, n_jobs=-1, verbose=True\n):\n    \"\"\"\n    Parallel version of mixing metric calculation.\n    Calculates mixing metric using parallel computation for better performance on large datasets.\n    For each cell, finds the rank of the k-th neighbor from each group in the neighborhood.\n    Args:\n        adata: AnnData object\n        group_key: Column in adata.obs containing grouping variable (e.g., \"modality\", \"batch\")",
+        "detail": "ARCADIA.src.arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
         "label": "modality_kbet_mixing_score",
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.training.metrics",
@@ -10001,6 +10868,42 @@
         "documentation": {}
     },
     {
+        "label": "is_valid_metric_value",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.training.metrics",
+        "description": "ARCADIA.src.arcadia.training.metrics",
+        "peekOfCode": "def is_valid_metric_value(val):\n    \"\"\"Check if a value is valid (not None/NaN/Inf) for MLflow logging.\n    Args:\n        val: Value to check (can be numpy array, float, or other numeric type)\n    Returns:\n        bool: True if value is valid, False otherwise\n    \"\"\"\n    if val is None:\n        return False\n    if hasattr(val, \"dtype\"):",
+        "detail": "ARCADIA.src.arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "extract_training_metrics_from_history",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.training.metrics",
+        "description": "ARCADIA.src.arcadia.training.metrics",
+        "peekOfCode": "def extract_training_metrics_from_history(history, metric_mapping):\n    \"\"\"Extract final training metrics from history dictionary.\n    Args:\n        history: Training history dictionary with metric names as keys\n        metric_mapping: Dictionary mapping output metric names to history keys\n    Returns:\n        dict: Dictionary of valid metrics ready for MLflow logging\n    \"\"\"\n    metrics_to_log = {}\n    for key, hist_key in metric_mapping.items():",
+        "detail": "ARCADIA.src.arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "process_post_training_metrics",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.training.metrics",
+        "description": "ARCADIA.src.arcadia.training.metrics",
+        "peekOfCode": "def process_post_training_metrics(metrics):\n    \"\"\"Process post-training metrics, filtering out invalid values.\n    Args:\n        metrics: Dictionary of metric names to values\n    Returns:\n        tuple: (valid_metrics dict, nan_metrics list)\n    \"\"\"\n    valid_metrics = {}\n    nan_metrics = []\n    for k, v in metrics.items():",
+        "detail": "ARCADIA.src.arcadia.training.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "train_vae",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.training.train_vae",
+        "description": "ARCADIA.src.arcadia.training.train_vae",
+        "peekOfCode": "def train_vae(\n    adata_rna_subset,\n    adata_prot_subset,\n    model_checkpoints_folder=None,\n    max_epochs=10,\n    batch_size=128,\n    lr=1e-3,\n    contrastive_weight=1.0,\n    similarity_weight=0.5,\n    similarity_dynamic=True,",
+        "detail": "ARCADIA.src.arcadia.training.train_vae",
+        "documentation": {}
+    },
+    {
         "label": "select_gene_likelihood",
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.training.utils",
@@ -10140,7 +11043,7 @@
         "kind": 2,
         "importPath": "ARCADIA.src.arcadia.training.utils",
         "description": "ARCADIA.src.arcadia.training.utils",
-        "peekOfCode": "def generate_post_training_visualizations(\n    adata_rna,\n    adata_prot,\n    rna_latent,\n    prot_latent,\n    combined_latent,\n    history,\n    matching_results,\n):\n    \"\"\"Generate all visualizations for the model.\"\"\"",
+        "peekOfCode": "def generate_post_training_visualizations(\n    adata_rna,\n    adata_prot,\n    rna_latent,\n    prot_latent,\n    combined_latent,\n    history,\n    matching_results,\n    plot_flag=True,\n):",
         "detail": "ARCADIA.src.arcadia.training.utils",
         "documentation": {}
     },
@@ -10406,6 +11309,24 @@
         "documentation": {}
     },
     {
+        "label": "setup_mlflow_experiment",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.utils.logging",
+        "description": "ARCADIA.src.arcadia.utils.logging",
+        "peekOfCode": "def setup_mlflow_experiment(dataset_name, tracking_uri=\"file:./mlruns\"):\n    \"\"\"Setup MLflow experiment with dataset name.\n    Args:\n        dataset_name: Name of the dataset (used as experiment name)\n        tracking_uri: MLflow tracking URI\n    Returns:\n        tuple: (experiment_name, run_name, mlflow_artifact_dir, log_file_path)\n    \"\"\"\n    from datetime import datetime\n    from pathlib import Path",
+        "detail": "ARCADIA.src.arcadia.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "log_training_summary",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.utils.logging",
+        "description": "ARCADIA.src.arcadia.utils.logging",
+        "peekOfCode": "def log_training_summary(\n    experiment_name,\n    run_name,\n    mlflow_artifact_dir,\n    log_file_path,\n    dataset_name,\n    save_dir,\n    rna_sample_size,\n    prot_sample_size,\n    max_epochs,",
+        "detail": "ARCADIA.src.arcadia.utils.logging",
+        "documentation": {}
+    },
+    {
         "label": "logger",
         "kind": 5,
         "importPath": "ARCADIA.src.arcadia.utils.logging",
@@ -10583,6 +11504,87 @@
         "description": "ARCADIA.src.arcadia.utils.paths",
         "peekOfCode": "def here():\n    \"\"\"Get the directory containing the calling script or current working directory.\n    Returns:\n        Path: Path to the directory containing the calling script, or current working directory\n              if called from a notebook or interactive session.\n    \"\"\"\n    try:\n        frame = inspect.stack()[1]\n        caller_file = frame.filename\n        return Path(caller_file).resolve().parent",
         "detail": "ARCADIA.src.arcadia.utils.paths",
+        "documentation": {}
+    },
+    {
+        "label": "patch_scvi_library",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.utils.setup_scvi_patch",
+        "description": "ARCADIA.src.arcadia.utils.setup_scvi_patch",
+        "peekOfCode": "def patch_scvi_library():\n    \"\"\"\n    Patch scVI library to support custom training plans.\n    Adds 'self._training_plan = training_plan' at line 131 (after the\n    training_plan = self._training_plan_cls(...) assignment).\n    Returns:\n        bool: True if patching was successful or already patched, False otherwise\n    Raises:\n        FileNotFoundError: If scVI library files cannot be found\n        RuntimeError: If patching fails",
+        "detail": "ARCADIA.src.arcadia.utils.setup_scvi_patch",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "ARCADIA.src.arcadia.utils.setup_scvi_patch",
+        "description": "ARCADIA.src.arcadia.utils.setup_scvi_patch",
+        "peekOfCode": "def main():\n    \"\"\"Main entry point for command-line usage.\"\"\"\n    try:\n        success = patch_scvi_library()\n        sys.exit(0 if success else 1)\n    except Exception as e:\n        print(f\"Failed to patch scVI library: {e}\")\n        sys.exit(1)\nif __name__ == \"__main__\":\n    main()",
+        "detail": "ARCADIA.src.arcadia.utils.setup_scvi_patch",
+        "documentation": {}
+    },
+    {
+        "label": "Model",
+        "kind": 6,
+        "importPath": "model_comparison.scMODAL_main.scmodal.model",
+        "description": "model_comparison.scMODAL_main.scmodal.model",
+        "peekOfCode": "class Model(object):\n    def __init__(\n        self,\n        batch_size=500,\n        training_steps=10000,\n        seed=1234,\n        n_latent=20,\n        lambdaAE=10.0,\n        lambdaLA=10.0,\n        lambdaMNN=1.0,",
+        "detail": "model_comparison.scMODAL_main.scmodal.model",
+        "documentation": {}
+    },
+    {
+        "label": "encoder",
+        "kind": 6,
+        "importPath": "model_comparison.scMODAL_main.scmodal.networks",
+        "description": "model_comparison.scMODAL_main.scmodal.networks",
+        "peekOfCode": "class encoder(nn.Module):\n    def __init__(self, n_input, n_latent):\n        super(encoder, self).__init__()\n        self.n_input = n_input\n        self.n_latent = n_latent\n        n_hidden = 512\n        self.W_1 = nn.Parameter(torch.Tensor(n_hidden, self.n_input).normal_(mean=0.0, std=0.1))\n        self.b_1 = nn.Parameter(torch.Tensor(n_hidden).normal_(mean=0.0, std=0.1))\n        self.W_2 = nn.Parameter(torch.Tensor(self.n_latent, n_hidden).normal_(mean=0.0, std=0.1))\n        self.b_2 = nn.Parameter(torch.Tensor(self.n_latent).normal_(mean=0.0, std=0.1))",
+        "detail": "model_comparison.scMODAL_main.scmodal.networks",
+        "documentation": {}
+    },
+    {
+        "label": "generator",
+        "kind": 6,
+        "importPath": "model_comparison.scMODAL_main.scmodal.networks",
+        "description": "model_comparison.scMODAL_main.scmodal.networks",
+        "peekOfCode": "class generator(nn.Module):\n    def __init__(self, n_input, n_latent):\n        super(generator, self).__init__()\n        self.n_input = n_input\n        self.n_latent = n_latent\n        n_hidden = 512\n        self.W_1 = nn.Parameter(torch.Tensor(n_hidden, self.n_latent).normal_(mean=0.0, std=0.1))\n        self.b_1 = nn.Parameter(torch.Tensor(n_hidden).normal_(mean=0.0, std=0.1))\n        self.W_2 = nn.Parameter(torch.Tensor(self.n_input, n_hidden).normal_(mean=0.0, std=0.1))\n        self.b_2 = nn.Parameter(torch.Tensor(self.n_input).normal_(mean=0.0, std=0.1))",
+        "detail": "model_comparison.scMODAL_main.scmodal.networks",
+        "documentation": {}
+    },
+    {
+        "label": "discriminator",
+        "kind": 6,
+        "importPath": "model_comparison.scMODAL_main.scmodal.networks",
+        "description": "model_comparison.scMODAL_main.scmodal.networks",
+        "peekOfCode": "class discriminator(nn.Module):\n    def __init__(self, n_input):\n        super(discriminator, self).__init__()\n        self.n_input = n_input\n        n_hidden = 512\n        self.W_1 = nn.Parameter(torch.Tensor(n_hidden, self.n_input).normal_(mean=0.0, std=0.1))\n        self.b_1 = nn.Parameter(torch.Tensor(n_hidden).normal_(mean=0.0, std=0.1))\n        self.W_2 = nn.Parameter(torch.Tensor(n_hidden, n_hidden).normal_(mean=0.0, std=0.1))\n        self.b_2 = nn.Parameter(torch.Tensor(n_hidden).normal_(mean=0.0, std=0.1))\n        self.W_3 = nn.Parameter(torch.Tensor(1, n_hidden).normal_(mean=0.0, std=0.1))",
+        "detail": "model_comparison.scMODAL_main.scmodal.networks",
+        "documentation": {}
+    },
+    {
+        "label": "acquire_pairs",
+        "kind": 2,
+        "importPath": "model_comparison.scMODAL_main.scmodal.utils",
+        "description": "model_comparison.scMODAL_main.scmodal.utils",
+        "peekOfCode": "def acquire_pairs(X, Y, k=30, metric=\"angular\"):\n    # This function was modified from iMAP: https://github.com/Svvord/iMAP/blob/master/imap/stage2.py\n    f = X.shape[1]\n    t1 = AnnoyIndex(f, metric)\n    t2 = AnnoyIndex(f, metric)\n    for i in range(len(X)):\n        t1.add_item(i, X[i])\n    for i in range(len(Y)):\n        t2.add_item(i, Y[i])\n    t1.build(10)",
+        "detail": "model_comparison.scMODAL_main.scmodal.utils",
+        "documentation": {}
+    },
+    {
+        "label": "annotate_by_nn",
+        "kind": 2,
+        "importPath": "model_comparison.scMODAL_main.scmodal.utils",
+        "description": "model_comparison.scMODAL_main.scmodal.utils",
+        "peekOfCode": "def annotate_by_nn(vec_tar, vec_ref, label_ref, k=20, metric=\"cosine\"):\n    dist_mtx = cdist(vec_tar, vec_ref, metric=metric)\n    idx = dist_mtx.argsort()[:, :k]\n    labels = [max(list(label_ref[i]), key=list(label_ref[i]).count) for i in idx]\n    return labels\ndef compute_umap(adata, rep=None):\n    import umap\n    reducer = umap.UMAP(\n        n_neighbors=30,\n        n_components=2,",
+        "detail": "model_comparison.scMODAL_main.scmodal.utils",
+        "documentation": {}
+    },
+    {
+        "label": "compute_umap",
+        "kind": 2,
+        "importPath": "model_comparison.scMODAL_main.scmodal.utils",
+        "description": "model_comparison.scMODAL_main.scmodal.utils",
+        "peekOfCode": "def compute_umap(adata, rep=None):\n    import umap\n    reducer = umap.UMAP(\n        n_neighbors=30,\n        n_components=2,\n        metric=\"correlation\",\n        n_epochs=None,\n        learning_rate=1.0,\n        min_dist=0.3,\n        spread=1.0,",
+        "detail": "model_comparison.scMODAL_main.scmodal.utils",
         "documentation": {}
     },
     {
