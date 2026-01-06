@@ -2955,13 +2955,17 @@ class DualVAETrainingPlan(TrainingPlan):
                 self.val_total_loss,
                 log_to_mlflow=should_log_to_mlflow,
             )
+        # Track if epoch metrics were logged during checkpoint save
+        epoch_metrics_logged = False
         if (
             self.current_epoch % self.save_checkpoint_every_n_epochs
         ) == 0 and self.current_epoch > 2:
             self.save_checkpoints()
+            epoch_metrics_logged = True  # save_checkpoints calls log_to_mlflow_centralized("epoch")
 
-        # Log epoch-level metrics to MLflow
-        self.log_to_mlflow_centralized("epoch")
+        # Log epoch-level metrics to MLflow (skip if already logged during checkpoint save)
+        if not epoch_metrics_logged:
+            self.log_to_mlflow_centralized("epoch")
 
         self.on_epoch_end_called = True
 

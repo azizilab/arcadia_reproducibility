@@ -420,6 +420,13 @@ def train_vae(
     training_end_time = time.time()
     training_time = training_end_time - training_start_time
 
+    # Ensure on_train_end_custom is called (PyTorch Lightning may not trigger it reliably)
+    if hasattr(rna_vae, "_training_plan") and rna_vae._training_plan is not None:
+        training_plan = rna_vae._training_plan
+        if not training_plan.on_train_end_custom_called:
+            logger.info("Calling on_train_end_custom explicitly (not triggered during training)")
+            training_plan.on_train_end_custom(plot_flag=True)
+
     # Update training results metadata
     training_results = {
         "training_time": training_time,

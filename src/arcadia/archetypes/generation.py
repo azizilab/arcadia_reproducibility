@@ -1230,7 +1230,6 @@ def find_optimal_k_across_modalities(
     # Collect after-matching proportions per batch for plotting
     combined_batch_proportions_after = {}
     if plot_flag:
-        print("\n=== Collecting after-matching proportions per batch ===")
         for modality_idx, (modality_name, k_matched_results) in enumerate(
             zip(modality_names, all_k_matched_results)
         ):
@@ -1239,11 +1238,13 @@ def find_optimal_k_across_modalities(
 
             optimal_k_results = k_matched_results[best_k]
             matched_configs = optimal_k_results["matched_configs"]
-            cross_modal_order = selected_cross_modal_orders.get(modality_idx)
 
-            # Extract proportions for each batch after matching
+            # Extract proportions for each batch after WITHIN-MODALITY matching
+            # Apply archetype_order to align batches within the modality (NOT cross-modal order)
             for batch, config_ in matched_configs.items():
                 combined_key = f"{modality_name}_batch_{batch}"
+                if combined_key not in combined_batch_archetypes:
+                    continue
                 batch_k_values = combined_batch_archetypes[combined_key]["k_values"]
                 if best_k not in batch_k_values:
                     continue
@@ -1251,11 +1252,19 @@ def find_optimal_k_across_modalities(
                 list_len = len(batch_k_values)
                 if combined_key not in combined_batch_proportions_after:
                     combined_batch_proportions_after[combined_key] = [None] * list_len
-                proportions_after_df = config_["proportions"]
-                if cross_modal_order is not None:
-                    proportions_after_df = proportions_after_df.iloc[cross_modal_order].reset_index(
-                        drop=True
-                    )
+
+                # Get original proportions and the matching order
+                proportions_original = config_["proportions"].copy()
+                within_modality_order = config_["archetype_order"]
+                # Convert numpy array to list for reliable pandas indexing
+                order_list = (
+                    within_modality_order.tolist()
+                    if hasattr(within_modality_order, "tolist")
+                    else list(within_modality_order)
+                )
+
+                # Apply reordering - iloc selects rows by integer position
+                proportions_after_df = proportions_original.iloc[order_list].reset_index(drop=True)
                 combined_batch_proportions_after[combined_key][k_idx] = proportions_after_df
 
         # Create combined before/after plot
@@ -1279,50 +1288,23 @@ def find_optimal_k_across_modalities(
             )
 
             # Create additional plot showing cross-modal aligned proportions
-            print("\n=== Computing cross-modal aligned proportions per batch ===")
+            # For consistent comparison, we use the SAME proportions as within-modality
+            # but apply cross-modal ordering for non-reference modalities
             combined_batch_proportions_final = {}
-            for modality_idx, (adata, modality_name) in enumerate(zip(adata_list, modality_names)):
-                if "archetype_vec" not in adata.obsm:
+            for modality_idx, (modality_name, k_matched_results) in enumerate(
+                zip(modality_names, all_k_matched_results)
+            ):
+                if best_k not in k_matched_results:
                     continue
 
-                archetype_vectors = adata.obsm["archetype_vec"].values
-                cell_type_key = "cell_types" if "cell_types" in adata.obs else "major_cell_types"
-                if cell_type_key not in adata.obs:
-                    continue
-                cell_types = adata.obs[cell_type_key].values
-                unique_cell_types = sorted(list(set(cell_types)))
-                batches_modal = adata.obs[batch_key].unique()
-                n_archetypes = archetype_vectors.shape[1]
-
+                optimal_k_results = k_matched_results[best_k]
+                matched_configs = optimal_k_results["matched_configs"]
                 cross_modal_order = selected_cross_modal_orders.get(modality_idx)
 
-                for batch in batches_modal:
+                for batch, config_ in matched_configs.items():
                     combined_key = f"{modality_name}_batch_{batch}"
                     if combined_key not in combined_batch_archetypes:
                         continue
-
-                    batch_mask = adata.obs[batch_key] == batch
-                    batch_vectors = archetype_vectors[batch_mask]
-                    batch_cell_types = cell_types[batch_mask]
-                    if batch_vectors.size == 0:
-                        continue
-
-                    arch_prop = pd.DataFrame(
-                        np.zeros((n_archetypes, len(unique_cell_types))),
-                        columns=unique_cell_types,
-                    )
-
-                    for arch_idx in range(n_archetypes):
-                        weights = batch_vectors[:, arch_idx]
-                        df = pd.DataFrame({"weight": weights, "cell_type": batch_cell_types})
-                        grouped = df.groupby("cell_type", observed=False)["weight"].sum()
-                        total_weight = grouped.sum()
-                        if total_weight > 0:
-                            arch_prop.loc[arch_idx, grouped.index] = grouped.values / total_weight
-
-                    if cross_modal_order is not None:
-                        arch_prop = arch_prop.iloc[cross_modal_order].reset_index(drop=True)
-
                     batch_k_values = combined_batch_archetypes[combined_key]["k_values"]
                     if best_k not in batch_k_values:
                         continue
@@ -1330,7 +1312,28 @@ def find_optimal_k_across_modalities(
                     list_len = len(batch_k_values)
                     if combined_key not in combined_batch_proportions_final:
                         combined_batch_proportions_final[combined_key] = [None] * list_len
-                    combined_batch_proportions_final[combined_key][k_idx] = arch_prop
+
+                    # Start with original proportions
+                    proportions_df = config_["proportions"].copy()
+                    # Apply within-modality ordering first
+                    within_modality_order = config_["archetype_order"]
+                    order_list = (
+                        within_modality_order.tolist()
+                        if hasattr(within_modality_order, "tolist")
+                        else list(within_modality_order)
+                    )
+                    proportions_df = proportions_df.iloc[order_list].reset_index(drop=True)
+                    # Then apply cross-modal ordering for non-reference modalities
+                    if cross_modal_order is not None:
+                        cross_order_list = (
+                            cross_modal_order.tolist()
+                            if hasattr(cross_modal_order, "tolist")
+                            else list(cross_modal_order)
+                        )
+                        proportions_df = proportions_df.iloc[cross_order_list].reset_index(
+                            drop=True
+                        )
+                    combined_batch_proportions_final[combined_key][k_idx] = proportions_df
 
             if combined_batch_proportions_final:
                 print("\n=== Creating within- vs cross-modal matching proportions plot ===")
