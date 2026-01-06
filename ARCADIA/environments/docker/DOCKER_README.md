@@ -33,18 +33,18 @@ The `run_docker.sh` script simplifies building and running Docker containers:
 
 ```bash
 # From the ARCADIA project root directory
-cd ARCADIA/environments/docker
+cd environments/docker
 
 # Build and test the Docker image
-./run_docker.sh test
+bash run_docker.sh test
 
 # Run the pipeline with a specific dataset
-./run_docker.sh pipeline cite_seq
-./run_docker.sh pipeline tonsil
-./run_docker.sh pipeline schreiber
+bash run_docker.sh pipeline cite_seq
+bash run_docker.sh pipeline tonsil
+bash run_docker.sh pipeline schreiber
 
 # Start an interactive bash session
-./run_docker.sh bash
+bash run_docker.sh bash
 ```
 
 ### Method 2: Manual Docker Commands
@@ -130,7 +130,7 @@ The Docker image includes:
 ```bash
 # Run the simple pipeline (no plots) - using run_docker.sh
 cd ARCADIA/environments/docker
-./run_docker.sh pipeline cite_seq
+bash run_docker.sh pipeline cite_seq
 
 # Run the notebook-based pipeline (with plots) - requires manual docker command
 # since run_docker.sh uses run_pipeline_direct.sh
@@ -151,7 +151,7 @@ docker run --rm -i --gpus all \
 ```bash
 # Run a specific script - using interactive session
 cd ARCADIA/environments/docker
-./run_docker.sh bash
+bash run_docker.sh 
 # Then inside container:
 # python scripts/_1_align_datasets.py --dataset_name cite_seq
 ```
@@ -161,7 +161,7 @@ cd ARCADIA/environments/docker
 ```bash
 # Start MLflow UI in the container
 docker run --rm -i --gpus all \
-  -v $(pwd)/../..:/workspace \
+  -v $(pwd)/bash ..:/workspa
   -w /workspace \
   -p 5000:5000 \
   -e CONDA_DEFAULT_ENV=scvi \
@@ -180,7 +180,7 @@ Then access MLflow at `http://localhost:5000` from your host machine.
 ```bash
 # Start Jupyter server
 docker run --rm -i --gpus all \
-  -v $(pwd)/../..:/workspace \
+  -v $(pwd)/bash ..:/workspa
   -w /workspace \
   -p 8888:8888 \
   -e CONDA_DEFAULT_ENV=scvi \
