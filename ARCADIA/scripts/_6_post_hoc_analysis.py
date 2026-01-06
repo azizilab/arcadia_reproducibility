@@ -102,7 +102,7 @@ else:
 
 # %% Load Checkpoint Data
 
-experiment_name = "single_vae_training"
+experiment_name = "cite_seq"  # todo: make as input arg
 logger.info(f"Finding latest checkpoint from experiment: {experiment_name}")
 checkpoint_path, experiment_id, run_id = find_checkpoint_from_experiment_name(experiment_name)
 logger.info(f"Found checkpoint: {checkpoint_path}")

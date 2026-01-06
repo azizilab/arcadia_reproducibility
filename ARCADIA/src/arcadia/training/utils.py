@@ -432,6 +432,8 @@ def ensure_correct_dtype(adata, target_dtype=np.int32):
 def compute_pairwise_distances(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     # x: [N, D], y: [M, D]
     # Returns: [N, M] distance matrix
+    # Ensure both tensors are on the same device
+    y = y.to(x.device)
     x_norm = (x**2).sum(dim=1, keepdim=True)  # [N, 1]
     y_norm = (y**2).sum(dim=1, keepdim=True)  # [M, 1]
     xy = torch.matmul(x, y.transpose(-2, -1))  # [N, M]
@@ -440,6 +442,12 @@ def compute_pairwise_distances(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor
 
 def compute_pairwise_kl_two_items(loc1, loc2, scale1, scale2, eps=1e-8, plot_flag=False):
     # Assumes scale* are std, not variance
+    # Ensure all tensors are on the same device
+    device = loc1.device
+    loc2 = loc2.to(device)
+    scale1 = scale1.to(device)
+    scale2 = scale2.to(device)
+
     loc1 = loc1.unsqueeze(1)
     loc2 = loc2.unsqueeze(0)
     s1 = torch.clamp(scale1.unsqueeze(1), min=eps)
