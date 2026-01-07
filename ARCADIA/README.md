@@ -55,13 +55,13 @@ See the [reproducibility repository README](../README.md) for details.
 **System Requirements:** To reproduce the results, we recommend a system with at least 60GB RAM (120GB preferred) and an NVIDIA T4 GPU or better.
 ### Running ARCADIA Scripts Directly
 
-To run individual pipeline steps directly:
+To run individual pipeline steps directly (example for CITE-seq spleen lymph node data from [scvi-tools](https://scvi-tools.org/) using `scvi.data.spleen_lymph_cite_seq()`):
 
 ```bash
 # Activate the conda environment
 conda activate scvi
 
-# Run the complete pipeline
+# Run the complete pipeline for cite_seq dataset
 python scripts/_0_preprocess_cite_seq.py
 python scripts/_1_align_datasets.py --dataset_name cite_seq
 python scripts/_2_spatial_integrate.py --dataset_name cite_seq
@@ -70,10 +70,15 @@ python scripts/_4_prepare_training.py --dataset_name cite_seq
 python scripts/_5_train_vae.py --dataset_name cite_seq
 ```
 
+**Note:** 
+- The `cite_seq` dataset is loaded from [scvi-tools](https://scvi-tools.org/) using `scvi.data.spleen_lymph_cite_seq()`. See `scripts/_0_preprocess_cite_seq.py` and `src/arcadia/data_utils/loading.py` for details.
+- Only Step 0 (preprocessing) is dataset-specific and requires a different script for each dataset (e.g., `scripts/_0_preprocess_tonsil.py` for the tonsil dataset). Steps 1-5 are dataset-agnostic and automatically read the latest output files from Step 0, regardless of which dataset was preprocessed.
+
 ## System Requirements
 
 - **Operating System:** Linux/Unix (tested on Ubuntu)
 - **Python Version:** Python 3.10
+- **Docker:** Docker (optional but recommended for reproducibility and easier setup)
 - **GPU:** NVIDIA GPU with CUDA support (recommended for VAE training)
 - **Memory:** Minimum 32GB RAM recommended
 - **Storage:** At least 50GB free space for data and checkpoints
@@ -82,110 +87,53 @@ python scripts/_5_train_vae.py --dataset_name cite_seq
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/azizilab/ARCADIA_public.git
    cd ARCADIA
    ```
 
 2. **Set up your Python Environment (Choose ONE option):**
 
-   You have multiple options to set up the Python environment. `scvi-tools` and its dependencies, including PyTorch, will be installed.
+   **Option A: Using Docker (Recommended)**
 
-   **Option A: Using Specific Conda Environment Files (Recommended)**
+   Docker provides a containerized environment that ensures consistent execution across different systems. This is the easiest and most reliable way to run ARCADIA.
+
+   **Quick Start:**
+
+   ```bash
+   cd environments/docker
+   bash run_docker.sh test                    # Build and test
+   bash run_docker.sh pipeline <dataset_name> # Run pipeline (e.g., cite_seq, tonsil)
+   bash run_docker.sh bash                     # Interactive session
+   ```
+
+   **Prerequisites:** Docker installed (NVIDIA Docker runtime optional for GPU support)
+
+   **Note:** The Docker image automatically patches the scVI library (`scvi-tools==1.2.2.post2`) to support custom training plans. This patch adds `self._training_plan = training_plan` at line 131 in `scvi/model/base/_training_mixin.py`, which is required for ARCADIA's dual VAE training. The patching happens automatically during Docker image build using `arcadia.utils.setup_scvi_patch`, so no manual intervention is needed.
+
+   > **📖 For detailed Docker documentation** including setup instructions, usage examples, troubleshooting, and advanced usage, see [`environments/docker/DOCKER_README.md`](environments/docker/DOCKER_README.md).
+
+   ---
+
+   **Alternative Option (Conda):**
+
+   If you prefer to manage your own Python environment, you can use conda environment files. Note that this requires manual setup and may be less reproducible across different systems.
+
+   **Option B: Using Conda Environment Files**
 
    We provide environment files tailored for different setups. These will create a conda environment named appropriately (e.g., `scvi-cpu`, `scvi-gpu-cuda11.8`).
 
-   *   **For CPU-only:**
+   *   **For NVIDIA GPU (CUDA 11.8 or 12.1):**
+       Make sure your NVIDIA drivers are compatible with your desired CUDA version.
        ```bash
-       conda env create -f environment_cpu.yaml
-       conda activate scvi-cpu
-       ```
-
-   *   **For NVIDIA GPU with CUDA 11.8:**
-       Make sure your NVIDIA drivers are compatible with CUDA 11.8.
-       ```bash
-       conda env create -f environment_gpu_cuda11.8.yaml
+       # For CUDA 11.8:
+       conda env create -f environments/environment_gpu_cuda11.8.yaml
        conda activate scvi-gpu-cuda11.8
-       ```
 
-   *   **For NVIDIA GPU with CUDA 12.1:**
-       Make sure your NVIDIA drivers are compatible with CUDA 12.1.
-       ```bash
-       conda env create -f environment_gpu_cuda12.1.yaml
+       # For CUDA 12.1:
+       conda env create -f environments/environment_gpu_cuda12.1.yaml
        conda activate scvi-gpu-cuda12.1
        ```
 
-   **Option B: Using a Base Python Environment + Manual PyTorch Installation**
-
-   This option is for users who want to start with a basic Python environment and then add dependencies, including the specific PyTorch build they need.
-
-   *   **Create and activate a base Conda environment:**
-       ```bash
-       conda create -n scvi python=3.10 -y
-       conda activate scvi
-       ```
-   *   **Install dependencies (excluding PyTorch, which will be installed next):
-       You can use the `requirements.txt` file which lists most dependencies:
-       ```bash
-       pip install -r requirements.txt
-       ```
-       Note: `requirements.txt` includes `scvi-tools`. If `scvi-tools` installs a CPU version of PyTorch as a sub-dependency before you install your desired PyTorch version, you might need to uninstall it first (see next step).
-
-   *   **Install PyTorch (CPU or GPU):**
-       *   Identify your CUDA version (e.g., by running `nvidia-smi`).
-       *   Go to the [official PyTorch installation page](https://pytorch.org/get-started/locally/).
-       *   Use their tool to generate the correct installation command for your system (select Conda or Pip).
-       *   **Important:** Before running the PyTorch install command from their website, it's often best to uninstall any existing PyTorch that might have been pulled in as a CPU version by `scvi-tools` or other packages:
-           ```bash
-           # Inside the activated 'scvi' environment
-           pip uninstall torch torchvision torchaudio lightning pytorch-lightning lightning-utilities -y
-           # The following conda uninstall is a fallback if conda somehow installed them, though less likely with this method
-           conda uninstall pytorch torchvision torchaudio pytorch-cpu torchvision-cpu torchaudio-cpu cpuonly torchmetrics lightning pytorch-lightning lightning-utilities -y # To be safe
-           ```
-       *   Then run the command from PyTorch.org. For example, for CUDA 11.8 via Conda (this will also pull in `torchvision`, `torchaudio`):
-           ```bash
-           conda install pytorch pytorch-cuda=11.8 -c pytorch -c nvidia
-           ```
-           Or for CUDA 12.1 via Pip (ensure your pip is from the `scvi` environment):
-           ```bash
-           pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-           ```
-       *   Finally, install PyTorch Lightning and related tools (if not already pulled in by your chosen PyTorch command or if you uninstalled them previously):
-           ```bash
-           pip install lightning torchmetrics
-           ```
-       *   **Patch scVI library for custom training plans:**
-           ```bash
-           # Install ARCADIA package first (if not already installed)
-           pip install -e .
-           # Then patch scVI (required for ARCADIA's dual VAE training)
-           python -m arcadia.utils.setup_scvi_patch
-           ```
-           **Why is patching needed?** ARCADIA uses a custom `DualVAETrainingPlan` class that requires access to `self._training_plan`. The patch adds this assignment at line 131 in `scvi/model/base/_training_mixin.py` after the `training_plan` is created.
-
-   **Option C: Using Pip and `requirements.txt` + Manual PyTorch Installation**
-
-   This option is for users who prefer managing their base Python environment manually (e.g., using `venv`) and then installing packages via pip.
-
-   *   **Create and activate your Python environment (e.g., using venv):**
-       ```bash
-       python3 -m venv venv
-       source venv/bin/activate
-       ```
-   *   **Install dependencies from `requirements.txt`:**
-       ```bash
-       pip install -r requirements.txt
-       ```
-   *   **Install PyTorch (CPU or GPU):**
-       *   Go to the [official PyTorch installation page](https://pytorch.org/get-started/locally/).
-       *   Use their tool to generate the Pip installation command for your desired PyTorch version (CPU or specific CUDA).
-       *   Example for CUDA 11.8 via Pip:
-           ```bash
-           pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-           ```
-       *   Example for CPU-only PyTorch via Pip:
-           ```bash
-           pip3 install torch torchvision
-           ```
    *   **Patch scVI library for custom training plans:**
        ```bash
        # Install ARCADIA package first (if not already installed)
@@ -194,26 +142,6 @@ python scripts/_5_train_vae.py --dataset_name cite_seq
        python -m arcadia.utils.setup_scvi_patch
        ```
        **Why is patching needed?** ARCADIA uses a custom `DualVAETrainingPlan` class that requires access to `self._training_plan`. The patch adds this assignment at line 131 in `scvi/model/base/_training_mixin.py` after the `training_plan` is created.
-
-   **Option D: Using Docker (Recommended for Reproducibility)**
-
-   Docker provides a containerized environment that ensures consistent execution across different systems.
-
-**Quick Start:**
-
-```bash
-cd environments/docker
-bash run_docker.sh test              # Build and test
-bash run_docker.sh pipeline cite_seq  # Run pipeline
-bash run_docker.sh bash               # Interactive session
-```
-
-
-**Prerequisites:** Docker installed (NVIDIA Docker runtime optional for GPU support)
-
-**Note:** The Docker image automatically patches the scVI library (`scvi-tools==1.2.2.post2`) to support custom training plans. This patch adds `self._training_plan = training_plan` at line 131 in `scvi/model/base/_training_mixin.py`, which is required for ARCADIA's dual VAE training. The patching happens automatically during Docker image build using `arcadia.utils.setup_scvi_patch`, so no manual intervention is needed.
-
-> **📖 For detailed Docker documentation** including setup instructions, usage examples, troubleshooting, and advanced usage, see [`environments/docker/DOCKER_README.md`](environments/docker/DOCKER_README.md).
 
 ## Pipeline Overview
 
@@ -228,26 +156,27 @@ The ARCADIA pipeline consists of six main steps:
 
 ## Detailed Workflow
 **Configuration:**
-The script uses `./config.json` for parameters:
+The script uses `configs/config.json` for parameters:
 ```json
 {
   "subsample": {
-    "num_rna_cells": 2000,
-    "num_protein_cells": 2000
+    "num_rna_cells": 9999999999,
+    "num_protein_cells": 9999999999
   },
   "plot_flag": true,
+  "residualize_spatial_features": true,
   "training": {
-    "max_epochs": 400
+    "max_epochs": 200
   }
 }
 ```
 
 This configuration file controls:
-- **Subsampling**: Limits the number of RNA or protein cells processed
+- **Subsampling**: Limits the number of RNA or protein cells processed (set to 9999999999 to include all cells in the dataset)
 - **Plotting**: Controls whether plots are generated during preprocessing steps (`plot_flag`)
+- **Spatial Features**: `residualize_spatial_features` controls spatial feature handling
 - **Training**: Controls training hyperparameters, including `max_epochs` (number of training epochs)
 
-**Note:** Training visualization control (`plot_x_times`) is set in the training script (`scripts/_5_train_vae.py`) as a training parameter, not in `config.json`. Set `plot_x_times: 0` to disable all training plots for faster execution.
 
 The config file is used in each of the following pipeline files and is useful for debugging and exploration. **For debugging and testing, set `max_epochs` to a low number (e.g., 10-50) to quickly verify the pipeline works correctly.**
 
@@ -271,7 +200,6 @@ For faster execution during development or testing:
 
 2. **Disable training plots** by setting `plot_x_times: 0` in `scripts/_5_train_vae.py` (line 310). This disables all training visualizations including first batch plots, latent space plots, and counterfactual plots.
 
-This significantly speeds up pipeline execution while still allowing you to test the full workflow. The default values are 2000 cells for each modality and 400 epochs for training. **For debugging and testing, set `max_epochs` to a low number (e.g., 10-50) and `plot_x_times: 0` to quickly verify the pipeline works correctly.**
 
 ### Step 0: Data Preprocessing
 **Script:** `scripts/_0_preprocess_cite_seq.py` or `scripts/_0_preprocess_tonsil.py`
@@ -287,8 +215,8 @@ This step preprocesses raw CODEX spatial proteomics and RNA-seq data:
 - Save processed data with timestamps
 
 **Outputs:**
-- `preprocessed_adata_rna_[timestamp].h5ad`
-- `preprocessed_adata_prot_[timestamp].h5ad`
+- `[dataset_name]/preprocessed_adata_rna_[timestamp].h5ad`
+- `[dataset_name]/preprocessed_adata_prot_[timestamp].h5ad`
 
 ### Step 1: Dataset Alignment
 **Script:** `scripts/_1_align_datasets.py`
@@ -298,11 +226,15 @@ This step aligns and harmonizes RNA and protein datasets:
 **Key Operations:**
 - Load preprocessed data from Step 0
 - Balance cell type proportions between modalities (matching smaller dataset proportions)
-- Apply batch correction to RNA data using scVI (ZINB likelihood)
-- Select highly variable genes using Seurat v3 method on raw counts
-- Normalize protein data (z-normalization already applied in Step 0)
+- Select highly variable genes on raw counts
+- Normalize protein data
 - Compute PCA and UMAP embeddings for visualization
 - Prepare data for spatial integration
+- Save aligned data with timestamps
+
+**Outputs:**
+- `[dataset_name]/adata_rna_aligned_[timestamp].h5ad`
+- `[dataset_name]/adata_prot_aligned_[timestamp].h5ad`
 
 ### Step 2: Spatial Integration
 **Script:** `scripts/_2_spatial_integrate.py`
@@ -340,8 +272,8 @@ This step integrates spatial information and creates neighborhood-aware features
    - Prepare data for archetype generation
 
 **Outputs:**
-- `adata_rna_spatial_integrated_[timestamp].h5ad`
-- `adata_prot_spatial_integrated_[timestamp].h5ad`
+- `[dataset_name]/adata_rna_spatial_integrated_[timestamp].h5ad`
+- `[dataset_name]/adata_prot_spatial_integrated_[timestamp].h5ad`
 
 ### Step 3: Archetype Generation
 **Script:** `scripts/_3_generate_archetypes.py`
@@ -352,20 +284,22 @@ This step identifies cell archetypes and aligns them across modalities:
 
 1. **Archetype Detection using PCHA:**
    - Apply Principal Convex Hull Analysis on PCA representations
-   - Test range of archetype numbers (default: 6-10)
+   - Test range of archetype numbers (default: 7-13)
    - Use batch-aware archetype generation for consistent representation across batches
    - Select optimal k that works across all modalities and batches
 
 2. **Cross-Modal Archetype Alignment:**
-   - Match RNA and protein archetypes using cell type proportions
-   - Optimize matching using cosine distance
+   - For each archetype, identify cells most aligned to it (highest archetype loading)
+   - Compute cell type proportion vectors for each archetype based on these aligned cells
+   - Match RNA and protein archetypes by comparing their cell type proportion vectors using cosine distance
+   - Optimize matching to find the best correspondence between modalities
    - Validate alignment with extreme archetype analysis
 
 ![Semi-synthetic Data Integration](readme_figures/semi_synthetic_data_ARCADIA_integration_archetype_assignment_and_matching.png)
 
 **Outputs:**
-- `adata_rna_archetype_generated_[timestamp].h5ad`
-- `adata_prot_archetype_generated_[timestamp].h5ad`
+- `[dataset_name]/adata_rna_archetype_generated_[timestamp].h5ad`
+- `[dataset_name]/adata_prot_archetype_generated_[timestamp].h5ad`
 - Both files contain:
   - `obsm['archetype_vec']`: Cell loadings on archetypes
   - `obs['archetype_label']`: Dominant archetype assignment
@@ -406,8 +340,8 @@ This step prepares the archetype-annotated data for VAE training:
 ![Cross-Modality Matching](readme_figures/ARCADIA_cross_modality_cell_type_matching_and_CN_assignment_accuracy.png)
 
 **Outputs:**
-- `adata_rna_subset_prepared_for_training_[timestamp].h5ad`
-- `adata_prot_subset_prepared_for_training_[timestamp].h5ad`
+- `[dataset_name]/adata_rna_subset_prepared_for_training_[timestamp].h5ad`
+- `[dataset_name]/adata_prot_subset_prepared_for_training_[timestamp].h5ad`
 - Metadata tracking preprocessing steps and matching quality
 
 ### Step 5: Model Training
@@ -459,6 +393,12 @@ Use `scripts/hyperparameter_search.py` to explore parameter space:
 - Comprehensive logging and visualization
 - Early stopping capabilities
 
+**Outputs:**
+- Model checkpoints saved in `checkpoints/[dataset_name]/` directory
+- Training metrics and visualizations logged to MLflow (accessible via `mlflow ui`)
+- Trained model files and latent representations
+- Training logs and experiment tracking data
+
 ![Integrated Embedding with Archetype Match Weights](readme_figures/ARCADIA_integrated_embedding_cell_subtypes_archetype_match_weights.png)
 
 ## DualVAETrainingPlan Architecture
@@ -500,13 +440,6 @@ The `dual_vae_training_plan.py` (located in `src/arcadia/training/`) implements 
 
 3. **Training Strategy:**
 
-   **Adaptive Similarity Weight:**
-   ```python
-   if iLISI < 1.5:  # Poor integration
-       similarity_weight *= 2  # Increase weight
-   elif iLISI >= 1.5 and similarity_weight > 10:
-       similarity_weight /= 2  # Decrease weight
-   ```
 
    **Steady-State Detection:**
    - Monitors similarity loss variance over sliding window
@@ -534,19 +467,6 @@ The `dual_vae_training_plan.py` (located in `src/arcadia/training/`) implements 
 - `load_from_checkpoints()`: Restores training from saved state
 
 ## Running on ARCADIA
-
-
-```bash
-git clone git@github.com:azizilab/ARCADIA_public.git
-```
-
-
-```bash
-# The project is located at
-cd ~/projects/ARCADIA
-
-# Activate the environment
-conda activate scvi
 
 
 
@@ -582,11 +502,8 @@ ARCADIA/
 
 To reproduce the paper results:
 
-1. **Setup Environment: (already done if you were connected to the existing VM properly)**
-   ```bash
-   conda env create -f environment.yaml
-   conda activate scvi
-   ```
+1. **Setup Environment:**
+   Follow the installation instructions above (Docker recommended, or use conda environment files from `environments/` folder)
 
 2. **Run Complete Pipeline:**
    ```bash
@@ -597,14 +514,7 @@ To reproduce the paper results:
    python scripts/_2_spatial_integrate.py --dataset_name cite_seq
    python scripts/_3_generate_archetypes.py --dataset_name cite_seq
    python scripts/_4_prepare_training.py --dataset_name cite_seq
-   python scripts/hyperparameter_search.py --dataset_name cite_seq  # Recommended
-   # or python scripts/_5_train_vae.py --dataset_name cite_seq
-
-   # to run in the background (optional)
-   nohup python scripts/hyperparameter_search.py --dataset_name cite_seq > hyperparameter_search.log 2>&1 &
-   # to view logs live (optional)
-   tail -f hyperparameter_search.log
-   # also results are logged to mlflow live (use `mlflow ui` to use the browser to see the training artifacts) (optional)
+   python scripts/_5_train_vae.py --dataset_name cite_seq  
 
    ```
 
@@ -696,7 +606,7 @@ Differential gene expression analysis reveals cell neighborhood-specific pattern
 Important parameters that affect results:
 
 - **Archetype Detection:**
-  - `k`: Number of archetypes (6-10 tested, optimal selected automatically)
+  - `k`: Number of archetypes (7-13 tested, optimal selected automatically)
   - `covet_k`: COVET neighborhood size (configurable, default 10)
   - `covet_g`: COVET grid size (64)
   - Note: By default, neighbor means are used instead of COVET features

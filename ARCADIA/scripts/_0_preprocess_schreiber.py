@@ -1,15 +1,17 @@
-# %% This script preprocesses raw CODEX spatial proteomics and RNA-seq data from the Schreiber lab dataset:
+# %% This script preprocesses raw CODEX spatial proteomics and RNA-seq data from the MaxFuse paper:
 
 # Key Operations:
 # Load raw data files:
-# RNA: rna_umap.h5ad (5,546 cells × 13,447 genes)
+# RNA: mouse_ICB_scRNA_umap_labelled.h5ad (scRNA-seq data)
 # Protein: codex_cn_tumor.h5ad (spatial proteomics data)
-# Metadata: codex_meta.csv
+# Metadata: codex_meta.csv and annotated_cells_for_Kevin.tsv
 # Filter to mutual cell types between RNA and protein datasets
 # Quality control and outlier removal using MAD (Median Absolute Deviation)
-# Normalize protein data using either z-normalization or log-double-z-normalization (selected based on silhouette score)
+# Normalize protein data using z-normalization (without log1p transformation)
 # Select highly variable genes for RNA data (using knee detection)
+# Normalize RNA data using normalize_total (target_sum=40000) + log1p transformation
 # Perform spatial analysis on protein data
+# Filter to specific samples (cntrl_n251_d10, ict_n205_d10)
 # Save processed data with timestamps
 
 # Outputs:
@@ -83,11 +85,8 @@ config_path = Path("configs/config.json")
 if config_path.exists():
     with open(config_path, "r") as f:
         config_ = json.load(f)
-    num_rna_cells = config_["subsample"]["num_rna_cells"]
-    num_protein_cells = config_["subsample"]["num_protein_cells"]
     plot_flag = config_["plot_flag"]
 else:
-    num_rna_cells = num_protein_cells = 2000
     plot_flag = True
 
 start_time = datetime.now()

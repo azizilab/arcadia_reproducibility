@@ -19,7 +19,40 @@ except NameError:
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
-"""Train VAE with archetypes vectors."""
+"""Dual VAE Training Script
+
+This script trains dual variational autoencoders (VAEs) for RNA and protein modalities
+using a custom training plan that incorporates archetype-based alignment.
+
+Key Operations:
+1. Load training-ready data from Step 4
+2. Set up MLflow experiment tracking
+3. Configure training hyperparameters (from config.json or defaults)
+4. Train dual VAEs with custom loss functions:
+   - Reconstruction losses for each modality
+   - Matching loss: Aligns cells with similar archetype profiles across modalities
+   - Cell type clustering loss: Ensures cell types cluster in latent space
+   - Cross-modal cell type alignment loss
+   - CN distribution separation loss (optional)
+   - Similarity loss (optional, adaptive based on iLISI score)
+5. Generate visualizations during training (if plot_x_times > 0):
+   - Latent space PCA/UMAP visualizations
+   - CN-specific cell type UMAPs
+   - Counterfactual predictions (RNA→Protein, Protein→RNA)
+6. Calculate post-training metrics:
+   - Matching accuracy between modalities
+   - Silhouette F1 and ARI scores
+   - iLISI for integration quality
+7. Save model checkpoints and log all results to MLflow
+
+Note: Requires scVI library patch for DualVAETrainingPlan support.
+See script comments for patching instructions.
+
+Outputs:
+- Model checkpoints saved to checkpoints/ directory
+- Training metrics and visualizations logged to MLflow
+- Latent representations stored in AnnData objects
+"""
 
 # ---
 # jupyter:
@@ -280,10 +313,6 @@ mlflow.log_param(
     f"{adata_prot_subset.shape[0]}x{adata_prot_subset.shape[1]}",
 )
 mlflow.log_param("dataset_name", adata_rna_subset.uns.get("dataset_name", "unknown"))
-mlflow.log_param(
-    "use_spatial_injection",
-    adata_prot_subset.uns.get("pipeline_metadata", {}).get("use_spatial_injection", "unknown"),
-)
 
 trained_from_scratch = model_checkpoints_folder is None
 mlflow.log_param("trained_from_scratch", trained_from_scratch)

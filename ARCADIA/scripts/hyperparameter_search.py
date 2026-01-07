@@ -428,12 +428,6 @@ for i, params in enumerate(new_combinations):
                 f"{adata_prot_subset.shape[0]}x{adata_prot_subset.shape[1]}",
             )
             mlflow.log_param("dataset_name", adata_rna_subset.uns.get("dataset_name", "unknown"))
-            mlflow.log_param(
-                "use_spatial_injection",
-                adata_prot_subset.uns.get("pipeline_metadata", {}).get(
-                    "use_spatial_injection", "unknown"
-                ),
-            )
 
             trained_from_scratch = model_checkpoints_folder is None
             mlflow.log_param("trained_from_scratch", trained_from_scratch)

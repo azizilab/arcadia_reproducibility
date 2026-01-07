@@ -1,16 +1,29 @@
-# %% Archetype Generation with Neighbors Means and MaxFuse
-# This notebook generates archetypes for RNA and protein data using neighbor means and MaxFuse alignment.
+# %% Spatial Integration Script
+# This script integrates spatial information and creates neighborhood-aware features for protein data.
+
+# Key Operations:
+# 1. Load preprocessed data from Step 1
+# 2. Compute spatial neighbors using adaptive k-NN (k=20 for >5000 cells, k=10 otherwise)
+# 3. Filter distant neighbors using 95th percentile threshold while protecting 5 closest neighbors
+# 4. Calculate neighbor mean expressions as contextual features
+# 5. Optionally apply COVET feature engineering (disabled by default, uses neighbor means instead)
+# 6. Apply cell-type-based residualization to spatial features (optional, configurable)
+# 7. Scale features globally to keep protein and spatial features on comparable ranges
+# 8. Generate Cell Neighborhood (CN) labels using empirical clustering:
+#    - For cite_seq: Fixed k=4 clusters (KMeans)
+#    - For other datasets: Elbow method to determine optimal k (5-20 range, KMeans or Leiden)
+# 9. Filter to highly variable features
+# 10. Save integrated data with spatial features and CN labels
+
+# Outputs:
+# adata_rna_spatial_integrated_[timestamp].h5ad
+# adata_prot_spatial_integrated_[timestamp].h5ad
 
 import json
 import os
-
-# Add src to path for arcadia package
 import sys
 import warnings
 from pathlib import Path
-
-# Set the filename for this script
-
 
 # Handle __file__ for both script and notebook execution
 try:
@@ -68,9 +81,7 @@ if config_path.exists():
     num_rna_cells = config_["subsample"]["num_rna_cells"]
     num_protein_cells = config_["subsample"]["num_protein_cells"]
     plot_flag = config_["plot_flag"]
-    use_spatial_injection = config_.get("use_spatial_injection", False)
     residualize_spatial_features_flag = config_.get("residualize_spatial_features", True)
-    print(f"use_spatial_injection: {use_spatial_injection}")
 else:
     num_rna_cells = num_protein_cells = 2000
     plot_flag = True

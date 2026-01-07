@@ -40,8 +40,33 @@ FILENAME = "_3_generate_archetypes.py"
 # Default parameters - can be overridden by papermill
 dataset_name = None
 
-# %% Archetype Generation with Neighbors Means and MaxFuse
-# This notebook generates archetypes for RNA and protein data using neighbor means and MaxFuse alignment.
+# %% Archetype Generation Script
+# This script identifies cell archetypes and aligns them across modalities using Principal Convex Hull Analysis (PCHA).
+
+# Key Operations:
+# 1. Load spatially integrated data from Step 2
+# 2. Compute PCA and UMAP embeddings for both modalities
+# 3. Apply batch correction to protein data (after spatial features are added)
+# 4. Convert protein data to integer representation for batch correction compatibility
+# 5. Batch-aware archetype generation:
+#    - Generate archetypes separately for each batch to account for batch differences
+#    - Match archetypes within modalities using cell type proportions
+#    - Create unified archetype coordinate system across batches
+#    - Find optimal k (number of archetypes) that works across all modalities and batches (default: 7-13)
+# 6. Cross-modal archetype alignment:
+#    - Match RNA and protein archetypes using cosine distance
+#    - Validate alignment with extreme archetype analysis
+# 7. Compute archetype vectors (cell loadings on archetypes) for each cell
+# 8. Assign dominant archetype label to each cell
+# 9. Generate visualizations and save results
+
+# Outputs:
+# adata_rna_archetype_generated_[timestamp].h5ad
+# adata_prot_archetype_generated_[timestamp].h5ad
+# Both files contain:
+#   - obsm['archetype_vec']: Cell loadings on archetypes
+#   - obs['archetype_label']: Dominant archetype assignment
+#   - uns['archetypes']: Archetype coordinates in PCA space
 
 # Suppress pkg_resources deprecation warnings from louvain - must be before any imports that use louvain
 warnings.filterwarnings("ignore", message="pkg_resources is deprecated")
@@ -559,8 +584,23 @@ if plot_flag:
     best_matches_extreme = np.argmin(similarity_matrix_extreme, axis=1)
     rna_extreme_cell_types = adata_rna.obs["cell_types"].values[rna_extreme_mask]
     prot_extreme_cell_types = adata_prot.obs["cell_types"].values[prot_extreme_mask]
-    similarity_matrix_full = cosine_distances(rna_archetypes, prot_archetypes)
-    best_matches_full = np.argmin(similarity_matrix_full, axis=1)
+
+    # Use chunked computation for full dataset to avoid memory issues
+    # Compute best matches without storing full distance matrix
+    n_rna_full = rna_archetypes.shape[0]
+    n_prot_full = prot_archetypes.shape[0]
+    # Dynamically adjust chunk size based on dataset size
+    max_chunk_memory_gb = 0.5
+    max_elements_per_chunk = int(max_chunk_memory_gb * 1e9 / (n_prot_full * 8))
+    chunk_size = min(1000, max(100, max_elements_per_chunk))
+
+    best_matches_full = np.zeros(n_rna_full, dtype=int)
+    for i in range(0, n_rna_full, chunk_size):
+        end_idx = min(i + chunk_size, n_rna_full)
+        chunk_distances = cosine_distances(rna_archetypes[i:end_idx], prot_archetypes)
+        best_matches_full[i:end_idx] = np.argmin(chunk_distances, axis=1)
+        del chunk_distances
+
     y_true_full = adata_rna.obs["cell_types"].values
     y_pred_full = adata_prot.obs["cell_types"].values[best_matches_full]
     f1_full = f1_score(y_true_full, y_pred_full, average="weighted")

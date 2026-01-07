@@ -25,22 +25,27 @@ This script aligns and preprocesses RNA-seq and protein (CODEX) datasets for dow
 REQUIREMENTS:
 - RNA adata must have:
   * 'counts' layer with raw count data
-  * 'log' layer with log1p transformed data
-  * Both datasets should be normalized
+  * 'log1p' layer with log1p transformed data
+  * X should contain log1p(normalized) data from Step 0
 - Protein adata must have:
   * 'counts' layer with raw count data
-  * Normalized expression data in X
+  * 'z_normalized' layer with z-normalized data
+  * X should contain z-normalized data from Step 0 (no log1p)
 - Both datasets must have:
   * 'cell_types' in obs
   * 'batch' information in obs
   * Spatial coordinates in obsm['spatial'] for protein data
 
 The script performs:
-1. Dataset balancing based on cell type proportions
-2. Protein normalization (z-score + log1p)
-3. RNA preprocessing with batch correction
-4. Quality control and visualization
-5. Final dataset alignment and saving
+1. Dataset balancing based on cell type proportions (matching smaller dataset proportions)
+2. Subsample datasets to specified cell counts (from config.json)
+3. RNA preprocessing with batch correction using scVI (ZINB likelihood)
+4. Highly variable gene selection using Seurat v3 method on raw counts
+5. Quality control and visualization
+6. Final dataset alignment and saving
+
+Note: Protein normalization is NOT performed here - it's already done in Step 0.
+Protein batch correction is deferred until Step 2 (after spatial features are added).
 """
 import json
 import os

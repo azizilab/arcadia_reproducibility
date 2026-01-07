@@ -39,9 +39,8 @@ cd environments/docker
 bash run_docker.sh test
 
 # Run the pipeline with a specific dataset
-bash run_docker.sh pipeline cite_seq
-bash run_docker.sh pipeline tonsil
-bash run_docker.sh pipeline schreiber
+./run_docker.sh pipeline cite_seq
+./run_docker.sh pipeline tonsil
 
 # Start an interactive bash session
 bash run_docker.sh bash
@@ -161,7 +160,7 @@ bash run_docker.sh
 ```bash
 # Start MLflow UI in the container
 docker run --rm -i --gpus all \
-  -v $(pwd)/bash ..:/workspa
+  -v $(pwd)/../..:/workspace \
   -w /workspace \
   -p 5000:5000 \
   -e CONDA_DEFAULT_ENV=scvi \
@@ -180,7 +179,7 @@ Then access MLflow at `http://localhost:5000` from your host machine.
 ```bash
 # Start Jupyter server
 docker run --rm -i --gpus all \
-  -v $(pwd)/bash ..:/workspa
+  -v $(pwd)/../..:/workspace \
   -w /workspace \
   -p 8888:8888 \
   -e CONDA_DEFAULT_ENV=scvi \

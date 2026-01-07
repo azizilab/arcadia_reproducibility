@@ -1,4 +1,29 @@
-# %% Processing
+# %% Training Data Preparation Script
+# This script prepares the archetype-annotated data for dual VAE training.
+
+# Key Operations:
+# 1. Load archetype-generated data from Step 3
+# 2. Subsample to specified number of cells (from config.json)
+# 3. Order cells by major and minor cell types for batch construction
+# 4. Cross-modal cell matching:
+#    - Find closest protein cell for each RNA cell using cosine distance on archetype vectors
+#    - Assign cell neighborhoods (CN) from protein to RNA data
+#    - Calculate initial matching distances for baseline metrics
+# 5. Compute PCA and UMAP embeddings for visualization
+# 6. Convert data to integer representation based on detected gene likelihood:
+#    - RNA: ZINB, NB, or Normal (detected automatically)
+#    - Protein: Normal or NB (detected automatically)
+# 7. Normalize library sizes for both modalities (target_sum=40000)
+# 8. Set up scVI-compatible batch and library size columns
+# 9. Quality checks and visualizations:
+#    - Cell type distributions
+#    - Archetype heatmaps
+#    - B cell subtypes and spatial patterns
+
+# Outputs:
+# adata_rna_subset_prepared_for_training_[timestamp].h5ad
+# adata_prot_subset_prepared_for_training_[timestamp].h5ad
+# Metadata tracking preprocessing steps and matching quality
 
 # ---
 # jupyter:
