@@ -51,23 +51,35 @@ bash run_pipeline_direct.sh cite_seq      # Fast execution without plots
 bash run_pipeline_notebooks.sh cite_seq   # With plots saved as notebooks
 ```
 
-See the [reproducibility repository README](../README.md) for details.
+See the [reproducibility repository README](https://github.com/azizilab/arcadia_reproducibility) for details.
+
 **System Requirements:** To reproduce the results, we recommend a system with at least 60GB RAM (120GB preferred) and an NVIDIA T4 GPU or better.
+
 ### Running ARCADIA Scripts Directly
 
+**Option 1: Using the pipeline script (Recommended)**
+```bash
+# Activate the conda environment
+conda activate scvi
+
+# Run the complete pipeline with a single command
+bash run_pipeline.sh <dataset_name>
+```
+
+**Option 2: Running steps individually**
 To run individual pipeline steps directly (example for CITE-seq spleen lymph node data from [scvi-tools](https://scvi-tools.org/) using `scvi.data.spleen_lymph_cite_seq()`):
 
 ```bash
 # Activate the conda environment
 conda activate scvi
 
-# Run the complete pipeline for cite_seq dataset
-python scripts/_0_preprocess_cite_seq.py
-python scripts/_1_align_datasets.py --dataset_name cite_seq
-python scripts/_2_spatial_integrate.py --dataset_name cite_seq
-python scripts/_3_generate_archetypes.py --dataset_name cite_seq
-python scripts/_4_prepare_training.py --dataset_name cite_seq
-python scripts/_5_train_vae.py --dataset_name cite_seq
+# Run the complete pipeline for <dataset_name>
+python scripts/_0_preprocess_<dataset_name>.py
+python scripts/_1_align_datasets.py --dataset_name <dataset_name>
+python scripts/_2_spatial_integrate.py --dataset_name <dataset_name>
+python scripts/_3_generate_archetypes.py --dataset_name <dataset_name>
+python scripts/_4_prepare_training.py --dataset_name <dataset_name>
+python scripts/_5_train_vae.py --dataset_name <dataset_name>
 ```
 
 **Note:** 
@@ -198,7 +210,7 @@ For faster execution during development or testing:
 }
 ```
 
-2. **Disable training plots** by setting `plot_x_times: 0` in `scripts/_5_train_vae.py` (line 310). This disables all training visualizations including first batch plots, latent space plots, and counterfactual plots.
+2. **Disable training plots** by setting `plot_x_times: 0` in the training parameters (see `scripts/_5_train_vae.py`). This disables all training visualizations including first batch plots, latent space plots, and counterfactual plots.
 
 
 ### Step 0: Data Preprocessing
@@ -466,10 +478,6 @@ The `dual_vae_training_plan.py` (located in `src/arcadia/training/`) implements 
 - `save_checkpoints()`: Persists model state with metadata
 - `load_from_checkpoints()`: Restores training from saved state
 
-## Running on ARCADIA
-
-
-
 ## Repository Structure
 
 ```
@@ -506,16 +514,22 @@ To reproduce the paper results:
    Follow the installation instructions above (Docker recommended, or use conda environment files from `environments/` folder)
 
 2. **Run Complete Pipeline:**
+
+   **Option A: Using the pipeline script (Recommended)**
    ```bash
+   # Run the complete pipeline with a single command
+   bash run_pipeline.sh <dataset_name>
+   ```
 
-   # Run pipeline steps
-   python scripts/_0_preprocess_cite_seq.py
-   python scripts/_1_align_datasets.py --dataset_name cite_seq
-   python scripts/_2_spatial_integrate.py --dataset_name cite_seq
-   python scripts/_3_generate_archetypes.py --dataset_name cite_seq
-   python scripts/_4_prepare_training.py --dataset_name cite_seq
-   python scripts/_5_train_vae.py --dataset_name cite_seq  
-
+   **Option B: Running steps manually**
+   ```bash
+   # Run pipeline steps individually
+   python scripts/_0_preprocess_<dataset_name>.py
+   python scripts/_1_align_datasets.py --dataset_name <dataset_name>
+   python scripts/_2_spatial_integrate.py --dataset_name <dataset_name>
+   python scripts/_3_generate_archetypes.py --dataset_name <dataset_name>
+   python scripts/_4_prepare_training.py --dataset_name <dataset_name>
+   python scripts/_5_train_vae.py --dataset_name <dataset_name>
    ```
 
 3. **View Results:**
