@@ -754,12 +754,16 @@ def z_normalize_codex(adata, apply_log1p=True):
     return adata
 
 
-def analyze_and_visualize(adata: sc.AnnData, modality: str = "", plot_flag=True) -> None:
+def analyze_and_visualize(
+    input_adata: sc.AnnData, modality: str = "", plot_flag=True, save_flag=False
+) -> None:
     """Dimensionality reduction and visualization"""
 
     print("\nRunning dimensionality reduction...")
     # take a random subset of the data
-    adata = adata[np.random.choice(adata.n_obs, size=min(adata.n_obs, 2000), replace=False), :]
+    adata = input_adata[
+        np.random.choice(input_adata.n_obs, size=min(input_adata.n_obs, 2000), replace=False), :
+    ]
     sc.pp.pca(adata, n_comps=15)
     sc.pp.neighbors(adata, n_neighbors=15, n_pcs=10)
     sc.tl.umap(adata)
@@ -782,9 +786,13 @@ def analyze_and_visualize(adata: sc.AnnData, modality: str = "", plot_flag=True)
             0.5, 0.5, "Count data not available", ha="center", va="center", transform=ax2.transAxes
         )
         ax2.set_title("Counts (N/A)")
-
     plt.tight_layout()
-    plt.show()
+    if save_flag:
+        fig.savefig(f"umap_{modality}.pdf", dpi=300, bbox_inches="tight")
+    elif plot_flag:
+        plt.show()
+    else:
+        None
 
 
 def spatial_analysis(adata: sc.AnnData) -> None:

@@ -448,8 +448,16 @@ def validate_extreme_archetypes_matching(
     prot_vec = adata_prot.obsm["archetype_vec"]
 
     # Use chunked computation to avoid creating huge distance matrix
-    chunk_size = 1000  # Process RNA cells in chunks
+    # Dynamically adjust chunk size based on dataset size to avoid memory issues
     n_rna = rna_vec.shape[0]
+    n_prot = prot_vec.shape[0]
+    # For large datasets, use smaller chunks to avoid memory issues
+    # Estimate memory: chunk_size * n_prot * 8 bytes (float64)
+    # Target: keep chunks under 500MB
+    max_chunk_memory_gb = 0.5
+    max_elements_per_chunk = int(max_chunk_memory_gb * 1e9 / (n_prot * 8))
+    chunk_size = min(1000, max(100, max_elements_per_chunk))
+
     closest_prot_indices = np.zeros(n_rna, dtype=int)
 
     for i in range(0, n_rna, chunk_size):
@@ -469,11 +477,14 @@ def validate_extreme_archetypes_matching(
     )
 
     # Do the same for protein data (compute in chunks)
-    n_prot = prot_vec.shape[0]
+    # Adjust chunk size for protein->RNA direction (different dimensions)
+    max_elements_per_chunk_prot = int(max_chunk_memory_gb * 1e9 / (n_rna * 8))
+    chunk_size_prot = min(1000, max(100, max_elements_per_chunk_prot))
+
     closest_rna_indices = np.zeros(n_prot, dtype=int)
 
-    for i in range(0, n_prot, chunk_size):
-        end_idx = min(i + chunk_size, n_prot)
+    for i in range(0, n_prot, chunk_size_prot):
+        end_idx = min(i + chunk_size_prot, n_prot)
         chunk_distances = cdist(
             prot_vec[i:end_idx],
             rna_vec,

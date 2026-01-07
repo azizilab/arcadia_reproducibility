@@ -3,13 +3,15 @@
 # Key Operations:
 # Load CITE-seq spleen lymph node dataset using scVI data loader
 # Extract RNA and protein data from different batches (following archetype methodology)
-# Apply identical preprocessing steps as MaxFuse/Schreiber datasets
+# Apply identical preprocessing steps as MaxFuse datasets
+# Map minor cell types to major cell types for both modalities
 # Filter to mutual cell types between RNA and protein datasets
 # Quality control and outlier removal using MAD (Median Absolute Deviation)
 # Generate synthetic spatial coordinates for protein data using minor cell type spatial segregation
-# Normalize protein data using either z-normalization or log-double-z-normalization (selected based on silhouette score)
+# Normalize protein data using z-normalization (without log1p transformation)
 # Select highly variable genes for RNA data (using knee detection)
-# Perform spatial analysis on protein data using Schreiber methodology
+# Normalize RNA data using normalize_total (target_sum=40000) + log1p transformation
+# Perform spatial analysis on protein data
 # Save processed data with timestamps
 
 # Outputs:
@@ -112,11 +114,8 @@ config_path = Path("configs/config.json")
 if config_path.exists():
     with open(config_path, "r") as f:
         config_ = json.load(f)
-    num_rna_cells = config_["subsample"]["num_rna_cells"]
-    num_protein_cells = config_["subsample"]["num_protein_cells"]
     plot_flag = config_["plot_flag"]
 else:
-    num_rna_cells = num_protein_cells = 2000
     plot_flag = True
 
 # %% --- Timestamp (no plot directories) ---
@@ -131,7 +130,7 @@ base_path = "raw_datasets"
 
 # Core directories to be created under the base path
 # Sub-directories are handled automatically by os.makedirs
-os.makedirs('processed_data', exist_ok=True)
+os.makedirs("processed_data", exist_ok=True)
 
 
 # %% --- Load CITE-seq Data ---

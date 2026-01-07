@@ -41,7 +41,6 @@ cd ARCADIA/environments/docker
 # Run the pipeline with a specific dataset
 ./run_docker.sh pipeline cite_seq
 ./run_docker.sh pipeline tonsil
-./run_docker.sh pipeline schreiber
 
 # Start an interactive bash session
 ./run_docker.sh bash

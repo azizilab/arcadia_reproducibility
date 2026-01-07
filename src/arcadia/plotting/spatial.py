@@ -427,9 +427,14 @@ def plot_spatial_clusters(adata_prot, max_cells=2000, plot_flag=True, save_plot=
         color="CN",
         size=10,
         title="Cluster cells by their CN, can see the different CN in different regions, \nthanks to the different B cell types in each region",
+        show=False,
     )
     if save_plot:
-        plt.savefig(f"spatial_clusters_CN.pdf")
+        plt.gcf().savefig(f"spatial_clusters_CN.pdf", bbox_inches="tight")
+    if plot_flag:
+        plt.show()
+    plt.close()
+
     sc.pl.scatter(
         adata_plot,
         x="X",
@@ -437,7 +442,13 @@ def plot_spatial_clusters(adata_prot, max_cells=2000, plot_flag=True, save_plot=
         size=10,
         color="cell_types",
         title="Cell types in spatial locations",
+        show=False,
     )
+    if save_plot:
+        plt.gcf().savefig(f"spatial_clusters_cell_types.pdf", bbox_inches="tight")
+    if plot_flag:
+        plt.show()
+    plt.close()
     spatial_features = adata_plot[:, adata_plot.var["feature_type"] != "protein"].copy()
     protein_features = adata_plot[:, adata_plot.var["feature_type"] == "protein"].copy()
 

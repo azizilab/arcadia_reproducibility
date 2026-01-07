@@ -1,15 +1,16 @@
-# %% This script preprocesses MaxFuse tonsil dataset using the same methodology as the Schreiber dataset:
+# %% This script preprocesses MaxFuse tonsil dataset:
 
 # Key Operations:
-# Load MaxFuse tonsil data files:
+# Download tonsil dataset from MaxFuse paper (if not already present)
+# Load tonsil dataset from MaxFuse paper:
 # RNA: tonsil_rna_counts.txt with metadata and gene names
 # Protein: tonsil_codex.csv (spatial proteomics data)
-# Apply identical preprocessing steps as Schreiber dataset
 # Filter to mutual cell types between RNA and protein datasets
 # Quality control and outlier removal using MAD (Median Absolute Deviation)
-# Normalize protein data using either z-normalization or log-double-z-normalization (selected based on silhouette score)
+# Normalize protein data using z-normalization (without log1p transformation)
 # Select highly variable genes for RNA data (using knee detection)
-# Perform spatial analysis on protein data using Schreiber methodology
+# Normalize RNA data using normalize_total (target_sum=40000) + log1p transformation
+# Perform spatial analysis on protein data
 # Save processed data with timestamps
 
 # Outputs:
@@ -108,11 +109,8 @@ config_path = Path("configs/config.json")
 if config_path.exists():
     with open(config_path, "r") as f:
         config_ = json.load(f)
-    num_rna_cells = config_["subsample"]["num_rna_cells"]
-    num_protein_cells = config_["subsample"]["num_protein_cells"]
     plot_flag = config_["plot_flag"]
 else:
-    num_rna_cells = num_protein_cells = 2000
     plot_flag = True
 
 # %% --- Timestamp (no plot directories) ---
@@ -125,7 +123,6 @@ sc.settings.set_figure_params(dpi=50, facecolor="white")
 
 # %% --- Directory Structure Definition ---
 os.makedirs("processed_data", exist_ok=True)
-
 
 
 # %% --- MaxFuse Data Download and Loading Functions ---
@@ -229,8 +226,8 @@ print(f"After filtering to common cell types:")
 print(f"RNA dataset shape: {adata_rna.shape}")
 print(f"Protein dataset shape: {adata_prot.shape}")
 
-# %% --- Apply Schreiber-style Initial Preprocessing ---
-print("\n=== Applying initial preprocessing (Schreiber methodology) ===")
+# %% --- Apply Initial Preprocessing ---
+print("\n=== Applying initial preprocessing ===")
 adata_rna_processed = preprocess_rna_initial_steps(
     adata_rna.copy(),
     min_genes=200,
@@ -282,14 +279,14 @@ print(f"Final RNA cell types: {sorted(set(adata_rna.obs['cell_types']))}")
 print(f"Final protein cell types: {sorted(set(adata_prot.obs['cell_types']))}")
 print("✅ MaxFuse dataset setup completed!")
 
-# %% --- Apply Schreiber-style Protein Processing ---
+# %% --- Apply Protein Processing ---
 pp_plots.plot_protein_violin(adata_prot, plot_flag)
 
 adata_prot = mad_outlier_removal(adata_prot).copy()
 adata_rna.obs["major_cell_types"] = adata_rna.obs["cell_types"]
 adata_prot.obs["major_cell_types"] = adata_prot.obs["cell_types"]
 
-# %% --- Protein Analysis Following Schreiber Methodology ---
+# %% --- Protein Analysis ---
 pp_plots.plot_protein_analysis(adata_prot, plot_flag=plot_flag)
 
 # Take subsample for spatial analysis
@@ -297,7 +294,7 @@ adata_prot_subsampled = adata_prot[
     np.random.choice(adata_prot.n_obs, size=min(6000, adata_prot.n_obs), replace=False)
 ].copy()
 
-# Apply spatial analysis (following Schreiber methodology, not MaxFuse)
+# Apply spatial analysis
 sc.pp.pca(adata_prot_subsampled, copy=False)
 sc.pp.neighbors(adata_prot_subsampled, use_rep="X_pca")
 sc.tl.umap(adata_prot_subsampled)
@@ -391,7 +388,7 @@ print(f"  Protein X: z-normalized (for VAE training), layers: {list(adata_prot.l
 adata_rna.uns["dataset_name"] = dataset_name
 adata_prot.uns["dataset_name"] = dataset_name
 save_processed_data(adata_rna, adata_prot, "processed_data", caller_filename=FILENAME)
-print("✅ MaxFuse dataset preprocessing completed successfully using Schreiber methodology!")
+print("✅ MaxFuse dataset preprocessing completed successfully!")
 print(f"Final RNA dataset shape: {adata_rna.shape}")
 print(f"Final protein dataset shape: {adata_prot.shape}")
 print(f"Common cell types: {sorted(set(adata_rna.obs['cell_types']))}")

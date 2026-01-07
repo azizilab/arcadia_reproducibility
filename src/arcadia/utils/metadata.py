@@ -109,7 +109,7 @@ def update_preprocess_metadata(
     n_highly_variable_genes_rna: Optional[int] = None,
 ) -> None:
     """
-    Update preprocessing metadata for the Schreiber dataset preprocessing steps.
+    Update preprocessing metadata for the dataset preprocessing steps.
 
     Args:
         adata: AnnData object to update
@@ -119,7 +119,7 @@ def update_preprocess_metadata(
     """
     if "pipeline_metadata" not in adata.uns:
         adata.uns["pipeline_metadata"] = {}
-    if "preprocess_schreiber" not in adata.uns["pipeline_metadata"]:
+    if "preprocess" not in adata.uns["pipeline_metadata"]:
         adata.uns["pipeline_metadata"]["preprocess"] = {"filtering_steps": []}
 
     # Add filtering steps
@@ -365,7 +365,7 @@ def get_pipeline_summary(adata) -> Dict[str, Any]:
     }
 
     # Add stage-specific summaries
-    if "preprocess_schreiber" in metadata:
+    if "preprocess" in metadata:
         summary["preprocessing"] = {
             "filtering_steps": len(metadata["preprocess"].get("filtering_steps", [])),
             "normalization": metadata["preprocess"].get("normalization", "Not specified"),
