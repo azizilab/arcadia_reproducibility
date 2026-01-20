@@ -138,7 +138,7 @@ logger.info(f"Log file: {timestamped_log_file}")
 
 # %% Define base parameter grid
 base_param_grid = {
-    "plot_x_times": [10],
+    "plot_x_times": [2],
     "check_val_every_n_epoch": [100],
     "max_epochs": [max_epochs],
     "save_checkpoint_every_n_epochs": [280],
@@ -150,14 +150,14 @@ base_param_grid = {
     "similarity_weight": [0],
     "similarity_dynamic": [False],
     "diversity_weight": [0.0],
-    "matching_weight": [1],
-    "cell_type_clustering_weight": [1],
-    "cross_modal_cell_type_weight": [1],
+    "matching_weight": [0.1,1,10],
+    "cell_type_clustering_weight": [0.1,1,10],
+    "cross_modal_cell_type_weight": [0.1,1,10],
     "cn_distribution_separation_weight": [0],
     "n_hidden_rna": [1024],  # 1024 gave better results than 256 layers (f1 score)
     "n_hidden_prot": [512],  # 512 was better than 256 layers in kbet score
-    "n_layers": [3, 1, 6],  # 5 layers learned too slow and resulted in low ilisi score
-    "latent_dim": [60, 30],  # 60 did not seem better than 30
+    "n_layers": [3],  # 5 layers learned too slow and resulted in low ilisi score
+    "latent_dim": [60],  # 60 did not seem better than 30
     "dropout_rate": [0.1],
     "rna_recon_weight": [1],
     "prot_recon_weight": [10],
