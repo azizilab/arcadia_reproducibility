@@ -103,6 +103,10 @@ def run_cell_type_clustering_loss(
     Returns:
         Cell type clustering loss tensor
     """
+    # Get device from latent_mean to ensure consistency
+    if isinstance(latent_mean, torch.Tensor):
+        device = latent_mean.device
+    
     # Check if this is protein data
     is_protein = modality_type == "protein" if modality_type is not None else False
 
