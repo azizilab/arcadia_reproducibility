@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "ARCADIA reproducibility: notebooks and preprocessed data"
+authors:
+  - family-names: Rozenman
+    given-names: Bar
+    affiliation: Columbia University
+  - family-names: Hoffer-Hawlik
+    given-names: Kevin
+    affiliation: Columbia University
+  - family-names: Djedjos
+    given-names: Nicholas
+    affiliation: Columbia University
+  - family-names: Azizi
+    given-names: Elham
+    affiliation: Columbia University
+version: v1.0.0
+doi: 10.5281/zenodo.20787199
+date-released: 2026-06-21
+license: BSD-3-Clause
+repository-code: "https://github.com/azizilab/arcadia_reproducibility"
+url: "https://github.com/azizilab/arcadia_reproducibility"
